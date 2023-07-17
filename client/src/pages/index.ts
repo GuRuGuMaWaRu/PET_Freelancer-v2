@@ -4,6 +4,7 @@ export * from "./app-unauthenticated/app-unauthenticated";
 export * from "./error-page/error-page";
 export * from "./root-page/root-page";
 
+export * from "./auth/auth";
 export * from "./dashboard/dashboard";
 export { loader as dashboardLoader } from "./dashboard/dashboard.loaders";
 export * from "./projects/projects";

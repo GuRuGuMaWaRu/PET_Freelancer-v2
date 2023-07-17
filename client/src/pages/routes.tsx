@@ -1,7 +1,10 @@
+/** @jsxImportSource @emotion/react */
+
 import {
   Root,
   ErrorPage,
   NotFound,
+  Auth,
   Dashboard,
   dashboardLoader,
   Projects,
@@ -54,6 +57,11 @@ const routes = [
         ],
       },
     ],
+  },
+  {
+    path: "auth",
+    element: <Auth />,
+    errorElement: <div>There's an error</div>,
   },
 ];
 
