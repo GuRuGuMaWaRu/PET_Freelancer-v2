@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, SInput, SubmitButton } from "shared/ui";
 import { IResponseUserData, ILoginFormInputs } from "shared/types";
 import { useAsync } from "shared/lib";
-import { useNotification, useAuth } from "app";
+import { useNotification } from "app";
 
 const formSchema = yup.object().shape({
   email: yup.string().required("You must specify an email"),
@@ -27,9 +27,8 @@ const LoginForm = () => {
     Error
   >();
   const notification = useNotification();
-  const { login } = useAuth();
   const submit: SubmitHandler<ILoginFormInputs> = (data) => {
-    run(login(data)).catch((error) => console.error(error));
+    console.log(data);
   };
 
   React.useEffect(() => {

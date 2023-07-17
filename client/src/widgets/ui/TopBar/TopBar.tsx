@@ -1,14 +1,11 @@
 import { SBar, SUserWelcome } from "./TopBar.styles";
 import { Button } from "shared/ui";
-import { useAuth } from "app";
 
 function TopBar() {
-  const { user, logout } = useAuth();
-
   return (
     <SBar>
-      <SUserWelcome>Hi, {user?.name}</SUserWelcome>
-      <Button variant="secondary" onClick={logout}>
+      <SUserWelcome>Hi, Bobur</SUserWelcome>
+      <Button variant="secondary" onClick={() => console.log("logout")}>
         Logout
       </Button>
     </SBar>

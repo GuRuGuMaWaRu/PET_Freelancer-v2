@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, SInput, SubmitButton } from "shared/ui";
 import { IResponseUserData, IRegisterFormInputs } from "shared/types";
 import { useAsync } from "shared/lib";
-import { useAuth, useNotification } from "app";
+import { useNotification } from "app";
 
 const getCharacterValidationError = (str: string) => {
   return `Your password must have at least 1 ${str} character`;
@@ -42,9 +42,8 @@ const RegisterForm = () => {
     Error
   >();
   const notification = useNotification();
-  const { signup } = useAuth();
   const submit: SubmitHandler<IRegisterFormInputs> = (data) => {
-    run(signup(data)).catch((error) => console.error(error));
+    console.log(data);
   };
 
   React.useEffect(() => {
