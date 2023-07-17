@@ -1,4 +1,4 @@
-/** @jsxImportSource @emotion/react */
+import { createBrowserRouter } from "react-router-dom";
 
 import {
   Root,
@@ -17,7 +17,7 @@ import {
 } from "pages";
 import { queryClient } from "app";
 
-const routes = [
+const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
@@ -63,6 +63,6 @@ const routes = [
     element: <Auth />,
     errorElement: <div>There's an error</div>,
   },
-];
+]);
 
-export { routes };
+export { router };
