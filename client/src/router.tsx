@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import {
   Root,
+  rootLoader,
   ErrorPage,
   NotFound,
   Auth,
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    loader: rootLoader,
     errorElement: <div>There's an error</div>,
     children: [
       {

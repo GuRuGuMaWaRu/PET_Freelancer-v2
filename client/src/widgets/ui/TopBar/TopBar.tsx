@@ -1,10 +1,14 @@
 import { SBar, SUserWelcome } from "./TopBar.styles";
 import { Button } from "shared/ui";
 
-function TopBar() {
+interface IProps {
+  user: string;
+}
+
+function TopBar({ user }: IProps) {
   return (
     <SBar>
-      <SUserWelcome>Hi, Bobur</SUserWelcome>
+      <SUserWelcome>Hi, {user}</SUserWelcome>
       <Button variant="secondary" onClick={() => console.log("logout")}>
         Logout
       </Button>
