@@ -2,10 +2,10 @@ import { SBar, SUserWelcome } from "./TopBar.styles";
 import { Button } from "shared/ui";
 
 interface IProps {
-  user: string;
+  user?: string;
 }
 
-function TopBar({ user }: IProps) {
+function TopBar({ user = "Handsome Stranger!" }: IProps) {
   return (
     <SBar>
       <SUserWelcome>Hi, {user}</SUserWelcome>

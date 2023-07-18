@@ -13,7 +13,7 @@ function Root() {
 
   return (
     <SRootContainer>
-      <TopBar user={data} />
+      <TopBar user={data?.name} />
       <NavBar />
       <SMain>
         <Outlet />
