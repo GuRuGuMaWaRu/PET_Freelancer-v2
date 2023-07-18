@@ -1,3 +1,4 @@
+import { redirect } from "react-router";
 import { loginUser } from "entities/auth";
 import { ILoginFormInputs } from "shared/types";
 
@@ -11,7 +12,7 @@ const action = async ({ request }: { request: Request }) => {
   try {
     await loginUser(loginData);
 
-    return { status: "success", message: "Logged in successfully" };
+    return redirect("/");
   } catch (error) {
     console.error(error);
     return {
