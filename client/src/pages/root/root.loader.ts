@@ -1,5 +1,5 @@
 const loader = async (): Promise<string> => {
-  return "Bobur";
+  return "Bofur";
 };
 
 export { loader };
