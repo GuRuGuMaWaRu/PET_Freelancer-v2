@@ -17,4 +17,15 @@ const getUser = async () => {
   return null;
 };
 
-export { getUser };
+const loginUser = async (data: { email: string; password: string }) => {
+  return client<IResponseUserData>("users/login", { data })
+    .then((res) => {
+      window.localStorage.setItem(config.localStorageKey, res.data.token);
+      return res.data;
+    })
+    .catch((error) => {
+      throw new Error(error.message);
+    });
+};
+
+export { getUser, loginUser };

@@ -1,13 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import * as React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useFetcher } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Field, SInput, SubmitButton } from "shared/ui";
-import { IResponseUserData, ILoginFormInputs } from "shared/types";
-import { useAsync } from "shared/lib";
-import { useNotification } from "app";
+import { ILoginFormInputs } from "shared/types";
+import { useFormNotifications } from "shared/lib";
 
 const formSchema = yup.object().shape({
   email: yup.string().required("You must specify an email"),
@@ -22,25 +21,24 @@ const LoginForm = () => {
   } = useForm<ILoginFormInputs>({
     resolver: yupResolver(formSchema),
   });
-  const { run, isLoading, isError, error } = useAsync<
-    IResponseUserData,
-    Error
-  >();
-  const notification = useNotification();
-  const submit: SubmitHandler<ILoginFormInputs> = (data) => {
-    console.log(data);
+  const fetcher = useFetcher();
+  const isLoading = fetcher.state !== "idle";
+
+  useFormNotifications(fetcher.data, isLoading);
+
+  const formSubmit: SubmitHandler<ILoginFormInputs> = (data) => {
+    let formData = new FormData();
+    for (const [key, value] of Object.entries(data)) {
+      formData.append(key, value);
+    }
+    fetcher.submit(formData, {
+      action: "/auth/login",
+      method: "post",
+    });
   };
 
-  React.useEffect(() => {
-    if (isError) {
-      const message = error?.message ?? "There was an error";
-
-      notification.warning(message);
-    }
-  }, [error, isError, notification]);
-
   return (
-    <form onSubmit={handleSubmit(submit)}>
+    <form onSubmit={handleSubmit(formSubmit)}>
       <Field label="Email" error={errors.email}>
         <SInput
           type="email"

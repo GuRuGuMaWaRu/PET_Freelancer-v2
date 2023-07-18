@@ -6,6 +6,7 @@ import {
   ErrorPage,
   NotFound,
   Auth,
+  loginAction,
   Dashboard,
   dashboardLoader,
   Projects,
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
     path: "auth",
     element: <Auth />,
     errorElement: <div>There's an error</div>,
+  },
+  {
+    path: "auth/login",
+    action: loginAction,
   },
 ]);
 
