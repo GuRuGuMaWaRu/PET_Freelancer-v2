@@ -6,7 +6,7 @@ import { Currency } from "shared/types";
 import { waitForLoadingToFinish } from "test/test-helpers";
 import { NotificationProvider, queryClient } from "app";
 import { ModalEditProject } from "..";
-import { action as projectsEditAction } from "pages/projects-edit/projects-edit";
+import { action as projectsEditAction } from "pages/projects-edit/projects-edit.action";
 
 function setup(jsx: React.ReactElement) {
   return {

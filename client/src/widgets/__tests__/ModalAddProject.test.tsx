@@ -6,7 +6,7 @@ import "@testing-library/jest-dom";
 import { waitForLoadingToFinish } from "test/test-helpers";
 import { NotificationProvider, queryClient } from "app";
 import { ModalAddProject } from "..";
-import { action as projectsAddAction } from "pages/projects-add/projects-add";
+import { action as projectsAddAction } from "pages/projects-add/projects-add.action";
 
 function setup(jsx: React.ReactElement) {
   return {
