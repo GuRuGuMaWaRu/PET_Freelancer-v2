@@ -17,11 +17,14 @@ const getUser = async () => {
   return null;
 };
 
-const loginUser = async (data: { email: string; password: string }) => {
+const loginUser = async (
+  data: { email: string; password: string },
+  callback: VoidFunction
+) => {
   return client<IResponseUserData>("users/login", { data })
     .then((res) => {
       window.localStorage.setItem(config.LOCAL_STORAGE_KEY, res.data.token);
-      return res.data;
+      callback();
     })
     .catch((error) => {
       throw new Error(error.message);

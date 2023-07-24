@@ -4,7 +4,6 @@ export * from "./error-page/error-page";
 export * from "./root/root";
 export { loader as rootLoader } from "./root/root.loader";
 export * from "./auth/auth";
-export { action as loginAction } from "./login/login.action";
 export * from "./dashboard/dashboard";
 export { loader as dashboardLoader } from "./dashboard/dashboard.loader";
 export * from "./projects/projects";

@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useFetcher } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Field, SInput, SubmitButton } from "shared/ui";
-import { ILoginFormInputs } from "shared/types";
+import { LOADING_STATE, ILocationState, ILoginFormInputs } from "shared/types";
 import { useFormNotifications } from "shared/lib";
+import { useAuth } from "app";
+import { useLocation, useNavigate } from "react-router";
 
 const formSchema = yup.object().shape({
   email: yup.string().required("You must specify an email"),
@@ -14,6 +15,12 @@ const formSchema = yup.object().shape({
 });
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { loadingState, login } = useAuth();
+
+  const from = (location.state as ILocationState)?.from?.pathname || "/";
+
   const {
     register,
     handleSubmit,
@@ -21,19 +28,10 @@ const LoginForm = () => {
   } = useForm<ILoginFormInputs>({
     resolver: yupResolver(formSchema),
   });
-  const fetcher = useFetcher();
-  const isLoading = fetcher.state !== "idle";
-
-  useFormNotifications(fetcher.data, isLoading);
 
   const formSubmit: SubmitHandler<ILoginFormInputs> = (data) => {
-    let formData = new FormData();
-    for (const [key, value] of Object.entries(data)) {
-      formData.append(key, value);
-    }
-    fetcher.submit(formData, {
-      action: "/auth/login",
-      method: "post",
+    login(data, () => {
+      navigate(from, { replace: true });
     });
   };
 
@@ -58,7 +56,9 @@ const LoginForm = () => {
           {...register("password")}
         ></SInput>
       </Field>
-      <SubmitButton isLoading={isLoading}>Login</SubmitButton>
+      <SubmitButton isLoading={loadingState === LOADING_STATE.LOADING}>
+        Login
+      </SubmitButton>
     </form>
   );
 };

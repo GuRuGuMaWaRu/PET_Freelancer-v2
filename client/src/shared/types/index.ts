@@ -7,7 +7,18 @@ type ErrorVariant = "stacked" | "inline";
 export enum Currency {
   USD = "USD",
   EUR = "EUR",
-  GBP = "GBP"
+  GBP = "GBP",
+}
+
+export enum LOADING_STATE {
+  IDLE = "IDLE",
+  LOADING = "LOADING",
+}
+
+interface ILocationState {
+  from?: {
+    pathname: string;
+  };
 }
 
 interface IProject {
@@ -70,16 +81,17 @@ interface IRegisterFormInputs {
   confirmPassword: string;
 }
 
-export type { 
+export type {
   Error,
   ErrorVariant,
+  ILocationState,
   IProject,
   IProjectPaginatedData,
-  IClient, 
-  IEarningsByClient, 
-  IEarningsByMonth, 
-  IEarnings, 
+  IClient,
+  IEarningsByClient,
+  IEarningsByMonth,
+  IEarnings,
   IResponseUserData,
   ILoginFormInputs,
-  IRegisterFormInputs
+  IRegisterFormInputs,
 };
