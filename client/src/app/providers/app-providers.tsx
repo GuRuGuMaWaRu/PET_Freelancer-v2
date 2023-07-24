@@ -15,9 +15,9 @@ const queryClient = new QueryClient({
 function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <NotificationProvider>{children}</NotificationProvider>
-      </AuthProvider>
+      <NotificationProvider>
+        <AuthProvider>{children}</AuthProvider>
+      </NotificationProvider>
       <ReactQueryDevtools position="bottom-right" />
     </QueryClientProvider>
   );

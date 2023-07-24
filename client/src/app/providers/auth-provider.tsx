@@ -1,5 +1,6 @@
 import React from "react";
 
+import { queryClient, useNotification } from "app";
 import { loginUser } from "entities/auth";
 import { config } from "shared/const";
 import { LOADING_STATE, ILoginFormInputs } from "shared/types";
@@ -15,6 +16,8 @@ interface AuthContextType {
 const AuthContext = React.createContext<AuthContextType>(null!);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const notification = useNotification();
+
   const [user, setUser] = React.useState<ILoginFormInputs | null>(null);
   const [loadingState, setLoadingState] = React.useState(LOADING_STATE.IDLE);
 
@@ -31,19 +34,28 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   //   });
   // };
 
-  const login = (userData: ILoginFormInputs, callback: VoidFunction) => {
+  const login = async (userData: ILoginFormInputs, callback: VoidFunction) => {
     setLoadingState(LOADING_STATE.LOADING);
 
-    return loginUser(userData, () => {
-      setUser(userData);
+    try {
+      await loginUser(userData, () => {
+        setUser(userData);
+        setLoadingState(LOADING_STATE.IDLE);
+        callback();
+      });
+    } catch (error) {
+      console.error(error);
+      const message =
+        error instanceof Error ? error.message : "Something went wrong";
+      notification.warning(message);
       setLoadingState(LOADING_STATE.IDLE);
-      callback();
-    });
+    }
   };
 
   const logout = (callback: VoidFunction) => {
     setUser(null);
     localStorage.removeItem(config.LOCAL_STORAGE_KEY);
+    queryClient.clear();
     callback();
   };
 
