@@ -17,7 +17,7 @@ const formSchema = yup.object().shape({
 const LoginForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { loadingState, login } = useAuth();
+  const auth = useAuth();
 
   const from = (location.state as ILocationState)?.from?.pathname || "/";
 
@@ -30,7 +30,7 @@ const LoginForm = () => {
   });
 
   const formSubmit: SubmitHandler<ILoginFormInputs> = (data) => {
-    login(data, () => {
+    auth.login(data, () => {
       navigate(from, { replace: true });
     });
   };
@@ -56,7 +56,7 @@ const LoginForm = () => {
           {...register("password")}
         ></SInput>
       </Field>
-      <SubmitButton isLoading={loadingState === LOADING_STATE.LOADING}>
+      <SubmitButton isLoading={auth.loadingState === LOADING_STATE.LOADING}>
         Login
       </SubmitButton>
     </form>
