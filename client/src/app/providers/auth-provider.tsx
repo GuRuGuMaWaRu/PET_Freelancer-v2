@@ -9,7 +9,7 @@ interface AuthContextType {
   loadingState: LOADING_STATE;
   // register: (user: ILoginFormInputs, callback: VoidFunction) => void;
   login: (user: ILoginFormInputs, callback: VoidFunction) => void;
-  // logout: (callback: VoidFunction) => void;
+  logout: (callback: VoidFunction) => void;
 }
 
 const AuthContext = React.createContext<AuthContextType>(null!);
@@ -41,15 +41,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  // const logout = (callback: VoidFunction) => {
-  //   return fakeAuthProvider.logout(() => {
-  //     setUser(null);
-  //     localStorage.removeItem(config.LOCAL_STORAGE_KEY);
-  //     callback();
-  //   });
-  // };
+  const logout = (callback: VoidFunction) => {
+    setUser(null);
+    localStorage.removeItem(config.LOCAL_STORAGE_KEY);
+    callback();
+  };
 
-  const value = { user, loadingState, login };
+  const value = { user, loadingState, login, logout };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
