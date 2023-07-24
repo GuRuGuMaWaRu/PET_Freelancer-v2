@@ -1,6 +1,6 @@
 import { config } from "../../shared/const";
-import { buildProject } from '../generate';
-import type { IProject } from '../../shared/types';
+import { buildProject } from "../generate";
+import type { IProject } from "../../shared/types";
 
 let projects: IProject[] = [];
 
@@ -8,16 +8,18 @@ let projects: IProject[] = [];
 // load();
 
 function persist() {
-  window.localStorage.setItem(config.projectsKey, JSON.stringify(projects));
+  window.localStorage.setItem(config.PROJECTS_KEY, JSON.stringify(projects));
 }
 function load() {
   Object.assign(
     projects,
-    JSON.parse(window.localStorage.getItem(config.projectsKey) || "[]"),
+    JSON.parse(window.localStorage.getItem(config.PROJECTS_KEY) || "[]")
   );
 }
 
-function bootstrapFakeProjects(num = Math.floor(Math.random() * 1000) + 1): void {
+function bootstrapFakeProjects(
+  num = Math.floor(Math.random() * 1000) + 1
+): void {
   for (let i = 0; i < num; i++) {
     projects.push(buildProject());
   }
@@ -31,7 +33,7 @@ function getProjectsForYear(): IProject[] {
   const startDate = new Date();
   startDate.setFullYear(startDate.getFullYear() - 1);
 
-  return projects.filter(project => {
+  return projects.filter((project) => {
     return project.date >= startDate;
   });
 }
@@ -42,7 +44,7 @@ function addProject(project: IProject): void {
 }
 
 function updateProject(project: IProject): void {
-  const index = projects.findIndex(p => p._id === project._id);
+  const index = projects.findIndex((p) => p._id === project._id);
 
   if (index) {
     projects[index] = project;

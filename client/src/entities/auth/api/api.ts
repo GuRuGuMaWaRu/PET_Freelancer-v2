@@ -3,7 +3,7 @@ import { client } from "shared/api";
 import { IResponseUserData } from "shared/types";
 
 const getUser = async () => {
-  const token = window.localStorage.getItem(config.localStorageKey);
+  const token = window.localStorage.getItem(config.LOCAL_STORAGE_KEY);
 
   if (token) {
     const res = await client<IResponseUserData>("users/getUser").catch(
@@ -20,7 +20,7 @@ const getUser = async () => {
 const loginUser = async (data: { email: string; password: string }) => {
   return client<IResponseUserData>("users/login", { data })
     .then((res) => {
-      window.localStorage.setItem(config.localStorageKey, res.data.token);
+      window.localStorage.setItem(config.LOCAL_STORAGE_KEY, res.data.token);
       return res.data;
     })
     .catch((error) => {

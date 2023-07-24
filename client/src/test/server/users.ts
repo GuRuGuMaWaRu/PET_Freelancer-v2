@@ -1,4 +1,4 @@
-import { config } from '../../shared/const';
+import { config } from "../../shared/const";
 
 interface IUser {
   name: string;
@@ -7,17 +7,19 @@ interface IUser {
   token?: string;
 }
 
-
 const users: Record<string, IUser> = {};
 
 // initialize
-load()
+load();
 
 function persist() {
-  window.localStorage.setItem(config.usersKey, JSON.stringify(users));
+  window.localStorage.setItem(config.USERS_KEY, JSON.stringify(users));
 }
 function load() {
-  Object.assign(users, JSON.parse(window.localStorage.getItem(config.usersKey) || '{}'));
+  Object.assign(
+    users,
+    JSON.parse(window.localStorage.getItem(config.USERS_KEY) || "{}")
+  );
 }
 
 function addUser(newUser: IUser): void {
@@ -26,22 +28,20 @@ function addUser(newUser: IUser): void {
   }
 
   users[newUser.email] = { ...newUser, token: newUser.password };
-  persist()
+  persist();
 }
 
-function getUser(email: string, password: string): IUser | undefined{
+function getUser(email: string, password: string): IUser | undefined {
   const user = users[email];
 
   if (user && user.password === password) {
-    return user
+    return user;
   }
 }
 
-function getUserByToken(token: string): IUser | undefined{
-  return Object.values(users).find(
-      (u) => u.token === token,
-    );
+function getUserByToken(token: string): IUser | undefined {
+  return Object.values(users).find((u) => u.token === token);
 }
 
-export type { IUser }
+export type { IUser };
 export { users, addUser, getUser, getUserByToken };

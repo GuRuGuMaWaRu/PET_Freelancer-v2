@@ -5,23 +5,21 @@ import { getUser, addUser, getUserByToken } from "./users";
 
 export const userHandlers = [
   rest.post(`${config.API_URL}/users/login`, async (req, res, ctx) => {
-    const {
-      email,
-      password,
-    }: { email: string; password: string } = await req.json();
+    const { email, password }: { email: string; password: string } =
+      await req.json();
     const user = getUser(email, password);
 
     if (!user) {
       return res(
         ctx.status(400),
-        ctx.json({ status: "fail", message: "Invalid credentials" }),
+        ctx.json({ status: "fail", message: "Invalid credentials" })
       );
     }
 
     return res(
       // Respond with a 200 status code
       ctx.status(200),
-      ctx.json({ status: "success", data: user }),
+      ctx.json({ status: "success", data: user })
     );
   }),
   rest.post(`${config.API_URL}/users/signup`, async (req, res, ctx) => {
@@ -40,7 +38,7 @@ export const userHandlers = [
     if (user) {
       return res(
         ctx.status(400),
-        ctx.json({ status: "fail", message: "User already exists" }),
+        ctx.json({ status: "fail", message: "User already exists" })
       );
     }
 
@@ -50,13 +48,13 @@ export const userHandlers = [
     return res(
       // Respond with a 200 status code
       ctx.status(200),
-      ctx.json({ status: "success", data: newUser }),
+      ctx.json({ status: "success", data: newUser })
     );
   }),
 
   rest.get(`${config.API_URL}/users/getUser`, (req, res, ctx) => {
     // Check if the user is authenticated in this session
-    const token = localStorage.getItem(config.localStorageKey);
+    const token = localStorage.getItem(config.LOCAL_STORAGE_KEY);
 
     if (!token) {
       // If not authenticated, respond with a 403 error
@@ -64,7 +62,7 @@ export const userHandlers = [
         ctx.status(403),
         ctx.json({
           errorMessage: "Not authorized",
-        }),
+        })
       );
     }
 
@@ -75,7 +73,7 @@ export const userHandlers = [
       ctx.json({
         status: "success",
         data: user,
-      }),
+      })
     );
   }),
 ];
