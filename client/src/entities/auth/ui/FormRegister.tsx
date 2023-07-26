@@ -1,13 +1,15 @@
-/** @jsxImportSource @emotion/react */
-import * as React from "react";
+import { useLocation, useNavigate } from "react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import {
+  LOADING_STATE,
+  ILocationState,
+  IRegisterFormInputs,
+} from "shared/types";
 import { Field, SInput, SubmitButton } from "shared/ui";
-import { IResponseUserData, IRegisterFormInputs } from "shared/types";
-import { useAsync } from "shared/lib";
-import { useNotification } from "app";
+import { useAuth } from "app";
 
 const getCharacterValidationError = (str: string) => {
   return `Your password must have at least 1 ${str} character`;
@@ -29,7 +31,13 @@ const formSchema = yup.object().shape({
     .oneOf([yup.ref("password")], "Passwords do not match"),
 });
 
-const RegisterForm = () => {
+function RegisterForm() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const auth = useAuth();
+  console.log("location.state", location.state);
+  const from = (location.state as ILocationState)?.from?.pathname || "/";
+
   const {
     register,
     handleSubmit,
@@ -37,22 +45,12 @@ const RegisterForm = () => {
   } = useForm<IRegisterFormInputs>({
     resolver: yupResolver(formSchema),
   });
-  const { run, isLoading, isError, error } = useAsync<
-    IResponseUserData,
-    Error
-  >();
-  const notification = useNotification();
+
   const submit: SubmitHandler<IRegisterFormInputs> = (data) => {
-    console.log(data);
+    auth.register(data, () => {
+      navigate(from, { replace: true });
+    });
   };
-
-  React.useEffect(() => {
-    if (isError) {
-      const message = error?.message ?? "There was an error";
-
-      notification.warning(message);
-    }
-  }, [error, isError, notification]);
 
   return (
     <form onSubmit={handleSubmit(submit)}>
@@ -94,9 +92,11 @@ const RegisterForm = () => {
           {...register("confirmPassword")}
         ></SInput>
       </Field>
-      <SubmitButton isLoading={isLoading}>Register</SubmitButton>
+      <SubmitButton isLoading={auth.loadingState === LOADING_STATE.LOADING}>
+        Register
+      </SubmitButton>
     </form>
   );
-};
+}
 
 export { RegisterForm };

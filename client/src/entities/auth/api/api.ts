@@ -1,6 +1,10 @@
 import { config } from "shared/const";
 import { client } from "shared/api";
-import { IResponseUserData } from "shared/types";
+import {
+  ILoginFormInputs,
+  IRegisterFormInputs,
+  IResponseUserData,
+} from "shared/types";
 
 const getUser = async () => {
   const token = window.localStorage.getItem(config.LOCAL_STORAGE_KEY);
@@ -17,10 +21,7 @@ const getUser = async () => {
   return null;
 };
 
-const loginUser = async (
-  data: { email: string; password: string },
-  callback: VoidFunction
-) => {
+const loginUser = async (data: ILoginFormInputs, callback: VoidFunction) => {
   return client<IResponseUserData>("users/login", { data })
     .then((res) => {
       window.localStorage.setItem(config.LOCAL_STORAGE_KEY, res.data.token);
@@ -31,4 +32,18 @@ const loginUser = async (
     });
 };
 
-export { getUser, loginUser };
+const registerUser = async (
+  data: Omit<IRegisterFormInputs, "confirmPassword">,
+  callback: VoidFunction
+) => {
+  return client<IResponseUserData>("users/signup", { data })
+    .then((res) => {
+      window.localStorage.setItem(config.LOCAL_STORAGE_KEY, res.data.token);
+      callback();
+    })
+    .catch((error) => {
+      throw new Error(error.message);
+    });
+};
+
+export { getUser, loginUser, registerUser };
