@@ -17,7 +17,7 @@ function TopBar({ user = "Handsome Stranger!" }: IProps) {
       <SUserWelcome>Hi, {user}</SUserWelcome>
       <Button
         variant="secondary"
-        onClick={() => auth.logout(() => navigate("/"))}
+        onClick={() => auth.logout(() => navigate("/auth"))}
       >
         Logout
       </Button>
