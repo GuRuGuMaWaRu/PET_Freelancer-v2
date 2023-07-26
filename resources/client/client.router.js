@@ -1,6 +1,7 @@
 const express = require("express");
+const mongoose = require("mongoose");
 
-const { protect, catchAsync } = require("../../utils");
+const { protect, catchAsync, AppError } = require("../../utils");
 const clientControllers = require("./client.controllers");
 const Project = require("../project/project.model");
 
@@ -27,11 +28,17 @@ router
    * @access    Private
    */
   .get(
-    catchAsync(async (req, res) => {
+    catchAsync(async (req, res, next) => {
+      //** Return early if no user ID is provided  */
+      if (!req.userId) {
+        return next(new AppError(400, "User ID is required"));
+      }
+
       const pipeline = [
         //* Match projects that are not deleted
         {
           $match: {
+            user: mongoose.Types.ObjectId(req.userId),
             deleted: false,
           },
         },
@@ -52,7 +59,9 @@ router
         {
           $group: {
             _id: "$client",
-            name: { $first: "$clientDetails.name" },
+            name: {
+              $first: "$clientDetails.name",
+            },
             totalProjects: { $sum: 1 },
             firstProjectDate: { $min: "$date" },
             lastProjectDate: { $max: "$date" },
