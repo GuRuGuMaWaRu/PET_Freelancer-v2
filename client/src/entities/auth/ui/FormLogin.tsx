@@ -5,7 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Field, SInput, SubmitButton } from "shared/ui";
 import { LOADING_STATE, ILocationState, ILoginFormInputs } from "shared/types";
-import { useFormNotifications } from "shared/lib";
 import { useAuth } from "app";
 import { useLocation, useNavigate } from "react-router";
 
@@ -14,7 +13,7 @@ const formSchema = yup.object().shape({
   password: yup.string().required("You must specify a password"),
 });
 
-const LoginForm = () => {
+function LoginForm() {
   const navigate = useNavigate();
   const location = useLocation();
   const auth = useAuth();
@@ -61,6 +60,6 @@ const LoginForm = () => {
       </SubmitButton>
     </form>
   );
-};
+}
 
 export { LoginForm };
