@@ -27,6 +27,10 @@ function ClientsChart({ data }: IProps) {
     [data]
   );
 
+  if (!data.length) {
+    return null;
+  }
+
   return (
     <ResponsiveContainer width="100%" height={70 + data.length * 40}>
       <BarChart
