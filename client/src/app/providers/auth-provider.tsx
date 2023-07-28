@@ -7,13 +7,14 @@ import {
   LOADING_STATE,
   ILoginFormInputs,
   IRegisterFormInputs,
+  IResponseUserData,
 } from "shared/types";
 
 interface AuthContextType {
-  user: ILoginFormInputs | null;
+  user: IResponseUserData | null;
   loadingState: LOADING_STATE;
-  register: (user: IRegisterFormInputs, callback: VoidFunction) => void;
-  login: (user: ILoginFormInputs, callback: VoidFunction) => void;
+  register: (userData: IRegisterFormInputs, callback: VoidFunction) => void;
+  login: (userData: ILoginFormInputs, callback: VoidFunction) => void;
   logout: (callback: VoidFunction) => void;
 }
 
@@ -22,7 +23,7 @@ const AuthContext = React.createContext<AuthContextType>(null!);
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const notification = useNotification();
 
-  const [user, setUser] = React.useState<ILoginFormInputs | null>(null);
+  const [user, setUser] = React.useState<IResponseUserData | null>(null);
   const [loadingState, setLoadingState] = React.useState(LOADING_STATE.IDLE);
 
   const register = async (
@@ -44,8 +45,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           email: userData.email,
           password: userData.password,
         },
-        () => {
-          setUser(userData);
+        (data) => {
+          setUser(data);
           setLoadingState(LOADING_STATE.IDLE);
           callback();
         }
@@ -63,8 +64,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setLoadingState(LOADING_STATE.LOADING);
 
     try {
-      await loginUser(userData, () => {
-        setUser(userData);
+      await loginUser(userData, (data) => {
+        setUser(data);
         setLoadingState(LOADING_STATE.IDLE);
         callback();
       });

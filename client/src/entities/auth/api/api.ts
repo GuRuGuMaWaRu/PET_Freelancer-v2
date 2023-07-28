@@ -21,11 +21,14 @@ const getUser = async () => {
   return null;
 };
 
-const loginUser = async (data: ILoginFormInputs, callback: VoidFunction) => {
+const loginUser = async (
+  data: ILoginFormInputs,
+  callback: (data: IResponseUserData) => void
+) => {
   return client<IResponseUserData>("users/login", { data })
     .then((res) => {
       window.localStorage.setItem(config.LOCAL_STORAGE_KEY, res.data.token);
-      callback();
+      callback(res.data);
     })
     .catch((error) => {
       throw new Error(error.message);
@@ -34,12 +37,12 @@ const loginUser = async (data: ILoginFormInputs, callback: VoidFunction) => {
 
 const registerUser = async (
   data: Omit<IRegisterFormInputs, "confirmPassword">,
-  callback: VoidFunction
+  callback: (data: IResponseUserData) => void
 ) => {
   return client<IResponseUserData>("users/signup", { data })
     .then((res) => {
       window.localStorage.setItem(config.LOCAL_STORAGE_KEY, res.data.token);
-      callback();
+      callback(res.data);
     })
     .catch((error) => {
       throw new Error(error.message);

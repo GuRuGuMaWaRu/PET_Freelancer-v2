@@ -4,17 +4,13 @@ import { SBar, SUserWelcome } from "./TopBar.styles";
 import { Button } from "shared/ui";
 import { useAuth } from "app";
 
-interface IProps {
-  user?: string;
-}
-
-function TopBar({ user = "Handsome Stranger!" }: IProps) {
+function TopBar() {
   const navigate = useNavigate();
   const auth = useAuth();
 
   return (
     <SBar>
-      <SUserWelcome>Hi, {user}</SUserWelcome>
+      <SUserWelcome>Hi, {auth.user?.name ?? "Handsome Stranger!"}</SUserWelcome>
       <Button
         variant="secondary"
         onClick={() => auth.logout(() => navigate("/auth"))}
