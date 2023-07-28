@@ -28,7 +28,7 @@ function ClientsChart({ data }: IProps) {
   );
 
   return (
-    <ResponsiveContainer width="100%" height={40 * data.length}>
+    <ResponsiveContainer width="100%" height={70 + data.length * 40}>
       <BarChart
         data={data}
         layout="vertical"
@@ -40,7 +40,6 @@ function ClientsChart({ data }: IProps) {
         }}
       >
         <XAxis
-          dataKey="payment"
           stroke={colors.textImportant}
           type="number"
           tickFormatter={(value) => formatUSD(value)}
