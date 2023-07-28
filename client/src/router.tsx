@@ -23,7 +23,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     loader: rootLoader,
-    errorElement: <div>There's an error</div>,
+    errorElement: <ErrorPage />,
     children: [
       {
         errorElement: <ErrorPage />,
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
   {
     path: "auth",
     element: <Auth />,
-    errorElement: <div>There's an error</div>,
+    errorElement: <ErrorPage />,
   },
 ]);
 
