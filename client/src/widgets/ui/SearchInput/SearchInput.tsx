@@ -37,11 +37,14 @@ const SSearchButton = styled("button")({
 });
 
 interface IProps {
+  searchQuery?: string | null | undefined;
   onSearch: (input: string) => void;
 }
 
-const SearchInput: React.FC<IProps> = ({ onSearch }) => {
-  const [searchInput, setSearchInput] = React.useState<string>("");
+const SearchInput: React.FC<IProps> = ({ searchQuery = "", onSearch }) => {
+  const [searchInput, setSearchInput] = React.useState<string>(
+    searchQuery as string
+  );
   const notification = useNotification();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {

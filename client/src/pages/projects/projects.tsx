@@ -2,6 +2,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaSortUp, FaSortDown, FaPen, FaRegTrashAlt } from "react-icons/fa";
+import { useQueryParam, StringParam } from "use-query-params";
 
 import { columns } from "./projects.const";
 import {
@@ -36,7 +37,7 @@ function Projects() {
   const [page, setPage] = React.useState<number>(1);
   const [sortColumn, setSortColumn] = React.useState<string>("-date");
   const [sortDir, setSortDir] = React.useState<string>("");
-  const [searchQuery, setSearchQuery] = React.useState<string>("");
+  const [searchQuery, setSearchQuery] = useQueryParam("q", StringParam);
 
   const { data: clients = [] } = useQuery(getAllClientsQuery());
   const {
@@ -60,7 +61,7 @@ function Projects() {
   return (
     <div>
       <SContainer>
-        <SearchInput onSearch={handleSearch} />
+        <SearchInput onSearch={handleSearch} searchQuery={searchQuery} />
         <ModalAddProject clients={clients} />
       </SContainer>
       {isLoading ? (

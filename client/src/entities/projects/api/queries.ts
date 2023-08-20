@@ -12,7 +12,7 @@ const projectsOneYearQuery = () => ({
 const getProjectsPageQuery = (
   page: number,
   sortColumn?: string,
-  searchQuery?: string,
+  searchQuery?: string | null | undefined
 ) => ({
   queryKey: ["projects", { page, sortColumn, searchQuery }],
   queryFn: async () => {
