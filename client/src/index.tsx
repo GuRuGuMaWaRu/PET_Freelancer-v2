@@ -19,7 +19,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ErrorBoundary FallbackComponent={FullPageError}>
       <AppProviders>
-        <RouterProvider router={router} fallbackElement={<FullPageSpinner />} />
+        <RouterProvider
+          router={router}
+          fallbackElement={<FullPageSpinner />}
+          future={{ v7_startTransition: true }}
+        />
       </AppProviders>
     </ErrorBoundary>
   </React.StrictMode>
