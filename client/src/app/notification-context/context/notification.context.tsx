@@ -8,12 +8,12 @@ import {
 import { Notification } from "../ui/Notification";
 
 const NotificationContext = React.createContext<INotificationContext>(
-  {} as INotificationContext,
+  {} as INotificationContext
 );
 
 function NotificationProvider({ children }: { children: React.ReactNode }) {
   const [notification, setNotification] = React.useState<INotification | null>(
-    null,
+    null
   );
   const [isShown, setIsShown] = React.useState<boolean>(false);
 
@@ -22,39 +22,37 @@ function NotificationProvider({ children }: { children: React.ReactNode }) {
       setNotification({ type, message });
       setIsShown(true);
     },
-    [],
+    []
   );
+  const hideNotification = React.useCallback(() => setIsShown(false), []);
 
   const success = React.useCallback(
     (message: string) => {
       showNotification(NotificationType.success, message);
     },
-    [showNotification],
+    [showNotification]
   );
-
   const warning = React.useCallback(
     (message: string) => {
       showNotification(NotificationType.warning, message);
     },
-    [showNotification],
+    [showNotification]
   );
-
-  const hideNotification = () => setIsShown(false);
 
   const value = React.useMemo(
     () => ({
       success,
       warning,
     }),
-    [success, warning],
+    [success, warning]
   );
 
   return (
     <NotificationContext.Provider value={value}>
       <Notification
         notification={notification}
-        hideNotification={hideNotification}
         isShown={isShown}
+        hideNotification={hideNotification}
       />
       {children}
     </NotificationContext.Provider>
@@ -66,7 +64,7 @@ const useNotification = () => {
 
   if (!context) {
     throw new Error(
-      "useNotification should be used inside NotificationProvider",
+      "useNotification should be used inside NotificationProvider"
     );
   }
 
