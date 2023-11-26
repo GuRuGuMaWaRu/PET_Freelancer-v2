@@ -16,7 +16,9 @@ const ProjectListItem: React.FC<IProps> = ({ project, children }) => {
         <time>{new Date(project.date).toLocaleDateString("default")}</time>
       </SDataCell>
       <SDataCell name="project nr">{project.projectNr}</SDataCell>
-      <SDataCell name="payment">{project.payment}</SDataCell>
+      <SDataCell name="payment" payment={project.payment}>
+        {project.payment}
+      </SDataCell>
       <SDataCell name="comments">
         {project.comments && project.comments?.length > 30
           ? project.comments.slice(0, 30) + "..."
