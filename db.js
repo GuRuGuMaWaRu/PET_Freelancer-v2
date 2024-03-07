@@ -10,12 +10,17 @@ if (process.env.NODE_ENV !== "test") {
   //** Disable autoIndex in production so as not to slow down the server */
   const autoIndex = process.env.NODE_ENV === "development" ? true : false;
 
+  mongoose.set("strictQuery", false);
+
   mongoose
     .connect(address, { autoIndex })
     // eslint-disable-next-line
     .then(() => console.log("Connection to database is established"))
     // eslint-disable-next-line
-    .catch((err) => console.log(`Connection error: ${err.reason}`));
+    .catch((err) => {
+      console.error(err);
+      console.log(`Connection error: ${err.reason}`);
+    });
 
   // eslint-disable-next-line
   mongoose.connection.on("error", (err) => {
