@@ -134,41 +134,41 @@ router
    */
   .post(
     catchAsync(async (req, res, next) => {
-      const body = { ...req.body };
+      //** Return early if no user ID is provided  */
+      if (!req.userId) {
+        return next(new AppError(400, "User ID is required"));
+      }
 
       //** Confirm data  */
       if (
-        !body.payment ||
-        !body.currency ||
-        !body.projectNr ||
-        !body.client ||
-        !body.date
+        !req.body.payment ||
+        !req.body.currency ||
+        !req.body.projectNr ||
+        !req.body.client ||
+        !req.body.date
       ) {
         return next(new AppError(400, "All fields are required"));
       }
 
-      //** Add userId to the data */
-      if (req.userId && Project.collection.collectionName !== "users") {
-        body.user = req.userId;
-      }
-
       //** Get a client Id or create a new client if necessary */
       let client = await Client.findOne({
-        name: body.client,
+        name: req.body.client,
       })
         .lean()
         .exec();
 
       if (!client) {
         client = await Client.create({
-          name: body.client,
-          user: body.user,
+          name: req.body.client,
+          user: req.userId,
         });
       }
 
-      body.client = client._id;
-
-      const doc = await Project.create(body);
+      const doc = await Project.create({
+        ...req.body,
+        client: client._id,
+        user: req.userId,
+      });
 
       res.status(201).json({
         status: "success",
