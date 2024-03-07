@@ -120,6 +120,7 @@ router
         { $count: "total" },
         // { $group: { _id: null, n: { $count: {} } } },
       ]);
+
       res.status(200).json({
         status: "success",
         results: docs.length,
@@ -185,7 +186,12 @@ router
    * @access    Private
    */
   .get(
-    catchAsync(async (req, res) => {
+    catchAsync(async (req, res, next) => {
+      //** Return early if no user ID is provided  */
+      if (!req.userId) {
+        return next(new AppError(400, "User ID is required"));
+      }
+
       const currentDate = new Date();
       currentDate.setFullYear(currentDate.getFullYear() - 1);
       currentDate.setDate(1);
@@ -199,7 +205,7 @@ router
       })
         .populate({
           path: "client",
-          select: "-_id -user -__v",
+          select: "-_id -user -__v -createdAt -updatedAt",
         })
         .lean()
         .exec();
