@@ -233,32 +233,36 @@ router
    */
   .patch(
     catchAsync(async (req, res, next) => {
-      const filter = { _id: req.params.id };
-      const body = { ...req.body };
+      //** Return early if no user ID is provided  */
+      if (!req.userId) {
+        return next(new AppError(400, "User ID is required"));
+      }
 
-      //** Get a client Id or create a new client if necessary */
+      //** Find an existing client or create a new client if necessary */
       let client = await Client.findOne({
-        name: body.client,
+        name: req.body.client,
       })
         .lean()
         .exec();
 
       if (!client) {
         client = await Client.create({
-          name: body.client,
-          user: body.user,
+          name: req.body.client,
+          user: req.body.user,
         });
       }
 
-      console.log("client:", client);
-      body.client = client._id;
-
-      const doc = await Project.findOneAndUpdate(filter, body, {
-        new: true,
-        runValidators: true,
-        upsert: true,
-        setDefaultsOnInsert: true,
-      })
+      //** Update a project */
+      const doc = await Project.findOneAndUpdate(
+        { _id: req.params.id },
+        { ...req.body, client: client._id },
+        {
+          new: true,
+          runValidators: true,
+          upsert: true,
+          setDefaultsOnInsert: true,
+        },
+      )
         .lean()
         .exec();
 
