@@ -120,6 +120,7 @@ router
         { $count: "total" },
         // { $group: { _id: null, n: { $count: {} } } },
       ]);
+
       res.status(200).json({
         status: "success",
         results: docs.length,
@@ -134,41 +135,41 @@ router
    */
   .post(
     catchAsync(async (req, res, next) => {
-      const body = { ...req.body };
+      //** Return early if no user ID is provided  */
+      if (!req.userId) {
+        return next(new AppError(400, "User ID is required"));
+      }
 
       //** Confirm data  */
       if (
-        !body.payment ||
-        !body.currency ||
-        !body.projectNr ||
-        !body.client ||
-        !body.date
+        !req.body.payment ||
+        !req.body.currency ||
+        !req.body.projectNr ||
+        !req.body.client ||
+        !req.body.date
       ) {
         return next(new AppError(400, "All fields are required"));
       }
 
-      //** Add userId to the data */
-      if (req.userId && Project.collection.collectionName !== "users") {
-        body.user = req.userId;
-      }
-
       //** Get a client Id or create a new client if necessary */
       let client = await Client.findOne({
-        name: body.client,
+        name: req.body.client,
       })
         .lean()
         .exec();
 
       if (!client) {
         client = await Client.create({
-          name: body.client,
-          user: body.user,
+          name: req.body.client,
+          user: req.userId,
         });
       }
 
-      body.client = client._id;
-
-      const doc = await Project.create(body);
+      const doc = await Project.create({
+        ...req.body,
+        client: client._id,
+        user: req.userId,
+      });
 
       res.status(201).json({
         status: "success",
@@ -185,7 +186,12 @@ router
    * @access    Private
    */
   .get(
-    catchAsync(async (req, res) => {
+    catchAsync(async (req, res, next) => {
+      //** Return early if no user ID is provided  */
+      if (!req.userId) {
+        return next(new AppError(400, "User ID is required"));
+      }
+
       const currentDate = new Date();
       currentDate.setFullYear(currentDate.getFullYear() - 1);
       currentDate.setDate(1);
@@ -199,7 +205,7 @@ router
       })
         .populate({
           path: "client",
-          select: "-_id -user -__v",
+          select: "-_id -user -__v -createdAt -updatedAt",
         })
         .lean()
         .exec();
@@ -227,32 +233,36 @@ router
    */
   .patch(
     catchAsync(async (req, res, next) => {
-      const filter = { _id: req.params.id };
-      const body = { ...req.body };
+      //** Return early if no user ID is provided  */
+      if (!req.userId) {
+        return next(new AppError(400, "User ID is required"));
+      }
 
-      //** Get a client Id or create a new client if necessary */
+      //** Find an existing client or create a new client if necessary */
       let client = await Client.findOne({
-        name: body.client,
+        name: req.body.client,
       })
         .lean()
         .exec();
 
       if (!client) {
         client = await Client.create({
-          name: body.client,
-          user: body.user,
+          name: req.body.client,
+          user: req.body.user,
         });
       }
 
-      console.log("client:", client);
-      body.client = client._id;
-
-      const doc = await Project.findOneAndUpdate(filter, body, {
-        new: true,
-        runValidators: true,
-        upsert: true,
-        setDefaultsOnInsert: true,
-      })
+      //** Update a project */
+      const doc = await Project.findOneAndUpdate(
+        { _id: req.params.id },
+        { ...req.body, client: client._id },
+        {
+          new: true,
+          runValidators: true,
+          upsert: true,
+          setDefaultsOnInsert: true,
+        },
+      )
         .lean()
         .exec();
 
