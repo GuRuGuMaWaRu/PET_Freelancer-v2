@@ -1,7 +1,7 @@
 const { catchAsync, AppError, APIFeatures } = require(".");
 
 const getAll = (Model) =>
-  catchAsync(async (req, res, next) => {
+  catchAsync(async (req, res) => {
     const filter = {};
 
     if (req.userId && Model.collection.collectionName !== "users") {
@@ -117,7 +117,7 @@ const deleteOne = (Model) =>
   });
 
 const createOne = (Model) =>
-  catchAsync(async (req, res, next) => {
+  catchAsync(async (req, res) => {
     const body = { ...req.body };
 
     if (req.userId && Model.collection.collectionName !== "users") {
