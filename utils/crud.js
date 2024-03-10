@@ -77,10 +77,7 @@ const deleteOne = (Model) =>
     const { id } = req.params;
 
     if (!id) {
-      return res.status(400).json({
-        status: "error",
-        message: "ID is required",
-      });
+      return next(new AppError(400, "Item ID is required"));
     }
 
     const filter = { _id: id };
