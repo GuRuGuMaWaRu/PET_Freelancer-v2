@@ -1,7 +1,7 @@
 const { catchAsync, AppError, APIFeatures } = require(".");
 
 const getAll = (Model) =>
-  catchAsync(async (req, res, next) => {
+  catchAsync(async (req, res) => {
     const filter = {};
 
     if (req.userId && Model.collection.collectionName !== "users") {
@@ -25,7 +25,13 @@ const getAll = (Model) =>
 
 const getOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const filter = { _id: req.params.id };
+    const { id } = req.params;
+
+    if (!id) {
+      return next(new AppError(400, "Item ID is required"));
+    }
+
+    const filter = { _id: id };
 
     if (req.userId && Model.collection.collectionName !== "users") {
       filter.user = req.userId;
@@ -47,7 +53,13 @@ const getOne = (Model) =>
 
 const updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const filter = { _id: req.params.id };
+    const { id } = req.params;
+
+    if (!id) {
+      return next(new AppError(400, "Item ID is required"));
+    }
+
+    const filter = { _id: id };
 
     if (req.userId && Model.collection.collectionName !== "users") {
       filter.user = req.userId;
@@ -77,10 +89,7 @@ const deleteOne = (Model) =>
     const { id } = req.params;
 
     if (!id) {
-      return res.status(400).json({
-        status: "error",
-        message: "ID is required",
-      });
+      return next(new AppError(400, "Item ID is required"));
     }
 
     const filter = { _id: id };
@@ -108,7 +117,7 @@ const deleteOne = (Model) =>
   });
 
 const createOne = (Model) =>
-  catchAsync(async (req, res, next) => {
+  catchAsync(async (req, res) => {
     const body = { ...req.body };
 
     if (req.userId && Model.collection.collectionName !== "users") {
