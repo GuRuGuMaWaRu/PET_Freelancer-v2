@@ -25,7 +25,13 @@ const getAll = (Model) =>
 
 const getOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const filter = { _id: req.params.id };
+    const { id } = req.params;
+
+    if (!id) {
+      return next(new AppError(400, "Item ID is required"));
+    }
+
+    const filter = { _id: id };
 
     if (req.userId && Model.collection.collectionName !== "users") {
       filter.user = req.userId;
@@ -47,7 +53,13 @@ const getOne = (Model) =>
 
 const updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const filter = { _id: req.params.id };
+    const { id } = req.params;
+
+    if (!id) {
+      return next(new AppError(400, "Item ID is required"));
+    }
+
+    const filter = { _id: id };
 
     if (req.userId && Model.collection.collectionName !== "users") {
       filter.user = req.userId;
