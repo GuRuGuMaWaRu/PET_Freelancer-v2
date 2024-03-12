@@ -27,7 +27,7 @@ router
   .route("/withProjectData")
   /**
    * @route     GET projects/withProjectData
-   * @desc      Get projects with project data
+   * @desc      Get clients with project statistics
    * @access    Private
    */
   .get(
