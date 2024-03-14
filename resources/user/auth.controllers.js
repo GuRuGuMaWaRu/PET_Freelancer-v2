@@ -10,9 +10,6 @@ const newToken = (payload) => {
   });
 };
 
-// @route     POST api/users/login
-// @desc      Log in user
-// @access    Public
 const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -36,8 +33,6 @@ const login = catchAsync(async (req, res, next) => {
     id: foundUser._id,
   };
 
-  const { name } = foundUser;
-
   jwt.sign(
     payload,
     process.env.ACCESS_TOKEN_SECRET,
@@ -47,15 +42,12 @@ const login = catchAsync(async (req, res, next) => {
       res.status(200).json({
         status: "success",
         message: `${foundUser.name} logged in successfully`,
-        data: { name, email, token },
+        data: { name: foundUser.name, email, token },
       });
     },
   );
 });
 
-// @route     GET api/users/getUser
-// @desc      Get logged in user
-// @access    Private
 const getUser = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.userId)
     .select("-password -_id -__v")
@@ -79,7 +71,8 @@ const getUser = catchAsync(async (req, res, next) => {
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: process.env.JWT_EXPIRES_IN },
     (err, token) => {
-      if (err) throw err;
+      if (err) throw err; //** TODO: need to test if I need AppError here */
+
       res.status(200).json({
         status: "success",
         message: `${user.name} logged in successfully`,
@@ -89,9 +82,6 @@ const getUser = catchAsync(async (req, res, next) => {
   );
 });
 
-// @route     POST api/users/signup
-// @desc      Register a new user
-// @access    Public
 const signup = catchAsync(async (req, res, next) => {
   // Handle errors on Registration form
   const { name, email, password } = req.body;
