@@ -15,6 +15,7 @@ const router = express.Router();
  * @access    Private
  */
 router.get("/getUser", protect, authControllers.getUser);
+
 /**
  * @route     POST login/
  * @desc      Log in with username and password
@@ -30,6 +31,7 @@ router.post(
   validateForm,
   authControllers.login,
 );
+
 /**
  * @route     POST signup/
  * @desc      Register a new user
