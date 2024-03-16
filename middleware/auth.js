@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { AppError } = require(".");
+const AppError = require("../utils/appError");
 
 const protect = (req, res, next) => {
   const bearer = req.headers.authorization;

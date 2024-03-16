@@ -1,6 +1,7 @@
 const express = require("express");
 
-const { protect, catchAsync } = require("../../utils");
+const catchAsync = require("../../utils/catchAsync");
+const { protect } = require("../../middleware/auth");
 const clientControllers = require("./client.controllers");
 const Project = require("../project/project.model");
 
