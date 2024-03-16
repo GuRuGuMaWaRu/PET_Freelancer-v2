@@ -2,7 +2,8 @@ const express = require("express");
 const { check } = require("express-validator");
 
 const loginLimiter = require("../../middleware/loginLimiter");
-const { protect, validateForm } = require("../../utils");
+const { protect } = require("../../middleware/auth");
+const validateForm = require("../../middleware/validation");
 const authControllers = require("./auth.controllers");
 const userControllers = require("./user.controllers");
 

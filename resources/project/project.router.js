@@ -1,7 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-const { protect, catchAsync, AppError } = require("../../utils");
+const AppError = require("../../utils/appError");
+const catchAsync = require("../../utils/catchAsync");
+const { protect } = require("../../middleware/auth");
 const projectControllers = require("./project.controllers");
 const Project = require("./project.model");
 const Client = require("../client/client.model");

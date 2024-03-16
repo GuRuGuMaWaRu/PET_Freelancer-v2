@@ -7,7 +7,7 @@ const helmet = require("helmet");
 const compression = require("compression");
 const mongoose = require("mongoose");
 
-const { AppError } = require("./utils");
+const AppError = require("./utils/appError");
 const { logger } = require("./middleware/logger");
 const errorHandler = require("./middleware/errorHandler");
 const corsOptions = require("./config/corsOptions");
