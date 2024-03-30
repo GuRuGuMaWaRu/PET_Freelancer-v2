@@ -41,7 +41,7 @@ const RegisterForm = () => {
     IResponseUserData,
     Error
   >();
-  const notification = useNotification();
+  const notify = useNotification();
   const { signup } = useAuth();
   const submit: SubmitHandler<IRegisterFormInputs> = (data) => {
     run(signup(data)).catch((error) => console.error(error));
@@ -51,9 +51,9 @@ const RegisterForm = () => {
     if (isError) {
       const message = error?.message ?? "There was an error";
 
-      notification.warning(message);
+      notify.warning(message);
     }
-  }, [error, isError, notification]);
+  }, [error, isError, notify]);
 
   return (
     <form onSubmit={handleSubmit(submit)}>
