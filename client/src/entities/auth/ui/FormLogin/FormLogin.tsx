@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -26,19 +26,20 @@ const LoginForm = () => {
     IResponseUserData,
     Error
   >();
-  const notification = useNotification();
+  const notify = useNotification();
   const { login } = useAuth();
-  const submit: SubmitHandler<ILoginFormInputs> = (data) => {
-    run(login(data)).catch((error) => console.error(error));
-  };
 
   React.useEffect(() => {
     if (isError) {
       const message = error?.message ?? "There was an error";
 
-      notification.warning(message);
+      notify.warning(message);
     }
-  }, [error, isError, notification]);
+  }, [error, isError, notify]);
+
+  const submit: SubmitHandler<ILoginFormInputs> = (data) => {
+    run(login(data)).catch((error) => console.error(error));
+  };
 
   return (
     <form onSubmit={handleSubmit(submit)}>

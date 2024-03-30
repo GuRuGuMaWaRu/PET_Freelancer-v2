@@ -1,4 +1,11 @@
-import * as React from "react";
+import {
+  useEffect,
+  useCallback,
+  useMemo,
+  createContext,
+  useContext,
+  type ReactNode,
+} from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import {
@@ -6,9 +13,9 @@ import {
   ILoginFormInputs,
   IRegisterFormInputs,
 } from "shared/types";
+import { FullPageSpinner, FullPageError } from "shared/ui";
 import { config } from "shared/const";
 import { client } from "shared/api";
-import { FullPageSpinner, FullPageError } from "shared/ui";
 import { useAsync } from "shared/lib";
 import { useNotification } from "app";
 
@@ -19,17 +26,17 @@ interface IState {
   logout: () => void;
 }
 
-const AuthContext = React.createContext<IState>({} as IState);
+const AuthContext = createContext<IState>({} as IState);
 
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+const AuthProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
   const { run, data, error, isIdle, isLoading, isError, setData } = useAsync<
     IResponseUserData,
     Error
   >();
-  const notification = useNotification();
+  const notify = useNotification();
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function bootstrapUser() {
       const token = window.localStorage.getItem(config.localStorageKey);
 
@@ -39,11 +46,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             console.log(e);
 
             if (e.code !== 406) {
-              notification.warning(e.message);
+              notify.warning(e.message);
             }
 
             return { data: null };
-          },
+          }
         );
 
         return res.data;
@@ -53,44 +60,46 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     run(bootstrapUser());
-  }, [run, notification]);
+  }, [run, notify]);
 
-  const login = React.useCallback(
-    async (data: ILoginFormInputs) => {
-      return client<IResponseUserData>("users/login", { data }).then((res) => {
-        window.localStorage.setItem(config.localStorageKey, res.data.token);
-        setData(res.data);
-        return res.data;
-      });
-    },
-    [setData],
-  );
-
-  const signup = React.useCallback(
+  const signup = useCallback(
     async (data: IRegisterFormInputs) => {
       return client<IResponseUserData>("users/signup", { data }).then((res) => {
         window.localStorage.setItem(config.localStorageKey, res.data.token);
         setData(res.data);
+
         return res.data;
       });
     },
-    [setData],
+    [setData]
   );
 
-  const logout = React.useCallback(() => {
+  const login = useCallback(
+    async (data: ILoginFormInputs) => {
+      return client<IResponseUserData>("users/login", { data }).then((res) => {
+        window.localStorage.setItem(config.localStorageKey, res.data.token);
+        setData(res.data);
+
+        return res.data;
+      });
+    },
+    [setData]
+  );
+
+  const logout = useCallback(() => {
     window.localStorage.removeItem(config.localStorageKey);
     queryClient.clear();
     setData(null);
   }, [queryClient, setData]);
 
-  const value = React.useMemo(
+  const value = useMemo(
     () => ({
       user: data,
       login,
       signup,
       logout,
     }),
-    [data, login, signup, logout],
+    [data, login, signup, logout]
   );
 
   if (isLoading || isIdle) {
@@ -105,7 +114,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 const useAuth = () => {
-  const context = React.useContext(AuthContext);
+  const context = useContext(AuthContext);
 
   if (!context) {
     throw new Error("useAuth must be used inside AuthProvider");

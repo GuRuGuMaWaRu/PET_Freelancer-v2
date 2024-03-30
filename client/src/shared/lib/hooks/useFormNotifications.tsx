@@ -2,18 +2,18 @@ import React from "react";
 import { useNotification } from "app";
 
 const useFormNotifications = (fetcherData: any, isLoading: boolean) => {
-  const notification = useNotification();
+  const notify = useNotification();
 
   //** Show SUCCESS or WARNING message */
   React.useEffect(() => {
     if (fetcherData && !isLoading) {
       if (fetcherData.status === "success") {
-        notification.success(fetcherData.message);
+        notify.success(fetcherData.message);
       } else {
-        notification.warning(fetcherData.message);
+        notify.warning(fetcherData.message);
       }
     }
-  }, [fetcherData, isLoading, notification]);
+  }, [fetcherData, isLoading, notify]);
 };
 
 export { useFormNotifications };

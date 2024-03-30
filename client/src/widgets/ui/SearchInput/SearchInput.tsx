@@ -42,7 +42,7 @@ interface IProps {
 
 const SearchInput: React.FC<IProps> = ({ onSearch }) => {
   const [searchInput, setSearchInput] = React.useState<string>("");
-  const notification = useNotification();
+  const notify = useNotification();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,7 +50,7 @@ const SearchInput: React.FC<IProps> = ({ onSearch }) => {
     if (searchInput.length >= 3 || searchInput.length === 0) {
       onSearch(searchInput);
     } else {
-      notification.warning("Enter at least 3 characters into Search field");
+      notify.warning("Enter at least 3 characters into Search field");
     }
   };
 
