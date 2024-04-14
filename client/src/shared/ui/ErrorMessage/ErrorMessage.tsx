@@ -6,19 +6,21 @@ const errorMessageVariants = {
 };
 
 interface Error {
-  message: string | undefined;
+  message?: string;
 }
 
-type ErrorVariant = "stacked" | "inline";
+type ErrorVariant = keyof typeof errorMessageVariants;
+
+interface ErrorMessageProps {
+  error: Error;
+  variant?: ErrorVariant;
+}
 
 function ErrorMessage({
   error,
   variant = "stacked",
   ...props
-}: {
-  error: Error;
-  variant?: ErrorVariant;
-}) {
+}: ErrorMessageProps & React.HTMLProps<HTMLDivElement>) {
   return (
     <div
       role="alert"
