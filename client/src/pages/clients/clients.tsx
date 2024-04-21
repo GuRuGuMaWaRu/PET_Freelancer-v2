@@ -85,10 +85,7 @@ function Clients() {
           }
           menu={Object.entries(clientDataItems).map(
             ([sortName, { displayName }]) => (
-              <SSortItem
-                key={sortName}
-                onClick={() => setSortBy(sortName as TClientDataItem)}
-              >
+              <SSortItem onClick={() => setSortBy(sortName as TClientDataItem)}>
                 {displayName}
               </SSortItem>
             )

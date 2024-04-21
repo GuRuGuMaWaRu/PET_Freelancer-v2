@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useTransition, animated } from "react-spring";
 
-import { Menu, MenuItem } from "./Dropdown.styles";
+import { Menu } from "./Dropdown.styles";
 import { useOutsideClick } from "shared/lib";
 
 const AnimatedMenu = animated(Menu);
@@ -50,20 +50,18 @@ function Dropdown({ trigger, menu, dropdownStyles = {} }: IProps) {
           (styles, item) =>
             item && (
               <AnimatedMenu style={{ ...dropdownStyles, ...styles }}>
-                {menu.map((menuItem, index) => (
-                  <MenuItem key={index} className="menu-item">
-                    {React.cloneElement(menuItem, {
-                      style: { width: "100%" },
-                      onClick: () => {
-                        if (menuItem.props?.onClick) {
-                          menuItem.props?.onClick();
-                        }
-                        setIsOpen(false);
-                      },
-                      tabIndex: isOpen ? 0 : -1,
-                    })}
-                  </MenuItem>
-                ))}
+                {menu.map((menuItem, index) =>
+                  React.cloneElement(menuItem, {
+                    key: index,
+                    style: { width: "100%" },
+                    onClick: () => {
+                      if (menuItem.props?.onClick) {
+                        menuItem.props?.onClick();
+                      }
+                    },
+                    tabIndex: isOpen ? 0 : -1,
+                  })
+                )}
               </AnimatedMenu>
             )
         )}
