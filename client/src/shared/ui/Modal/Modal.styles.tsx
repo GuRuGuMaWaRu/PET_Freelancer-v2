@@ -1,7 +1,9 @@
-import { DialogContent as ReachDialogContent } from "@reach/dialog";
-import styled from "@emotion/styled";
-import { DialogOverlay } from "@reach/dialog";
+import {
+  DialogContent as ReachDialogContent,
+  DialogOverlay,
+} from "@reach/dialog";
 import { animated } from "react-spring";
+import styled from "@emotion/styled";
 
 import { colors, mq } from "../../const";
 

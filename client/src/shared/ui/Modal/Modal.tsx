@@ -19,15 +19,15 @@ const callAll =
   (...args: unknown[]): void =>
     fns.forEach((fn) => fn && fn(...args));
 
-function ModalOpenButton({ children }: { children: React.ReactElement }) {
+const ModalOpenButton = ({ children }: { children: React.ReactElement }) => {
   const { setIsOpen } = useModal();
 
   return React.cloneElement(children, {
     onClick: callAll(() => setIsOpen(true), children.props.onClick),
   });
-}
+};
 
-function ModalContents({
+const ModalContents = ({
   children,
   title,
   bgColor = colors.dashboardPageBg,
@@ -36,8 +36,9 @@ function ModalContents({
   children: React.ReactElement;
   title: string;
   bgColor?: string;
-}) {
+}) => {
   const { isOpen, setIsOpen } = useModal();
+
   const transitions = useTransition(isOpen, {
     from: { opacity: 0, y: -10 },
     enter: { opacity: 1, y: 0 },
@@ -81,7 +82,7 @@ function ModalContents({
         </AnimatedDialogOverlay>
       )
   );
-}
+};
 
 interface ModalProps {
   title: string;
@@ -89,9 +90,9 @@ interface ModalProps {
   children: React.ReactElement;
 }
 
-function Modal({ title, button, children }: ModalProps) {
-  // const color = useGetColorFromPath();
-  const color = colors.dashboardPageBg;
+const Modal = ({ title, button, children }: ModalProps) => {
+  const color = useGetColorFromPath();
+  // const color = colors.dashboardPageBg;
 
   return (
     <ModalProvider>
@@ -101,6 +102,6 @@ function Modal({ title, button, children }: ModalProps) {
       </ModalContents>
     </ModalProvider>
   );
-}
+};
 
 export { Modal };
