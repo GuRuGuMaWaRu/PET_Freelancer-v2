@@ -11,13 +11,15 @@ import { useItemMatch } from "./Combobox.hooks";
 import { SReachComboboxInput } from "../../styles";
 
 const Combobox = React.forwardRef<HTMLInputElement, IComboboxProps>(
-  ({ label = "choose an item", items, name, onChange, onBlur, id }, ref) => {
+  ({ label = "choose an item", items, name, onChange, onBlur }, ref) => {
     const [term, setTerm] = React.useState<string>("");
-    const results = useItemMatch(items, term);
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
       setTerm(event.target.value);
       onChange(event);
     };
+
+    const results = useItemMatch(items, term);
 
     return (
       <ReachCombobox aria-label={label}>
@@ -36,7 +38,7 @@ const Combobox = React.forwardRef<HTMLInputElement, IComboboxProps>(
         </ReachComboboxPopover>
       </ReachCombobox>
     );
-  },
+  }
 );
 
 export { Combobox };
