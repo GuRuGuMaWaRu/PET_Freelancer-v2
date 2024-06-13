@@ -1,6 +1,6 @@
-const getPages = (
+const calculatePageNumbers = (
   currentPage: number,
-  totalPages: number,
+  totalPages: number
 ): { page: number; next_previous?: boolean }[] => {
   if (totalPages <= 9) {
     return Array.from({ length: totalPages }, (_, index) => ({
@@ -39,4 +39,4 @@ const getPages = (
   ];
 };
 
-export { getPages };
+export { calculatePageNumbers };

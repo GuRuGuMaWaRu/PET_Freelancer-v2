@@ -9,7 +9,7 @@ import {
   SPaginationButtons,
   SButton,
 } from "./Pagination.styles";
-import { getPages } from "./Pagination.helpers";
+import { calculatePageNumbers } from "./Pagination.helpers";
 
 interface IProps {
   currentPage: number;
@@ -22,7 +22,7 @@ const Pagination: React.FC<IProps> = ({
   totalPages,
   setCurrentPage,
 }) => {
-  const pages = getPages(currentPage, totalPages);
+  const pageNumbers = calculatePageNumbers(currentPage, totalPages);
 
   return (
     <SPaginationContainer>
@@ -36,7 +36,7 @@ const Pagination: React.FC<IProps> = ({
         </SButton>
       )}
       <SPaginationButtons>
-        {pages.map((item) => (
+        {pageNumbers.map((item) => (
           <SButton
             key={item.page}
             currentPage={currentPage}
