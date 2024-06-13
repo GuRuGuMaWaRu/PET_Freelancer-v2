@@ -1,4 +1,4 @@
-const calculatePageNumbers = (
+const getPaginationData = (
   currentPage: number,
   totalPages: number
 ): { page: number; next_previous?: boolean }[] => {
@@ -39,4 +39,4 @@ const calculatePageNumbers = (
   ];
 };
 
-export { calculatePageNumbers };
+export { getPaginationData };

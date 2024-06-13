@@ -15,15 +15,15 @@ const SPaginationButtons = styled.div({
 interface SButtonProps {
   disabled: boolean;
   currentPage?: number;
-  itemPage?: number;
+  page?: number;
 }
 
 const SButton = styled.button<SButtonProps>(
-  ({ disabled, currentPage, itemPage }) => ({
+  ({ disabled, currentPage, page }) => ({
     width: "3rem",
     padding: ".7rem",
     backgroundColor:
-      currentPage === itemPage ? colors.textImportant : "transparent",
+      currentPage === page ? colors.textImportant : "transparent",
     border: `2px solid ${disabled ? colors.disabled : colors.white}`,
     color: colors.white,
     transition: "all 0.2s",
