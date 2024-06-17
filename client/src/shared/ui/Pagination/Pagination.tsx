@@ -44,10 +44,10 @@ const Pagination: React.FC<IProps> = ({
             currentPage={currentPage}
             page={item.page}
             onClick={() => setCurrentPage(item.page)}
-            aria-label={`{Select page ${item.page}}`}
+            aria-label={`Select page ${item.page}`}
             disabled={currentPage === item.page}
           >
-            {item.next_previous ? "..." : item.page}
+            {item.isSpread ? "..." : item.page}
           </SButton>
         ))}
       </SPaginationButtons>
