@@ -4,10 +4,10 @@ interface Error {
 
 type ErrorVariant = "stacked" | "inline";
 
-export enum Currency {
+enum Currency {
   USD = "USD",
   EUR = "EUR",
-  GBP = "GBP"
+  GBP = "GBP",
 }
 
 interface IProject {
@@ -70,16 +70,18 @@ interface IRegisterFormInputs {
   confirmPassword: string;
 }
 
-export type { 
+export type {
   Error,
   ErrorVariant,
   IProject,
   IProjectPaginatedData,
-  IClient, 
-  IEarningsByClient, 
-  IEarningsByMonth, 
-  IEarnings, 
+  IClient,
+  IEarningsByClient,
+  IEarningsByMonth,
+  IEarnings,
   IResponseUserData,
   ILoginFormInputs,
-  IRegisterFormInputs
+  IRegisterFormInputs,
 };
+
+export { Currency };
