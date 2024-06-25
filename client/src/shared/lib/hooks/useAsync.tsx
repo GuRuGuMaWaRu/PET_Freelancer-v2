@@ -7,14 +7,14 @@ enum Status {
   pending = "pending",
 }
 
-interface IState<T, U> {
+interface IState<D, E> {
   status?: Status;
-  data?: T | null;
-  error?: U | null;
+  data?: D | null;
+  error?: E | null;
 }
 
-const useSafeDispatch = <T, U>(
-  dispatch: React.Dispatch<Partial<IState<T, U>>>
+const useSafeDispatch = <D, E>(
+  dispatch: React.Dispatch<Partial<IState<D, E>>>
 ) => {
   const mounted = React.useRef(false);
 
@@ -26,7 +26,7 @@ const useSafeDispatch = <T, U>(
   }, []);
 
   return React.useCallback(
-    (args: Partial<IState<T, U>>) =>
+    (args: Partial<IState<D, E>>) =>
       mounted.current ? dispatch(args) : void 0,
     [dispatch]
   );
@@ -38,40 +38,43 @@ const defaultInitialState = {
   error: null,
 };
 
-const useAsync = <T, U>(initialState: IState<T, U> = {}) => {
+const useAsync = <D, E>(initialState: IState<D, E> = {}) => {
   const initialStateRef = React.useRef({
     ...defaultInitialState,
     ...initialState,
   });
   const [{ status, data, error }, setState] = React.useReducer(
-    (s: IState<T, U>, a: Partial<IState<T, U>>) => ({ ...s, ...a }),
+    (s: IState<D, E>, a: Partial<IState<D, E>>) => ({ ...s, ...a }),
     initialStateRef.current
   );
 
   const safeSetState = useSafeDispatch(setState);
 
   const setData = React.useCallback(
-    (data: T | null) => safeSetState({ data, status: Status.resolved }),
+    (data: D | null) => safeSetState({ data, status: Status.resolved }),
     [safeSetState]
   );
+
   const setError = React.useCallback(
-    (error: U) => safeSetState({ error, status: Status.rejected }),
+    (error: E) => safeSetState({ error, status: Status.rejected }),
     [safeSetState]
   );
+
   const reset = React.useCallback(
     () => safeSetState(initialStateRef.current),
     [safeSetState]
   );
+
   const run = React.useCallback(
-    (promise: Promise<T | null>) => {
+    (promise: Promise<D | null>) => {
       safeSetState({ status: Status.pending });
 
       return promise.then(
-        (data: T | null) => {
+        (data: D | null) => {
           setData(data);
           return data;
         },
-        (error: U) => {
+        (error: E) => {
           setError(error);
           return Promise.reject(error);
         }
