@@ -5,19 +5,19 @@ import {
   PathParams,
 } from "../../../test/server/test-server";
 import { client } from "../client";
-import { config } from "../../const";
+import { CONFIG } from "../../const";
 
 describe("RestClient", () => {
-  let previousToken = window.localStorage.getItem(config.localStorageKey);
+  let previousToken = window.localStorage.getItem(CONFIG.LOCAL_STORAGE_KEY);
   const token = "test-token";
 
-  beforeAll(() => window.localStorage.setItem(config.localStorageKey, token));
+  beforeAll(() => window.localStorage.setItem(CONFIG.LOCAL_STORAGE_KEY, token));
 
   afterAll(() => {
     if (previousToken) {
-      window.localStorage.setItem(config.localStorageKey, previousToken);
+      window.localStorage.setItem(CONFIG.LOCAL_STORAGE_KEY, previousToken);
     } else {
-      window.localStorage.removeItem(config.localStorageKey);
+      window.localStorage.removeItem(CONFIG.LOCAL_STORAGE_KEY);
     }
   });
 
@@ -28,7 +28,7 @@ describe("RestClient", () => {
     server.use(
       rest.get(`${config.API_URL}/${endpoint}`, async (req, res, ctx) => {
         return res(ctx.json(mockResult));
-      }),
+      })
     );
 
     const result = await client(endpoint);
@@ -45,7 +45,7 @@ describe("RestClient", () => {
       rest.get(`${config.API_URL}/${endpoint}`, async (req, res, ctx) => {
         request = req;
         return res(ctx.json(mockResult));
-      }),
+      })
     );
 
     await client(endpoint);
@@ -62,7 +62,7 @@ describe("RestClient", () => {
       rest.get(`${config.API_URL}/${endpoint}`, async (req, res, ctx) => {
         request = req;
         return res(ctx.json(mockResult));
-      }),
+      })
     );
 
     const customConfig = {
@@ -83,7 +83,7 @@ describe("RestClient", () => {
       rest.post(`${config.API_URL}/${endpoint}`, async (req, res, ctx) => {
         const data = await req.json();
         return res(ctx.json(data));
-      }),
+      })
     );
 
     const customData = { a: "foo" };
@@ -100,7 +100,7 @@ describe("RestClient", () => {
     server.use(
       rest.get(`${config.API_URL}/${endpoint}`, async (req, res, ctx) => {
         return res(ctx.json(testError));
-      }),
+      })
     );
 
     const error = await client(endpoint).catch((e) => e);
