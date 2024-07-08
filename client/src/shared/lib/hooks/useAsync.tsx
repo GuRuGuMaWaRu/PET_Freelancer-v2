@@ -43,6 +43,7 @@ const useAsync = <D, E>(initialState: IState<D, E> = {}) => {
     ...defaultInitialState,
     ...initialState,
   });
+
   const [{ status, data, error }, setState] = React.useReducer(
     (s: IState<D, E>, a: Partial<IState<D, E>>) => ({ ...s, ...a }),
     initialStateRef.current

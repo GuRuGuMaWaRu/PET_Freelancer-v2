@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import { colors } from "shared/const";
 import { ComboboxInput as ReachComboboxInput } from "@reach/combobox";
+
+import { colors } from "shared/const";
 
 const inputStyles = `
   padding: 5px 10px;
@@ -35,7 +36,7 @@ const SContainer = styled.div`
 `;
 
 const SButtonContainer = styled.div`
-  margin-top: 30px;
+  margin-block-start: 30px;
 `;
 
 export {

@@ -9,6 +9,7 @@
     "node": "14 || 16 || 18",
     "npm": ">=8.16.0"
   },
+  "type": "module",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
