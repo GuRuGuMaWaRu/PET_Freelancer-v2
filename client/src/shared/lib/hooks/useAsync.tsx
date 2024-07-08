@@ -7,15 +7,15 @@ enum Status {
   pending = "pending",
 }
 
-interface IState<T, U> {
+interface IState<D, E> {
   status?: Status;
-  data?: T | null;
-  error?: U | null;
+  data?: D | null;
+  error?: E | null;
 }
 
-function useSafeDispatch<T, U>(
-  dispatch: React.Dispatch<Partial<IState<T, U>>>,
-) {
+const useSafeDispatch = <D, E>(
+  dispatch: React.Dispatch<Partial<IState<D, E>>>
+) => {
   const mounted = React.useRef(false);
 
   React.useLayoutEffect(() => {
@@ -26,11 +26,11 @@ function useSafeDispatch<T, U>(
   }, []);
 
   return React.useCallback(
-    (args: Partial<IState<T, U>>) =>
+    (args: Partial<IState<D, E>>) =>
       mounted.current ? dispatch(args) : void 0,
-    [dispatch],
+    [dispatch]
   );
-}
+};
 
 const defaultInitialState = {
   status: Status.idle,
@@ -38,45 +38,50 @@ const defaultInitialState = {
   error: null,
 };
 
-function useAsync<T, U>(initialState: IState<T, U> = {}) {
+const useAsync = <D, E>(initialState: IState<D, E> = {}) => {
   const initialStateRef = React.useRef({
     ...defaultInitialState,
     ...initialState,
   });
+
   const [{ status, data, error }, setState] = React.useReducer(
-    (s: IState<T, U>, a: Partial<IState<T, U>>) => ({ ...s, ...a }),
-    initialStateRef.current,
+    (s: IState<D, E>, a: Partial<IState<D, E>>) => ({ ...s, ...a }),
+    initialStateRef.current
   );
 
   const safeSetState = useSafeDispatch(setState);
 
   const setData = React.useCallback(
-    (data: T | null) => safeSetState({ data, status: Status.resolved }),
-    [safeSetState],
+    (data: D | null) => safeSetState({ data, status: Status.resolved }),
+    [safeSetState]
   );
+
   const setError = React.useCallback(
-    (error: U) => safeSetState({ error, status: Status.rejected }),
-    [safeSetState],
+    (error: E) => safeSetState({ error, status: Status.rejected }),
+    [safeSetState]
   );
-  const reset = React.useCallback(() => safeSetState(initialStateRef.current), [
-    safeSetState,
-  ]);
+
+  const reset = React.useCallback(
+    () => safeSetState(initialStateRef.current),
+    [safeSetState]
+  );
+
   const run = React.useCallback(
-    (promise: Promise<T | null>) => {
+    (promise: Promise<D | null>) => {
       safeSetState({ status: Status.pending });
 
       return promise.then(
-        (data: T | null) => {
+        (data: D | null) => {
           setData(data);
           return data;
         },
-        (error: U) => {
+        (error: E) => {
           setError(error);
           return Promise.reject(error);
-        },
+        }
       );
     },
-    [safeSetState, setData, setError],
+    [safeSetState, setData, setError]
   );
 
   return {
@@ -84,14 +89,14 @@ function useAsync<T, U>(initialState: IState<T, U> = {}) {
     isLoading: status === "pending",
     isError: status === "rejected",
     isSuccess: status === "resolved",
-    setData,
-    setError,
-    error,
-    status,
     data,
+    setData,
+    error,
+    setError,
+    status,
     run,
     reset,
   };
-}
+};
 
 export { useAsync, Status };

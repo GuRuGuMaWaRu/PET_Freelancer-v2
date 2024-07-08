@@ -14,7 +14,7 @@ import {
   IRegisterFormInputs,
 } from "shared/types";
 import { FullPageSpinner, FullPageError } from "shared/ui";
-import { config } from "shared/const";
+import { CONFIG } from "shared/const";
 import { client } from "shared/api";
 import { useAsync } from "shared/lib";
 import { useNotification } from "app";
@@ -30,7 +30,7 @@ const AuthContext = createContext<IState>({} as IState);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
-  const { run, data, error, isIdle, isLoading, isError, setData } = useAsync<
+  const { run, data, setData, error, isIdle, isLoading, isError } = useAsync<
     IResponseUserData,
     Error
   >();
@@ -38,7 +38,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     async function bootstrapUser() {
-      const token = window.localStorage.getItem(config.localStorageKey);
+      const token = window.localStorage.getItem(CONFIG.LOCAL_STORAGE_KEY);
 
       if (token) {
         const res = await client<IResponseUserData>("users/getUser").catch(
@@ -65,7 +65,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signup = useCallback(
     async (data: IRegisterFormInputs) => {
       return client<IResponseUserData>("users/signup", { data }).then((res) => {
-        window.localStorage.setItem(config.localStorageKey, res.data.token);
+        window.localStorage.setItem(CONFIG.LOCAL_STORAGE_KEY, res.data.token);
         setData(res.data);
 
         return res.data;
@@ -77,7 +77,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = useCallback(
     async (data: ILoginFormInputs) => {
       return client<IResponseUserData>("users/login", { data }).then((res) => {
-        window.localStorage.setItem(config.localStorageKey, res.data.token);
+        window.localStorage.setItem(CONFIG.LOCAL_STORAGE_KEY, res.data.token);
         setData(res.data);
 
         return res.data;
@@ -87,7 +87,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const logout = useCallback(() => {
-    window.localStorage.removeItem(config.localStorageKey);
+    window.localStorage.removeItem(CONFIG.LOCAL_STORAGE_KEY);
     queryClient.clear();
     setData(null);
   }, [queryClient, setData]);

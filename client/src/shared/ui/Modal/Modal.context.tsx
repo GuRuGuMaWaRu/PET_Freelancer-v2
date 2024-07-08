@@ -7,6 +7,14 @@ interface IModalContext {
 
 const ModalContext = React.createContext({} as IModalContext);
 
+function ModalProvider({ children }: { children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  return (
+    <ModalContext.Provider value={{ isOpen, setIsOpen }} children={children} />
+  );
+}
+
 const useModal = () => {
   const context = React.useContext(ModalContext);
 
@@ -16,11 +24,5 @@ const useModal = () => {
 
   return context;
 };
-
-function ModalProvider(props: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  return <ModalContext.Provider value={{ isOpen, setIsOpen }} {...props} />;
-}
 
 export { ModalProvider, useModal };

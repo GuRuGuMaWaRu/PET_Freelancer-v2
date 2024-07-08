@@ -14,7 +14,7 @@ import {
   SActionButton,
 } from "./projects.styles";
 import { FullPageSpinner, Modal, MemoPagination } from "shared/ui";
-import { config } from "shared/const";
+import { CONFIG } from "shared/const";
 import { getAllClientsQuery } from "entities/clients";
 import {
   DeleteProjectForm,
@@ -55,7 +55,7 @@ function Projects() {
   };
 
   //** Calculate total number of pages */
-  const pagesTotal = Math.ceil((projects?.allDocs ?? 0) / config.PAGE_LIMIT);
+  const pagesTotal = Math.ceil((projects?.allDocs ?? 0) / CONFIG.PAGE_LIMIT);
 
   return (
     <div>

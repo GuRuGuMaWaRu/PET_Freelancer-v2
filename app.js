@@ -35,6 +35,10 @@ app.use(
         scriptSrc: ["'self'", "'unsafe-inline'"],
       },
     },
+    hsts: {
+      maxAge: 86400, // 60 days
+      includeSubDomains: false,
+    },
   }),
 );
 

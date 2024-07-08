@@ -9,7 +9,7 @@ import {
   SPaginationButtons,
   SButton,
 } from "./Pagination.styles";
-import { getPages } from "./Pagination.helpers";
+import { getPaginationData } from "./Pagination.helpers";
 
 interface IProps {
   currentPage: number;
@@ -22,10 +22,11 @@ const Pagination: React.FC<IProps> = ({
   totalPages,
   setCurrentPage,
 }) => {
-  const pages = getPages(currentPage, totalPages);
+  const paginationData = getPaginationData(currentPage, totalPages);
 
   return (
     <SPaginationContainer>
+      {/** Render First Page button */}
       {totalPages > 0 && (
         <SButton
           aria-label="Previous page"
@@ -35,20 +36,22 @@ const Pagination: React.FC<IProps> = ({
           <MdOutlineArrowBackIos />
         </SButton>
       )}
+      {/** Render other page buttons */}
       <SPaginationButtons>
-        {pages.map((item) => (
+        {paginationData.map((item) => (
           <SButton
             key={item.page}
             currentPage={currentPage}
-            itemPage={item.page}
+            page={item.page}
             onClick={() => setCurrentPage(item.page)}
-            aria-label={`{Select page ${item.page}}`}
+            aria-label={`Select page ${item.page}`}
             disabled={currentPage === item.page}
           >
-            {item.next_previous ? "..." : item.page}
+            {item.isSpread ? "..." : item.page}
           </SButton>
         ))}
       </SPaginationButtons>
+      {/** Render Last Page button */}
       {totalPages > 0 && (
         <SButton
           aria-label="Next page"

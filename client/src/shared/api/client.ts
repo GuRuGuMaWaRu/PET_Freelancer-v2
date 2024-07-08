@@ -1,4 +1,4 @@
-import { config } from "../const";
+import { CONFIG } from "../const";
 
 interface IConfig {
   data?: object;
@@ -19,14 +19,14 @@ async function client<T>(
     useToken = true,
     headers: customHeaders,
     ...customConfig
-  }: IConfig = {},
+  }: IConfig = {}
 ) {
   const options = {
     method: data ? "POST" : "GET",
     body: data ? JSON.stringify(data) : undefined,
     headers: {
       Authorization: useToken
-        ? `Bearer ${window.localStorage.getItem(config.localStorageKey)}`
+        ? `Bearer ${window.localStorage.getItem(CONFIG.LOCAL_STORAGE_KEY)}`
         : "",
       "Content-Type": data ? "application/json" : "",
       ...customHeaders,

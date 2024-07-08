@@ -13,7 +13,7 @@ const buttonVariants = {
 };
 
 interface ButtonProps {
-  variant?: "primary" | "secondary";
+  variant?: keyof typeof buttonVariants;
   customStyles?: string;
 }
 
@@ -22,17 +22,16 @@ const Button = styled.button<ButtonProps>`
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 5px;
   font-weight: bold;
+  transition: transform 0.2s;
   &:disabled {
     filter: brightness(0.8);
     cursor: not-allowed;
   }
-  transition: transform 0.2s;
   &:active {
     transform: translateY(2px);
   }
-  ${({ variant = "primary" }) =>
-    buttonVariants[variant as keyof typeof buttonVariants]}
-  ${({ customStyles }) => customStyles}
+  ${({ variant = "primary" }) => buttonVariants[variant]}
+  ${({ customStyles = "" }) => customStyles}
 `;
 
 export { Button };
