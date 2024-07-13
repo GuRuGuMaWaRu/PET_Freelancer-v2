@@ -1,7 +1,7 @@
-import { useDashboardData } from "./dashboard.hooks";
-import { SControlsSection } from "./dashboard.styles";
 import { MemoDashboardTotals, ChartSection } from "widgets";
 import { ModalAddProject } from "entities/projects";
+import { useDashboardData } from "./dashboard.hooks";
+import styles from "./index.module.css";
 
 function Dashboard() {
   const { earningsByMonth, dataByClient, dataByMonth, clients } =
@@ -9,9 +9,9 @@ function Dashboard() {
 
   return (
     <>
-      <SControlsSection>
+      <div className={styles.controlsSection}>
         <ModalAddProject clients={clients} />
-      </SControlsSection>
+      </div>
       <MemoDashboardTotals data={earningsByMonth} />
       <ChartSection
         clientChartData={dataByClient}
