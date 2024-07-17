@@ -1,6 +1,6 @@
 import { Modal, Button } from "shared/ui";
 import { LoginForm, RegisterForm } from "entities/auth";
-import styles from "./index.module.css";
+import styles from "./app-unauthenticated.module.css";
 
 function AppUnauthenticated() {
   return (

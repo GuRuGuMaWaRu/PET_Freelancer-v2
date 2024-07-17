@@ -1,7 +1,7 @@
 import { MemoDashboardTotals, ChartSection } from "widgets";
 import { ModalAddProject } from "entities/projects";
 import { useDashboardData } from "./dashboard.hooks";
-import styles from "./index.module.css";
+import styles from "./dashboard.module.css";
 
 function Dashboard() {
   const { earningsByMonth, dataByClient, dataByMonth, clients } =
