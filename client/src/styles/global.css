@@ -9,6 +9,8 @@
   --color-warning: tomato;
 
   --border-radius: 0.5rem;
+
+  --dashboard-page-bg: rgb(106 72 220);
 }
 
 /* some global reset */
