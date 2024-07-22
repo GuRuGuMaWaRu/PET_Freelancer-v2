@@ -4,13 +4,12 @@
 :root {
   --color-main-bg: #764cff;
   --color-main-bg-2: #b8351e;
-
   --color-white: #fff;
   --color-warning: tomato;
 
-  --border-radius: 0.5rem;
-
   --dashboard-page-bg: rgb(106 72 220);
+
+  --border-radius: 0.5rem;
 }
 
 /* some global reset */
