@@ -1,18 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
+import clsx from "clsx";
 import { FaSortUp, FaSortDown, FaPen, FaRegTrashAlt } from "react-icons/fa";
 
 import { columns } from "./projects.const";
-import {
-  SContainer,
-  STableContainer,
-  STableLoading,
-  STablePlaceholder,
-  STable,
-  STableHeader,
-  SActionButton,
-} from "./projects.styles";
 import { FullPageSpinner, Modal, MemoPagination } from "shared/ui";
 import { CONFIG } from "shared/const";
 import { getAllClientsQuery } from "entities/clients";
@@ -24,6 +16,7 @@ import {
   getProjectsPageQuery,
 } from "entities/projects";
 import { SearchInput } from "widgets";
+import styles from "./projects.module.css";
 
 //** TODO: move this into a separate utilities file (projects.utils.tsx) when I'll have FEATURES */
 const capitalizeItem = (item: string): string =>
@@ -59,27 +52,31 @@ function Projects() {
 
   return (
     <div>
-      <SContainer>
+      <div className={styles.container}>
         <SearchInput onSearch={handleSearch} />
         <ModalAddProject clients={clients} />
-      </SContainer>
+      </div>
       {isLoading ? (
         <FullPageSpinner />
       ) : (
         <>
-          <STableContainer>
-            {isFetching && <STableLoading />}
+          <div className={styles.tableContainer}>
+            {isFetching && <div className={styles.tableLoading} />}
             {pagesTotal < 1 ? (
-              <STablePlaceholder>
+              <div className={styles.tablePlaceholder}>
                 There are no projects available. Please add some.
-              </STablePlaceholder>
+              </div>
             ) : (
-              <STable>
+              <div className={styles.table}>
                 {columns.map((column) => (
-                  <STableHeader
+                  <div
                     key={column.name}
-                    name={column.name}
-                    sortName={column.sortName}
+                    className={clsx(styles.tableHeader, {
+                      [styles["tableHeader--sortable"]]: column.sortName,
+                      [styles["tableHeader--date"]]: column.name === "date",
+                      [styles["tableHeader--comments"]]:
+                        column.name === "comments",
+                    })}
                     onClick={
                       column.sortName
                         ? () => handleSort(column?.sortName)
@@ -93,7 +90,7 @@ function Projects() {
                     ) : (
                       <FaSortDown />
                     )}
-                  </STableHeader>
+                  </div>
                 ))}
 
                 {projects?.docs?.map((project) => (
@@ -101,9 +98,9 @@ function Projects() {
                     <Modal
                       title="Edit Project"
                       button={
-                        <SActionButton>
+                        <button className={styles.actionButton}>
                           <FaPen aria-label="edit" />
-                        </SActionButton>
+                        </button>
                       }
                     >
                       <AddEditProjectForm project={project} clients={clients} />
@@ -111,18 +108,18 @@ function Projects() {
                     <Modal
                       title="Delete Project"
                       button={
-                        <SActionButton>
+                        <button className={styles.actionButton}>
                           <FaRegTrashAlt aria-label="delete" />
-                        </SActionButton>
+                        </button>
                       }
                     >
                       <DeleteProjectForm project={project} />
                     </Modal>
                   </ProjectListItem>
                 ))}
-              </STable>
+              </div>
             )}
-          </STableContainer>
+          </div>
 
           <MemoPagination
             totalPages={pagesTotal}
