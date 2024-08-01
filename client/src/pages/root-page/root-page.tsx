@@ -1,21 +1,21 @@
 /** @jsxImportSource @emotion/react */
 import { Outlet } from "react-router-dom";
 
-import { SRootContainer, SMain } from "./root-page.styles";
 import { TopBar, NavBar } from "widgets";
 import { useChangeBGColor } from "shared/lib";
+import styles from "./root-page.module.css";
 
 function Root() {
   useChangeBGColor();
 
   return (
-    <SRootContainer>
+    <div className={styles.rootContainer}>
       <TopBar />
       <NavBar />
-      <SMain>
+      <main className={styles.main}>
         <Outlet />
-      </SMain>
-    </SRootContainer>
+      </main>
+    </div>
   );
 }
 
