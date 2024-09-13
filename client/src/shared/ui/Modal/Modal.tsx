@@ -91,8 +91,8 @@ interface ModalProps {
 }
 
 const Modal = ({ title, button, children }: ModalProps) => {
-  const color = useGetColorFromPath();
-  // const color = colors.dashboardPageBg;
+  // const color = useGetColorFromPath();
+  const color = colors.dashboardPageBg;
 
   return (
     <ModalProvider>
