@@ -5,10 +5,10 @@ import { AddEditProjectForm } from "entities/projects";
 
 interface IProps {
   clients: IClient[];
-  customStyles?: string;
+  customStyles?: React.CSSProperties;
 }
 
-function ModalAddProject({ clients, customStyles = "" }: IProps) {
+function ModalAddProject({ clients, customStyles = {} }: IProps) {
   return (
     <Modal
       title="Add Project"

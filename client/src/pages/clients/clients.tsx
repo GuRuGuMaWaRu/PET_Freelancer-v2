@@ -118,7 +118,7 @@ function Clients() {
         </button>
         <ModalAddProject
           clients={data}
-          customStyles={`margin-inline-start: auto;`}
+          customStyles={{ marginInlineStart: "auto" }}
         />
       </div>
       {/** CONTROLS --> end */}
