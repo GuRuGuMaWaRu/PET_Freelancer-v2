@@ -10,7 +10,8 @@ function SubmitButton({ isLoading = false, children }: IProps) {
   return (
     <SButtonContainer>
       <Button type="submit" disabled={isLoading}>
-        {children} {isLoading ? <Spinner css={{ marginLeft: 7 }} /> : null}
+        {children}{" "}
+        {isLoading ? <Spinner customStyles={{ marginLeft: 7 }} /> : null}
       </Button>
     </SButtonContainer>
   );
