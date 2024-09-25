@@ -11,6 +11,9 @@
   --color-secondary: #8a2be2;
   --color-danger: #f0301b;
   --color-base2: #0e0430;
+  --color-text-important: #ff6347;
+
+  --color-spinnerContrasting: var(--color-text-important);
 
   --dashboard-page-bg: rgb(106 72 220);
   --projects-page-bg: #3c8b5a;
