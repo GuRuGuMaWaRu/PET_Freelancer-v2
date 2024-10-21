@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.button {
+  width: 3rem;
+  padding: 0.7rem;
+  border: 2px solid var(--color-white);
+  color: var(--color-white);
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: transparent;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  svg {
+    fill: var(--color-white);
+    vertical-align: middle;
+  }
+
+  &[disabled] {
+    border: 2px solid var(--color-disabled);
+    cursor: default;
+
+    svg {
+      fill: var(--color-disabled);
+    }
+  }
+
+  &.currentPage {
+    background-color: var(--color-text-important);
+  }
+}

@@ -12,6 +12,7 @@
   --color-danger: #f0301b;
   --color-base2: #0e0430;
   --color-text-important: #ff6347;
+  --color-disabled: #858585;
 
   --color-spinnerContrasting: var(--color-text-important);
 
