@@ -1,0 +1,18 @@
+.errorContainer {
+  color: var(--color-danger);
+  background-color: var(--color-primary);
+}
+
+.stacked {
+  display: block;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.errorMessage {
+  white-space: break-spaces;
+  margin: 0;
+  margin-bottom: -5px;
+}
