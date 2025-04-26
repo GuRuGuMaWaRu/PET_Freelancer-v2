@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Combobox as ReachCombobox,
+  ComboboxInput as ReachComboboxInput,
   ComboboxPopover as ReachComboboxPopover,
   ComboboxList as ReachComboboxList,
   ComboboxOption as ReachComboboxOption,
@@ -8,7 +9,7 @@ import {
 
 import { IComboboxProps } from "./Combobox.types";
 import { useItemMatch } from "./Combobox.hooks";
-import { SReachComboboxInput } from "../../styles";
+import styles from "./Combobox.module.css";
 
 const Combobox = React.forwardRef<HTMLInputElement, IComboboxProps>(
   ({ label = "choose an item", items, name, onChange, onBlur }, ref) => {
@@ -23,7 +24,8 @@ const Combobox = React.forwardRef<HTMLInputElement, IComboboxProps>(
 
     return (
       <ReachCombobox aria-label={label}>
-        <SReachComboboxInput
+        <ReachComboboxInput
+          className={styles.input}
           onChange={handleChange}
           name={name}
           onBlur={onBlur}
@@ -31,7 +33,7 @@ const Combobox = React.forwardRef<HTMLInputElement, IComboboxProps>(
         />
         <ReachComboboxPopover>
           <ReachComboboxList>
-            {results?.map((item) => (
+            {results.map((item) => (
               <ReachComboboxOption key={item._id} value={item.name} />
             ))}
           </ReachComboboxList>

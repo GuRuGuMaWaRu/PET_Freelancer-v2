@@ -1,6 +1,4 @@
 import styled from "@emotion/styled";
-import { ComboboxInput as ReachComboboxInput } from "@reach/combobox";
-
 import { colors } from "shared/const";
 
 const inputStyles = `
@@ -18,11 +16,6 @@ const SSelect = styled.select`
 `;
 
 const STextarea = styled.textarea`
-  ${inputStyles}
-`;
-
-const SReachComboboxInput = styled(ReachComboboxInput)`
-  width: 100%;
   ${inputStyles}
 `;
 
@@ -44,7 +37,6 @@ export {
   SInput,
   SSelect,
   STextarea,
-  SReachComboboxInput,
   SLabel,
   SContainer,
   SButtonContainer,
