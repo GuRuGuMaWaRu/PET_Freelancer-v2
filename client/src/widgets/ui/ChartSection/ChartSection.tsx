@@ -1,16 +1,12 @@
 import React from "react";
+import clsx from "clsx";
 
 import { ChartType } from "./ChartSection.types";
-import {
-  SContainer,
-  SChartSelectionButton,
-  SChartDataContainer,
-  SChartTitle,
-  SDateRange,
-} from "./ChartSection.styles";
 import { getDateRange } from "./ChartSection.helpers";
 import type { IEarningsByClient, IEarningsByMonth } from "shared/types";
 import { MemoClientsChart, MemoEarningsChart } from "features/charts";
+
+import styles from "./ChartSection.module.css";
 
 interface IProps {
   clientChartData: IEarningsByClient[];
@@ -19,12 +15,12 @@ interface IProps {
 
 function ChartSection({ clientChartData, monthsChartData }: IProps) {
   const [chartType, setChartType] = React.useState<ChartType>(
-    ChartType.earnings,
+    ChartType.earnings
   );
 
   const dateRange = getDateRange(
     monthsChartData[0].date,
-    monthsChartData[monthsChartData.length - 1].date,
+    monthsChartData[monthsChartData.length - 1].date
   );
 
   const chartTitle =
@@ -33,33 +29,37 @@ function ChartSection({ clientChartData, monthsChartData }: IProps) {
       : "Earnings by Clients";
 
   return (
-    <SContainer>
-      <SChartDataContainer>
-        <SChartTitle>{chartTitle}</SChartTitle>
+    <div className={styles.chartSection}>
+      <div className={styles.chartDataContainer}>
+        <h2 className={styles.chartTitle}>{chartTitle}</h2>
         <div>
-          <SChartSelectionButton
-            variant={ChartType.earnings}
-            chartType={chartType}
+          <button
+            className={clsx(
+              styles.chartSelectionButton,
+              chartType === ChartType.earnings && styles.activeBtn
+            )}
             onClick={() => setChartType(ChartType.earnings)}
           >
             Earnings
-          </SChartSelectionButton>
-          <SChartSelectionButton
-            variant={ChartType.clients}
-            chartType={chartType}
+          </button>
+          <button
+            className={clsx(
+              styles.chartSelectionButton,
+              chartType === ChartType.clients && styles.activeBtn
+            )}
             onClick={() => setChartType(ChartType.clients)}
           >
             Clients
-          </SChartSelectionButton>
+          </button>
         </div>
-      </SChartDataContainer>
-      <SDateRange>{dateRange}</SDateRange>
+      </div>
+      <div className={styles.dateRange}>{dateRange}</div>
       {chartType === ChartType.earnings ? (
         <MemoEarningsChart data={monthsChartData} />
       ) : (
         <MemoClientsChart data={clientChartData} />
       )}
-    </SContainer>
+    </div>
   );
 }
 
