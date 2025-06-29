@@ -12,5 +12,6 @@ export {
   SubmitButton,
   Dropdown,
   SInput,
+  SSelect,
+  STextarea,
 } from "./FormComponents";
-export { SSelect, STextarea } from "./FormComponents/styles";
