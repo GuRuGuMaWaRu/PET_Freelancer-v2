@@ -7,10 +7,6 @@ const inputStyles = `
   border-radius: 5px;
 `;
 
-const SInput = styled.input`
-  ${inputStyles}
-`;
-
 const SSelect = styled.select`
   ${inputStyles}
 `;
@@ -19,4 +15,4 @@ const STextarea = styled.textarea`
   ${inputStyles}
 `;
 
-export { inputStyles, SInput, SSelect, STextarea };
+export { inputStyles, SSelect, STextarea };
