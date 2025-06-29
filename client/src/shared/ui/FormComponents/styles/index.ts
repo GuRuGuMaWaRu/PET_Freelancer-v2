@@ -19,25 +19,8 @@ const STextarea = styled.textarea`
   ${inputStyles}
 `;
 
-const SLabel = styled.label`
-  margin: 10px 0 5px;
-`;
-
-const SContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 const SButtonContainer = styled.div`
   margin-block-start: 30px;
 `;
 
-export {
-  inputStyles,
-  SInput,
-  SSelect,
-  STextarea,
-  SLabel,
-  SContainer,
-  SButtonContainer,
-};
+export { inputStyles, SInput, SSelect, STextarea, SButtonContainer };

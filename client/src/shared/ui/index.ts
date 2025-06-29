@@ -11,7 +11,5 @@ export {
   SInput,
   SSelect,
   STextarea,
-  SLabel,
-  SContainer,
   SButtonContainer,
 } from "./FormComponents/styles";
