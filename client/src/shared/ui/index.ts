@@ -7,9 +7,4 @@ export { useModal, Modal } from "./Modal";
 export { MemoPagination } from "./Pagination/Pagination";
 
 export { Field, Combobox, SubmitButton, Dropdown } from "./FormComponents";
-export {
-  SInput,
-  SSelect,
-  STextarea,
-  SButtonContainer,
-} from "./FormComponents/styles";
+export { SInput, SSelect, STextarea } from "./FormComponents/styles";

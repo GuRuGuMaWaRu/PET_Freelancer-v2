@@ -19,8 +19,4 @@ const STextarea = styled.textarea`
   ${inputStyles}
 `;
 
-const SButtonContainer = styled.div`
-  margin-block-start: 30px;
-`;
-
-export { inputStyles, SInput, SSelect, STextarea, SButtonContainer };
+export { inputStyles, SInput, SSelect, STextarea };
