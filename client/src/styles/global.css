@@ -13,6 +13,7 @@
   --color-base2: #0e0430;
   --color-text-important: #ff6347;
   --color-disabled: #858585;
+  --color-opaque-black: rgba(0, 0, 0, 0.2);
 
   --color-spinnerContrasting: var(--color-text-important);
 

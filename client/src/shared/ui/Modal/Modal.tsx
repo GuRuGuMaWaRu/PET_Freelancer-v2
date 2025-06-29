@@ -2,17 +2,17 @@
 
 import * as React from "react";
 import VisuallyHidden from "@reach/visually-hidden";
-import { useTransition } from "react-spring";
-
-import { colors } from "../../const";
+import { animated, useTransition } from "react-spring";
 import {
-  SModalCloseButton,
-  SModalTitle,
-  AnimatedDialogOverlay,
-  AnimatedDialogContent,
-} from "./Modal.styles";
+  DialogContent as ReachDialogContent,
+  DialogOverlay,
+} from "@reach/dialog";
+
+import { useGetColorFromPath } from "widgets/lib/hooks"; // TODO: this feature is not implemented yet
+
 import { useModal, ModalProvider } from "./Modal.context";
-import { useGetColorFromPath } from "widgets/lib/hooks";
+import { colors } from "../../const";
+import modalStyles from "./Modal.module.css";
 
 const callAll =
   (...fns: Array<(...args: unknown[]) => void>) =>
@@ -26,6 +26,9 @@ const ModalOpenButton = ({ children }: { children: React.ReactElement }) => {
     onClick: callAll(() => setIsOpen(true), children.props.onClick),
   });
 };
+
+const AnimatedDialogOverlay = animated(DialogOverlay);
+const AnimatedDialogContent = animated(ReachDialogContent);
 
 const ModalContents = ({
   children,
@@ -55,6 +58,7 @@ const ModalContents = ({
           style={styles}
         >
           <AnimatedDialogContent
+            className={modalStyles.modalContent}
             style={{
               transform: styles.y.to(
                 (value) => `translate3d(0px, ${value}px, 0px)`
@@ -71,12 +75,15 @@ const ModalContents = ({
                 top: "-10px",
               }}
             >
-              <SModalCloseButton onClick={() => setIsOpen(false)}>
+              <button
+                className={modalStyles.modalCloseButton}
+                onClick={() => setIsOpen(false)}
+              >
                 <VisuallyHidden>Close</VisuallyHidden>
                 <span aria-hidden="true">×</span>
-              </SModalCloseButton>
+              </button>
             </div>
-            <SModalTitle>{title}</SModalTitle>
+            <h2 className={modalStyles.modalTitle}>{title}</h2>
             {children}
           </AnimatedDialogContent>
         </AnimatedDialogOverlay>
