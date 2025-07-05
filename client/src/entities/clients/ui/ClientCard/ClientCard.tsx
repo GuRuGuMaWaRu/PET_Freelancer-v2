@@ -19,7 +19,7 @@ import type {
   IClientWithProjectData,
   TClientDataItem,
 } from "../../types/clients.types";
-import { clientDataItems } from "../../const/clientDataItems";
+import { clientDataItems } from "../../const/clients.const";
 
 interface IProps {
   client: IClientWithProjectData;
