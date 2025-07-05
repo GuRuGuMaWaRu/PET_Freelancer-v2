@@ -33,7 +33,7 @@ const Combobox = React.forwardRef<HTMLInputElement, IComboboxProps>(
         />
         <ReachComboboxPopover>
           <ReachComboboxList>
-            {results.map((item) => (
+            {results?.map((item) => (
               <ReachComboboxOption key={item._id} value={item.name} />
             ))}
           </ReachComboboxList>
