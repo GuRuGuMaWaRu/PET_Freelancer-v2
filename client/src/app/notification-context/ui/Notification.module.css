@@ -1,0 +1,37 @@
+.iconBase {
+  font-size: 3.2rem;
+  margin: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.warningIcon {
+  color: var(--color-text-important);
+}
+
+.successIcon {
+  color: var(--color-success);
+}
+
+.closeIcon {
+  font-size: 1.6rem;
+  cursor: pointer;
+  margin: 0 1.5rem 0 2.7rem;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.notification {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  border-radius: 8px 8px 0 0;
+  color: var(--color-white);
+  font-size: 1rem;
+  background-color: var(--notification-bg);
+  z-index: 20;
+}

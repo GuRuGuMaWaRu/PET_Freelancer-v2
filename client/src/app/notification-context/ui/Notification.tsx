@@ -1,25 +1,41 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import clsx from "clsx";
 import { useTransition, animated } from "react-spring";
+import { FaTimes, FaExclamationCircle, FaCheck } from "react-icons/fa";
 
 import { NOTIFICATION_DURATION } from "../const/notification.const";
 import { NotificationType, INotificationProps } from "../types";
-import {
-  SCloseIcon,
-  SNotificationMessage,
-  SAccomplishedIcon,
-  SWarningIcon,
-} from "./Notification.styles";
-
-const AnimatedNotificationMessage = animated(SNotificationMessage);
+import notificationStyles from "./Notification.module.css";
 
 const getNotificationIcon = (type: NotificationType) => {
   switch (type) {
     case NotificationType.success:
-      return <SAccomplishedIcon />;
+      return (
+        <FaCheck
+          className={clsx(
+            notificationStyles.iconBase,
+            notificationStyles.successIcon
+          )}
+        />
+      );
     case NotificationType.warning:
-      return <SWarningIcon />;
+      return (
+        <FaExclamationCircle
+          className={clsx(
+            notificationStyles.iconBase,
+            notificationStyles.warningIcon
+          )}
+        />
+      );
     default:
-      return <SWarningIcon />;
+      return (
+        <FaExclamationCircle
+          className={clsx(
+            notificationStyles.iconBase,
+            notificationStyles.warningIcon
+          )}
+        />
+      );
   }
 };
 
@@ -34,13 +50,13 @@ function Notification({
     leave: { opacity: 0, y: 20 },
     delay: 200,
   });
-  const timeoutId = React.useRef<number>();
+  const timeoutId = useRef<number>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (notification) {
       timeoutId.current = window.setTimeout(
         () => hideNotification(),
-        NOTIFICATION_DURATION,
+        NOTIFICATION_DURATION
       );
     }
     return () => window.clearTimeout(timeoutId.current);
@@ -51,29 +67,32 @@ function Notification({
     hideNotification();
   };
 
+  const notificationType = notification?.type ?? NotificationType.warning;
+
   return transitions(
     (styles, item) =>
       item && (
-        <AnimatedNotificationMessage
+        <animated.div
           role="alert"
           aria-label="notification"
-          type={notification?.type || NotificationType.warning}
+          className={clsx(notificationStyles.notification)}
           style={{
             transform: styles.y.to(
-              (value) => `translateY(${value}px) translateX(-50%)`,
+              (value) => `translateY(${value}px) translateX(-50%)`
             ),
             opacity: styles.opacity,
           }}
         >
           <>
-            {getNotificationIcon(
-              notification?.type ?? NotificationType.warning,
-            )}
+            {getNotificationIcon(notificationType)}
             {notification?.message || "Oops! Something unexpected happened!"}
-            <SCloseIcon onClick={handleCloseNotification}></SCloseIcon>
+            <FaTimes
+              onClick={handleCloseNotification}
+              className={notificationStyles.closeIcon}
+            />
           </>
-        </AnimatedNotificationMessage>
-      ),
+        </animated.div>
+      )
   );
 }
 

@@ -6,6 +6,7 @@
   --color-main-bg-2: #b8351e;
   --color-white: #f1f1f4;
   --color-warning: tomato;
+  --color-success: greenyellow;
   --green-dark-1: #3d6a4e;
   --color-primary: #ffef44;
   --color-secondary: #8a2be2;
@@ -19,6 +20,7 @@
 
   --dashboard-page-bg: rgb(106 72 220);
   --projects-page-bg: #3c8b5a;
+  --notification-bg: #604e97;
 
   --border-radius: 0.5rem;
 }
