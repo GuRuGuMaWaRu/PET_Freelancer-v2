@@ -51,7 +51,7 @@ const RegisterForm = () => {
     if (isError) {
       const message = error?.message ?? "There was an error";
 
-      notify.warning(message);
+      notify.showWarning(message);
     }
   }, [error, isError, notify]);
 

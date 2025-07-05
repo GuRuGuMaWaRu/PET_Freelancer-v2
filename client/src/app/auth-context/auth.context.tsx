@@ -46,7 +46,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             console.log(e);
 
             if (e.code !== 406) {
-              notify.warning(e.message);
+              notify.showWarning(e.message);
             }
 
             return { data: null };

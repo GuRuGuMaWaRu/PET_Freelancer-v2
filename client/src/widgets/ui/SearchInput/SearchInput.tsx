@@ -50,7 +50,7 @@ const SearchInput: React.FC<IProps> = ({ onSearch }) => {
     if (searchInput.length >= 3 || searchInput.length === 0) {
       onSearch(searchInput);
     } else {
-      notify.warning("Enter at least 3 characters into Search field");
+      notify.showWarning("Enter at least 3 characters into Search field");
     }
   };
 

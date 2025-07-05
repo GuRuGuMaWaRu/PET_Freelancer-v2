@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback, useMemo } from "react";
 
 import {
   INotification,
@@ -12,39 +12,37 @@ const NotificationContext = React.createContext<INotificationContext>(
 );
 
 function NotificationProvider({ children }: { children: React.ReactNode }) {
-  const [notification, setNotification] = React.useState<INotification | null>(
-    null
-  );
-  const [isShown, setIsShown] = React.useState<boolean>(false);
+  const [notification, setNotification] = useState<INotification | null>(null);
+  const [isShown, setIsShown] = useState<boolean>(false);
 
-  const showNotification = React.useCallback(
+  const showNotification = useCallback(
     (type: NotificationType, message: string) => {
       setNotification({ type, message });
       setIsShown(true);
     },
     []
   );
-  const hideNotification = React.useCallback(() => setIsShown(false), []);
+  const hideNotification = useCallback(() => setIsShown(false), []);
 
-  const success = React.useCallback(
+  const showSuccess = useCallback(
     (message: string) => {
       showNotification(NotificationType.success, message);
     },
     [showNotification]
   );
-  const warning = React.useCallback(
+  const showWarning = useCallback(
     (message: string) => {
       showNotification(NotificationType.warning, message);
     },
     [showNotification]
   );
 
-  const value = React.useMemo(
+  const value = useMemo(
     () => ({
-      success,
-      warning,
+      showSuccess,
+      showWarning,
     }),
-    [success, warning]
+    [showSuccess, showWarning]
   );
 
   return (
