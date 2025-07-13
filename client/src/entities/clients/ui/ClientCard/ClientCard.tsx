@@ -1,25 +1,15 @@
-/** @jsxImportSource @emotion/react */
-
-import React from "react";
+import React, { useState, useEffect } from "react";
+import clsx from "clsx";
 import { SlOptions, SlArrowDown } from "react-icons/sl";
 
-import {
-  SClientCard,
-  SClientHeader,
-  SOptionsButton,
-  SOptionsItem,
-  SClientName,
-  SClientData,
-  SClientDataItem,
-  SShowMoreButton,
-} from "./ClientCard.styles";
 import { Dropdown } from "shared/ui";
-import { colors } from "shared/const";
+
 import type {
   IClientWithProjectData,
   TClientDataItem,
 } from "../../types/clients.types";
 import { clientDataItems } from "../../const/clients.const";
+import styles from "./ClientCard.module.css";
 
 interface IProps {
   client: IClientWithProjectData;
@@ -28,29 +18,44 @@ interface IProps {
 }
 
 function ClientCard({ client, isExpandedAll, sortBy }: IProps) {
-  const [isExpanded, setIsExpanded] = React.useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  useEffect(() => {
+    setIsExpanded(isExpandedAll);
+  }, [isExpandedAll]);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
-  React.useEffect(() => {
-    setIsExpanded(isExpandedAll);
-  }, [isExpandedAll]);
+  const mainItemName =
+    sortBy === clientDataItems.name.sortName
+      ? clientDataItems.daysSinceLastProject.displayName
+      : clientDataItems[sortBy].displayName;
+
+  const mainItemData =
+    sortBy === clientDataItems.name.sortName
+      ? client.daysSinceLastProject
+      : sortBy === clientDataItems.totalEarnings.sortName
+      ? client.totalEarnings.toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
+        })
+      : client[sortBy];
 
   return (
-    <SClientCard key={client._id}>
-      <SClientHeader>
-        <SClientName>{client.name}</SClientName>
+    <div className={styles.card}>
+      <div className={styles.cardHeader}>
+        <h3 className={styles.clientName}>{client.name}</h3>
         <Dropdown
           trigger={
-            <SOptionsButton>
+            <button className={styles.optionsButton}>
               <SlOptions />
-            </SOptionsButton>
+            </button>
           }
           menu={[
-            <SOptionsItem>Edit</SOptionsItem>,
-            <SOptionsItem>Delete</SOptionsItem>,
+            <button className={styles.optionsItem}>Edit</button>,
+            <button className={styles.optionsItem}>Delete</button>,
           ]}
           dropdownStyles={{
             width: "100px",
@@ -60,35 +65,27 @@ function ClientCard({ client, isExpandedAll, sortBy }: IProps) {
             boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
           }}
         />
-      </SClientHeader>
-      <SClientDataItem>
-        <div>
-          {sortBy === clientDataItems.name.sortName
-            ? clientDataItems.daysSinceLastProject.displayName
-            : clientDataItems[sortBy].displayName}
-        </div>
+      </div>
+      <div className={styles.clientDataItem}>
+        <div>{mainItemName}</div>
         <div
-          css={{
-            color:
-              sortBy === clientDataItems.totalEarnings.sortName
-                ? colors.money
-                : sortBy === clientDataItems.daysSinceLastProject.sortName &&
-                  client.daysSinceLastProject > 90
-                ? colors.textImportant
-                : colors.white,
-          }}
+          className={clsx(
+            sortBy === clientDataItems.totalEarnings.sortName &&
+              styles.totalEarnings,
+            sortBy === clientDataItems.daysSinceLastProject.sortName &&
+              client.daysSinceLastProject > 90 &&
+              styles.daysSinceLastProject
+          )}
         >
-          {sortBy === clientDataItems.name.sortName
-            ? client.daysSinceLastProject
-            : sortBy === clientDataItems.totalEarnings.sortName
-            ? client.totalEarnings.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-              })
-            : client[sortBy]}
+          {mainItemData}
         </div>
-      </SClientDataItem>
-      <SClientData isExpanded={isExpanded}>
+      </div>
+      <div
+        className={clsx(
+          styles.clientData,
+          isExpanded && styles.clientDataExpanded
+        )}
+      >
         {Object.entries(clientDataItems)
           .filter(([sortName]) => {
             if (sortName === clientDataItems.name.sortName) {
@@ -104,15 +101,17 @@ function ClientCard({ client, isExpandedAll, sortBy }: IProps) {
             }
           })
           .map(([sortName, { displayName }]) => (
-            <SClientDataItem key={sortName}>
+            <div className={styles.clientDataItem} key={sortName}>
               <div>{displayName}</div>
               <div
-                css={{
-                  color:
-                    displayName === clientDataItems.totalEarnings.displayName
-                      ? colors.money
-                      : colors.white,
-                }}
+                className={clsx(
+                  displayName === clientDataItems.totalEarnings.displayName &&
+                    styles.totalEarnings,
+                  displayName ===
+                    clientDataItems.daysSinceLastProject.displayName &&
+                    client.daysSinceLastProject > 90 &&
+                    styles.daysSinceLastProject
+                )}
               >
                 {sortName === clientDataItems.totalEarnings.sortName
                   ? client.totalEarnings.toLocaleString("en-US", {
@@ -121,21 +120,24 @@ function ClientCard({ client, isExpandedAll, sortBy }: IProps) {
                     })
                   : client[sortName as TClientDataItem]}
               </div>
-            </SClientDataItem>
+            </div>
           ))}
-      </SClientData>
-      <div css={{ textAlign: "center" }}>
-        <SShowMoreButton onClick={toggleExpand} aria-label="Show more">
-          <SlArrowDown
-            css={{
-              fontSize: "1.5rem",
-              transition: "transform 0.2s",
-              transform: isExpanded ? "rotate(180deg)" : "",
-            }}
-          />
-        </SShowMoreButton>
       </div>
-    </SClientCard>
+      <div className={styles.showMoreButtonContainer}>
+        <button
+          className={styles.showMoreButton}
+          onClick={toggleExpand}
+          aria-label="Show more"
+        >
+          <SlArrowDown
+            className={clsx(
+              styles.showMoreButtonIcon,
+              isExpanded && styles.showMoreButtonIconExpanded
+            )}
+          />
+        </button>
+      </div>
+    </div>
   );
 }
 

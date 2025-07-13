@@ -12,9 +12,11 @@
   --color-secondary: #8a2be2;
   --color-danger: #f0301b;
   --color-base2: #0e0430;
-  --color-text-important: #ff6347;
   --color-disabled: #858585;
   --color-opaque-black: rgba(0, 0, 0, 0.2);
+  --color-grey-1: #d2d2d2;
+  --color-green-1: #3cff3c;
+  --color-red-1: #ff6347;
 
   --color-spinnerContrasting: var(--color-text-important);
 
@@ -23,6 +25,10 @@
   --notification-bg: #604e97;
 
   --border-radius: 0.5rem;
+
+  --text-secondary: var(--color-grey-1);
+  --money-color: var(--color-green-1);
+  --color-text-important: var(--color-red-1);
 }
 
 /* some global reset */
