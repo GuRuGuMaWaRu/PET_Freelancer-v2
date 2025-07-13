@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import * as React from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import * as yup from "yup";

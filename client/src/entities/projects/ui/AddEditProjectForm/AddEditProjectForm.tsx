@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Form, useFetcher } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -110,7 +109,6 @@ function AddEditProjectForm({ project, clients }: IProps) {
       <Field label="Comments" error={errors.comments}>
         <STextarea
           id="comments"
-          css={{ maxWidth: "100%" }}
           aria-invalid={errors.comments ? "true" : "false"}
           {...register("comments")}
         ></STextarea>
