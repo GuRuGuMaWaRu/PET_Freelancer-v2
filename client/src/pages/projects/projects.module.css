@@ -31,13 +31,14 @@
 }
 
 .tableHeader {
+  display: block;
   background-color: var(--green-dark-1);
   text-align: left;
   padding: 8px;
   cursor: auto;
 }
 
-.tableHeader--sortable {
+.headerSortable {
   cursor: pointer;
 }
 
@@ -47,31 +48,22 @@
   border: 0;
 }
 
-@media (max-width: 691px) {
-  .table {
-    grid-template-columns: 1fr 2fr 1fr 90px;
-  }
-
-  .tableHeader {
-    display: block;
-  }
-
-  .tableHeader--date,
-  .tableHeader--comments {
-    display: none;
-  }
-}
-
 @media (max-width: 1299px) {
   .table {
     grid-template-columns: repeat(2, 1fr) 2fr 1fr 90px;
   }
 
-  .tableHeader {
-    display: block;
+  .headerComments {
+    display: none;
+  }
+}
+
+@media (max-width: 691px) {
+  .table {
+    grid-template-columns: 1fr 2fr 1fr 90px;
   }
 
-  .tableHeader--comments {
+  .headerDate {
     display: none;
   }
 }

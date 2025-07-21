@@ -72,10 +72,9 @@ function Projects() {
                   <div
                     key={column.name}
                     className={clsx(styles.tableHeader, {
-                      [styles["tableHeader--sortable"]]: column.sortName,
-                      [styles["tableHeader--date"]]: column.name === "date",
-                      [styles["tableHeader--comments"]]:
-                        column.name === "comments",
+                      [styles.headerSortable]: column.sortName,
+                      [styles.headerDate]: column.name === "date",
+                      [styles.headerComments]: column.name === "comments",
                     })}
                     onClick={
                       column.sortName
