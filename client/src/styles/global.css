@@ -1,11 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Alata&family=Exo+2:wght@400;600;700;800;900&family=IBM+Plex+Sans+Devanagari:wght@400;500;600;700&family=Lexend+Deca:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap");
 
-/* constants */
 :root {
+  /** colors */
   --color-main-bg: #764cff;
   --color-main-bg-2: #b8351e;
   --color-white: #f1f1f4;
-  --color-warning: tomato;
   --color-success: greenyellow;
   --green-dark-1: #3d6a4e;
   --color-primary: #ffef44;
@@ -16,6 +15,7 @@
   --color-opaque-black: rgba(0, 0, 0, 0.2);
   --color-grey-1: #d2d2d2;
   --color-green-1: #3cff3c;
+  --color-green-dark-2: #49815e;
   --color-red-1: #ff6347;
 
   --color-spinnerContrasting: var(--color-text-important);

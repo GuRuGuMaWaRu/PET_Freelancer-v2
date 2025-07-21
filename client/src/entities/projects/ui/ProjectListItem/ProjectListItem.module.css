@@ -1,0 +1,46 @@
+.dataCell {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.9rem 0.5rem;
+  color: var(--text-secondary);
+
+  &:nth-of-type(12n + 7) {
+    background-color: var(--color-green-dark-2);
+  }
+  &:nth-of-type(12n + 8) {
+    background-color: var(--color-green-dark-2);
+  }
+  &:nth-of-type(12n + 9) {
+    background-color: var(--color-green-dark-2);
+  }
+  &:nth-of-type(12n + 10) {
+    background-color: var(--color-green-dark-2);
+  }
+  &:nth-of-type(12n + 11) {
+    background-color: var(--color-green-dark-2);
+  }
+  &:nth-of-type(12n + 12) {
+    background-color: var(--color-green-dark-2);
+  }
+
+  &.paymentZero {
+    color: var(--color-text-important);
+  }
+}
+
+.comments,
+.date {
+  display: block;
+}
+
+@media screen and (max-width: 1299px) {
+  .comments {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 691px) {
+  .date {
+    display: none;
+  }
+}
