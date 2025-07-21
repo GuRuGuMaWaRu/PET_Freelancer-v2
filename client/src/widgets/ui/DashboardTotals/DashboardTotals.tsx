@@ -1,18 +1,12 @@
-/** @jsxImportSource @emotion/react */
 import React from "react";
 
-import {
-  STotalsWrapper,
-  SDate,
-  SSumContainer,
-  SCurrencySymbol,
-  SSum,
-} from "./DashboardTotals.styles";
+import { IEarnings } from "shared/types";
+
 import {
   getEarningsForThisMonth,
   getEarningsForThisYear,
 } from "./DashboardTotals.helpers";
-import { IEarnings } from "shared/types";
+import styles from "./DashboardTotals.module.css";
 
 interface IProps {
   data: IEarnings[];
@@ -28,22 +22,22 @@ function DashboardTotals({ data }: IProps) {
   const year = new Date().getFullYear().toString();
 
   return (
-    <STotalsWrapper>
+    <div className={styles.totals}>
       <div>
-        <SDate>{month}</SDate>
-        <SSumContainer>
-          <SCurrencySymbol>$</SCurrencySymbol>{" "}
-          <SSum>{earningsForThisMonth}</SSum>
-        </SSumContainer>
+        <div className={styles.date}>{month}</div>
+        <div className={styles.sumContainer}>
+          <span className={styles.currencySymbol}>$</span>{" "}
+          <span className={styles.sum}>{earningsForThisMonth}</span>
+        </div>
       </div>
       <div>
-        <SDate>{year}</SDate>
-        <SSumContainer>
-          <SCurrencySymbol>$</SCurrencySymbol>{" "}
-          <SSum>{earningsForThisYear}</SSum>
-        </SSumContainer>
+        <div className={styles.date}>{year}</div>
+        <div className={styles.sumContainer}>
+          <span className={styles.currencySymbol}>$</span>{" "}
+          <span className={styles.sum}>{earningsForThisYear}</span>
+        </div>
       </div>
-    </STotalsWrapper>
+    </div>
   );
 }
 
