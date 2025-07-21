@@ -95,6 +95,7 @@ function Projects() {
 
                 {projects?.docs?.map((project) => (
                   <ProjectListItem key={project._id} project={project}>
+                    {/** TODO: check if the whole Modal + AddEditProjectForm can be extracted into a separate component */}
                     <Modal
                       title="Edit Project"
                       button={
@@ -105,6 +106,7 @@ function Projects() {
                     >
                       <AddEditProjectForm project={project} clients={clients} />
                     </Modal>
+                    {/** TODO: check if the whole Modal + DeleteProjectForm can be extracted into a separate component */}
                     <Modal
                       title="Delete Project"
                       button={
