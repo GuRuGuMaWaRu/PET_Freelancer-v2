@@ -1,5 +1,7 @@
-import { useLocation } from "react-router-dom";
-import { SNav, SNavList, SNavItem } from "./NavBar.styles";
+import { useLocation, NavLink } from "react-router-dom";
+import clsx from "clsx";
+
+import styles from "./NavBar.module.css";
 
 const navLinks = [
   { to: "/", name: "Main" },
@@ -12,16 +14,20 @@ function NavBar() {
 
   const navItems = navLinks.map(({ to, name }) => (
     <li key={name}>
-      <SNavItem pathname={pathname} to={to} end={to === "/" ? true : false}>
+      <NavLink
+        className={clsx(styles.navItem, pathname === to && styles.active)}
+        to={to}
+        end={to === "/" ? true : false}
+      >
         {name}
-      </SNavItem>
+      </NavLink>
     </li>
   ));
 
   return (
-    <SNav>
-      <SNavList>{navItems}</SNavList>
-    </SNav>
+    <nav className={styles.navbar}>
+      <ul className={styles.navItemList}>{navItems}</ul>
+    </nav>
   );
 }
 
