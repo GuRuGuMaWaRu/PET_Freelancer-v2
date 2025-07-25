@@ -1,0 +1,9 @@
+.content {
+  padding: 2rem 1rem;
+  line-height: 1.8rem;
+}
+
+.highlightedText {
+  background-color: var(--color-text-important);
+  padding: 0 0.2rem;
+}

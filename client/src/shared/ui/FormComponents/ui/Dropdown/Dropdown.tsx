@@ -1,12 +1,9 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { useState } from "react";
 import { useTransition, animated } from "react-spring";
 
-import { Menu } from "./Dropdown.styles";
 import { useOutsideClick } from "shared/lib";
 
-const AnimatedMenu = animated(Menu);
+import internalStyles from "./Dropdown.module.css";
 
 interface IProps {
   trigger: React.ReactElement;
@@ -40,7 +37,7 @@ function Dropdown({ trigger, menu, dropdownStyles = {} }: IProps) {
   const ref = useOutsideClick(closeDropdown);
 
   return (
-    <div css={{ position: "relative" }}>
+    <div className={internalStyles.dropdownContainer}>
       {React.cloneElement(trigger, {
         ref,
         onClick: handleOpen,
@@ -49,7 +46,10 @@ function Dropdown({ trigger, menu, dropdownStyles = {} }: IProps) {
         {transition(
           (styles, item) =>
             item && (
-              <AnimatedMenu style={{ ...dropdownStyles, ...styles }}>
+              <animated.div
+                className={internalStyles.dropdownMenu}
+                style={{ ...dropdownStyles, ...styles }}
+              >
                 {menu.map((menuItem, index) =>
                   React.cloneElement(menuItem, {
                     key: index,
@@ -62,7 +62,7 @@ function Dropdown({ trigger, menu, dropdownStyles = {} }: IProps) {
                     tabIndex: isOpen ? 0 : -1,
                   })
                 )}
-              </AnimatedMenu>
+              </animated.div>
             )
         )}
       </div>

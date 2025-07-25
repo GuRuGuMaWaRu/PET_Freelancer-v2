@@ -1,5 +1,6 @@
-/** @jsxImportSource @emotion/react */
-import { SButtonContainer, Button, Spinner } from "shared/ui";
+import { Button, Spinner } from "shared/ui";
+
+import styles from "./SubmitButton.module.css";
 
 interface IProps {
   isLoading?: boolean;
@@ -8,11 +9,12 @@ interface IProps {
 
 function SubmitButton({ isLoading = false, children }: IProps) {
   return (
-    <SButtonContainer>
+    <div className={styles.container}>
       <Button type="submit" disabled={isLoading}>
-        {children} {isLoading ? <Spinner css={{ marginLeft: 7 }} /> : null}
+        {children}{" "}
+        {isLoading ? <Spinner customStyles={{ marginLeft: 7 }} /> : null}
       </Button>
-    </SButtonContainer>
+    </div>
   );
 }
 

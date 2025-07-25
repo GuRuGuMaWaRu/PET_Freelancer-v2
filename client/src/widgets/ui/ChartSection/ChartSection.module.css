@@ -1,0 +1,34 @@
+.container {
+  margin-block-start: 2rem;
+}
+
+.chartDataContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chartTitle {
+  align-self: center;
+  margin-block: 0;
+}
+
+.chartSelectionButton {
+  border: 0;
+  padding: 5px 10px;
+  color: var(--color-white);
+  clip-path: polygon(10% 0, 100% 0%, 90% 100%, 0% 100%);
+  background-color: transparent;
+}
+
+.activeBtn {
+  background-color: var(--color-text-important);
+}
+
+.dateRange {
+  display: inline-block;
+  margin-block-start: 0;
+  margin-block-end: 1rem;
+  opacity: 0.7;
+  font-size: 0.9rem;
+}

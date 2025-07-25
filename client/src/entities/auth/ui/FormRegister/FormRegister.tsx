@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import * as React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
@@ -51,7 +50,7 @@ const RegisterForm = () => {
     if (isError) {
       const message = error?.message ?? "There was an error";
 
-      notify.warning(message);
+      notify.showWarning(message);
     }
   }, [error, isError, notify]);
 

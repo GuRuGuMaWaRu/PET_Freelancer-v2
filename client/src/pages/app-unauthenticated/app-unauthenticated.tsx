@@ -1,12 +1,13 @@
-import { SContainer, SAppTitle, SButtons } from "./app-unauthenticated.styles";
 import { Modal, Button } from "shared/ui";
 import { LoginForm, RegisterForm } from "entities/auth";
 
+import styles from "./app-unauthenticated.module.css";
+
 function AppUnauthenticated() {
   return (
-    <SContainer>
-      <SAppTitle>Freelancer</SAppTitle>
-      <SButtons>
+    <div className={styles.container}>
+      <h1 className={styles.appTitle}>Freelancer</h1>
+      <div className={styles.buttons}>
         <Modal title="Login" button={<Button>Login</Button>}>
           <LoginForm />
         </Modal>
@@ -16,8 +17,8 @@ function AppUnauthenticated() {
         >
           <RegisterForm />
         </Modal>
-      </SButtons>
-    </SContainer>
+      </div>
+    </div>
   );
 }
 

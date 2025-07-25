@@ -1,11 +1,11 @@
 import { Spinner } from "../";
-import { SFullPageSpinnerContainer } from "./FullPageSpinner.styles";
+import styles from "./FullPageSpinner.module.css";
 
 function FullPageSpinner() {
   return (
-    <SFullPageSpinnerContainer>
+    <div className={styles.fullPageSpinner}>
       <Spinner />
-    </SFullPageSpinnerContainer>
+    </div>
   );
 }
 

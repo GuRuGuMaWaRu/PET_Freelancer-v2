@@ -1,17 +1,8 @@
-/** @jsxImportSource @emotion/react */
-
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 import { SlArrowDown } from "react-icons/sl";
+import { useQuery } from "@tanstack/react-query";
 
-import {
-  SControlsPanel,
-  SClientList,
-  SSortByButton,
-  SSortItem,
-  SControlsButton,
-} from "./clients.styles";
 import {
   IClientWithProjectData,
   TClientDataItem,
@@ -21,6 +12,8 @@ import {
 } from "entities/clients";
 import { Dropdown, FullPageSpinner } from "shared/ui";
 import { ModalAddProject } from "entities/projects";
+
+import styles from "./clients.module.css";
 
 enum sortDirItem {
   desc = "desc",
@@ -70,24 +63,23 @@ function Clients() {
   return (
     <>
       {/** CONTROLS --> start */}
-      <SControlsPanel>
+      <div className={styles.controlsPanel}>
         <h3>SORT BY</h3>
         <Dropdown
           trigger={
-            <SSortByButton>
+            <button className={styles.sortByButton}>
               <span>{clientDataItems[sortBy].displayName}</span>{" "}
-              <SlArrowDown
-                css={{
-                  fontSize: "12px",
-                }}
-              />
-            </SSortByButton>
+              <SlArrowDown className={styles.dropdownIcon} />
+            </button>
           }
           menu={Object.entries(clientDataItems).map(
             ([sortName, { displayName }]) => (
-              <SSortItem onClick={() => setSortBy(sortName as TClientDataItem)}>
+              <div
+                className={styles.sortItem}
+                onClick={() => setSortBy(sortName as TClientDataItem)}
+              >
                 {displayName}
-              </SSortItem>
+              </div>
             )
           )}
           dropdownStyles={{
@@ -101,31 +93,23 @@ function Clients() {
             overflow: "hidden",
           }}
         />
-        <SControlsButton onClick={changeSortDirection}>
+        <button className={styles.controlsButton} onClick={changeSortDirection}>
           {sortDir === sortDirItem.desc ? (
-            <HiSortDescending
-              css={{
-                fontSize: "20px",
-              }}
-            />
+            <HiSortDescending className={styles.sortIcon} />
           ) : (
-            <HiSortAscending
-              css={{
-                fontSize: "20px",
-              }}
-            />
+            <HiSortAscending className={styles.sortIcon} />
           )}
-        </SControlsButton>
-        <SControlsButton onClick={toggleExpandAll}>
+        </button>
+        <button className={styles.controlsButton} onClick={toggleExpandAll}>
           {isExpandedAll ? "Collapse all" : "Expand all"}
-        </SControlsButton>
+        </button>
         <ModalAddProject
           clients={data}
-          customStyles={`margin-inline-start: auto;`}
+          customStyles={{ marginInlineStart: "auto" }}
         />
-      </SControlsPanel>
+      </div>
       {/** CONTROLS --> end */}
-      <SClientList>
+      <div className={styles.clientList}>
         {sortedClients.map((client) => (
           <ClientCard
             key={client._id}
@@ -134,7 +118,7 @@ function Clients() {
             sortBy={sortBy}
           />
         ))}
-      </SClientList>
+      </div>
     </>
   );
 }

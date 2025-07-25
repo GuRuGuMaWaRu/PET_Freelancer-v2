@@ -1,12 +1,12 @@
-import type { Error } from '../../types';
-import { SFullPageErrorContainer} from './FullPageError.styles'
+import type { Error } from "../../types";
+import styles from "./FullPageError.module.css";
 
 function FullPageError({ error }: { error: Error }) {
   return (
-    <SFullPageErrorContainer role="alert">
+    <div className={styles.container} role="alert">
       <p>Uh oh... There's a problem. Try refreshing the app.</p>
       <pre>{error.message}</pre>
-    </SFullPageErrorContainer>
+    </div>
   );
 }
 

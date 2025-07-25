@@ -1,15 +1,10 @@
-import { colors } from "../../const";
-
-const errorMessageVariants = {
-  stacked: { display: "block" },
-  inline: { display: "inline-block" },
-};
+import styles from "./ErrorMessage.module.css";
 
 interface Error {
   message?: string;
 }
 
-type ErrorVariant = keyof typeof errorMessageVariants;
+type ErrorVariant = "stacked" | "inline";
 
 interface ErrorMessageProps {
   error: Error;
@@ -24,19 +19,11 @@ function ErrorMessage({
   return (
     <div
       role="alert"
-      css={[
-        { color: colors.danger, backgroundColor: colors.primary },
-        errorMessageVariants[variant],
-      ]}
+      className={`${styles.errorContainer} ${styles[variant]}`}
       {...props}
     >
       {variant === "stacked" && <span>There was an error: </span>}
-      <pre
-        css={[
-          { whiteSpace: "break-spaces", margin: "0", marginBottom: -5 },
-          errorMessageVariants[variant],
-        ]}
-      >
+      <pre className={`${styles.errorMessage} ${styles[variant]}`}>
         {error.message ?? "Something bad happened!"}
       </pre>
     </div>

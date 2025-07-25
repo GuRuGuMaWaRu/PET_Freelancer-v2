@@ -1,9 +1,10 @@
 import React from "react";
 import { FieldError } from "react-hook-form";
 
-import { getChildId } from "../../lib/helpers";
-import { SContainer, SLabel } from "../../styles";
 import { ErrorMessage } from "shared/ui";
+
+import { getChildId } from "../../lib/helpers";
+import styles from "./Field.module.css";
 
 interface IProps {
   label?: string;
@@ -16,13 +17,17 @@ function Field({ label, children, htmlFor, error }: IProps) {
   const id = htmlFor || getChildId(children);
 
   return (
-    <SContainer>
-      {label && <SLabel htmlFor={id}>{label}</SLabel>}
+    <div className={styles.container}>
+      {label && (
+        <label className={styles.label} htmlFor={id}>
+          {label}
+        </label>
+      )}
       {children}
       {!!error && (
         <ErrorMessage error={{ message: error.message }} variant="inline" />
       )}
-    </SContainer>
+    </div>
   );
 }
 

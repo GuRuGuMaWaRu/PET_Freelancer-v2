@@ -1,0 +1,31 @@
+.inputContainer {
+  display: flex;
+  align-items: center;
+}
+
+.cancelButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  position: relative;
+  border: 0;
+  margin-inline-start: -30px;
+  background: transparent;
+  color: var(--color-text-important);
+}
+
+.searchButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 38px;
+  height: 33px;
+  padding-inline-start: 10px;
+  border: 2px solid var(--color-white);
+  border-left: 0;
+  border-radius: 5px;
+  margin-inline-start: -5px;
+  background: transparent;
+  color: var(--color-white);
+}

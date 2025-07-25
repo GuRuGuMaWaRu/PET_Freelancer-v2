@@ -1,0 +1,41 @@
+.modalCloseButtonContainer {
+  position: relative;
+  display: flex;
+  justify-content: end;
+  top: -10px;
+}
+
+.modalCloseButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  font-size: 2em;
+  color: var(--color-primary);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.modalTitle {
+  margin: 0;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.modalContent {
+  width: 450px;
+  border-radius: 3px;
+  margin: 20vh auto;
+  box-shadow: 0 10px 30px -5px var(--color-opaque-black);
+  background-color: var(--dashboard-page-bg);
+  color: var(--color-white);
+}
+
+@media (max-width: 691px) {
+  .modalContent {
+    width: 100%;
+    margin: 10vh auto;
+  }
+}

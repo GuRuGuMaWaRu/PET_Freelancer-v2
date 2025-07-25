@@ -1,15 +1,12 @@
-/** @jsxImportSource @emotion/react */
 import React from "react";
 import {
   MdOutlineArrowBackIos,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
-import {
-  SPaginationContainer,
-  SPaginationButtons,
-  SButton,
-} from "./Pagination.styles";
+import clsx from "clsx";
+
 import { getPaginationData } from "./Pagination.helpers";
+import styles from "./Pagination.module.css";
 
 interface IProps {
   currentPage: number;
@@ -25,43 +22,46 @@ const Pagination: React.FC<IProps> = ({
   const paginationData = getPaginationData(currentPage, totalPages);
 
   return (
-    <SPaginationContainer>
+    <div className={styles.container}>
       {/** Render First Page button */}
       {totalPages > 0 && (
-        <SButton
+        <button
+          className={styles.button}
           aria-label="Previous page"
           onClick={() => setCurrentPage(currentPage - 1)}
           disabled={currentPage === 1}
         >
           <MdOutlineArrowBackIos />
-        </SButton>
+        </button>
       )}
       {/** Render other page buttons */}
-      <SPaginationButtons>
+      <div className={styles.buttons}>
         {paginationData.map((item) => (
-          <SButton
+          <button
             key={item.page}
-            currentPage={currentPage}
-            page={item.page}
+            className={clsx(styles.button, {
+              [styles.currentPage]: currentPage === item.page,
+            })}
             onClick={() => setCurrentPage(item.page)}
             aria-label={`Select page ${item.page}`}
             disabled={currentPage === item.page}
           >
             {item.isSpread ? "..." : item.page}
-          </SButton>
+          </button>
         ))}
-      </SPaginationButtons>
+      </div>
       {/** Render Last Page button */}
       {totalPages > 0 && (
-        <SButton
+        <button
+          className={styles.button}
           aria-label="Next page"
           onClick={() => setCurrentPage(currentPage + 1)}
           disabled={currentPage >= totalPages}
         >
           <MdOutlineArrowForwardIos />
-        </SButton>
+        </button>
       )}
-    </SPaginationContainer>
+    </div>
   );
 };
 

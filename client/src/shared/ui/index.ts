@@ -6,12 +6,12 @@ export { Spinner } from "./Spinner/Spinner";
 export { useModal, Modal } from "./Modal";
 export { MemoPagination } from "./Pagination/Pagination";
 
-export { Field, Combobox, SubmitButton, Dropdown } from "./FormComponents";
 export {
+  Field,
+  Combobox,
+  SubmitButton,
+  Dropdown,
   SInput,
   SSelect,
   STextarea,
-  SLabel,
-  SContainer,
-  SButtonContainer,
-} from "./FormComponents/styles";
+} from "./FormComponents";

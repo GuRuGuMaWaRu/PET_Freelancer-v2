@@ -8,9 +8,9 @@ const useFormNotifications = (fetcherData: any, isLoading: boolean) => {
   React.useEffect(() => {
     if (fetcherData && !isLoading) {
       if (fetcherData.status === "success") {
-        notify.success(fetcherData.message);
+        notify.showSuccess(fetcherData.message);
       } else {
-        notify.warning(fetcherData.message);
+        notify.showWarning(fetcherData.message);
       }
     }
   }, [fetcherData, isLoading, notify]);

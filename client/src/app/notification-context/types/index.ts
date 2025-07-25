@@ -1,4 +1,7 @@
-export enum NotificationType { "success", "warning" }
+export enum NotificationType {
+  "success",
+  "warning",
+}
 
 interface INotification {
   type: NotificationType;
@@ -10,8 +13,8 @@ interface INotificationMessageProps {
 }
 
 interface INotificationContext {
-  success: (message: string) => void;
-  warning: (message: string) => void;
+  showSuccess: (message: string) => void;
+  showWarning: (message: string) => void;
 }
 
 interface INotificationProps {
@@ -20,4 +23,9 @@ interface INotificationProps {
   isShown: boolean;
 }
 
-export type { INotification, INotificationMessageProps, INotificationContext, INotificationProps }
+export type {
+  INotification,
+  INotificationMessageProps,
+  INotificationContext,
+  INotificationProps,
+};

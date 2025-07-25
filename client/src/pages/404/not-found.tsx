@@ -1,14 +1,8 @@
-/** @jsxImportSource @emotion/react */
+import styles from "./not-found.module.css";
 
 function NotFound() {
   return (
-    <div
-      css={{
-        display: "grid",
-        height: "100%",
-        placeItems: "center",
-      }}
-    >
+    <div className={styles.container}>
       <h1>Sorry... nothing here.</h1>
     </div>
   );

@@ -1,6 +1,8 @@
-import styled from "@emotion/styled";
+.dropdownContainer {
+  position: relative;
+}
 
-const Menu = styled.div`
+.dropdownMenu {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,6 +14,4 @@ const Menu = styled.div`
   border-radius: 5px;
 
   z-index: 10;
-`;
-
-export { Menu };
+}
