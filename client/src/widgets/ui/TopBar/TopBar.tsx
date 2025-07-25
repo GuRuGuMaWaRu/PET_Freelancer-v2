@@ -1,17 +1,17 @@
-import { SBar, SUserWelcome } from "./TopBar.styles";
-import { Button } from "shared/ui";
 import { useAuth } from "app";
+import { Button } from "shared/ui";
+import styles from "./TopBar.module.css";
 
 function TopBar() {
   const { user, logout } = useAuth();
 
   return (
-    <SBar>
-      <SUserWelcome>Hi, {user?.name}</SUserWelcome>
+    <div className={styles.bar}>
+      <div className={styles.userWelcome}>Hi, {user?.name}</div>
       <Button variant="secondary" onClick={logout}>
         Logout
       </Button>
-    </SBar>
+    </div>
   );
 }
 
