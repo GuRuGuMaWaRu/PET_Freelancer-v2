@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Button, Spinner } from "shared/ui";
 
 import styles from "./SubmitButton.module.css";

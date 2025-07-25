@@ -1,9 +1,8 @@
-/** @jsxImportSource @emotion/react */
-
 import React, { useState } from "react";
 import { useTransition, animated } from "react-spring";
 
 import { useOutsideClick } from "shared/lib";
+
 import internalStyles from "./Dropdown.module.css";
 
 interface IProps {
@@ -38,7 +37,7 @@ function Dropdown({ trigger, menu, dropdownStyles = {} }: IProps) {
   const ref = useOutsideClick(closeDropdown);
 
   return (
-    <div css={{ position: "relative" }}>
+    <div className={internalStyles.dropdownContainer}>
       {React.cloneElement(trigger, {
         ref,
         onClick: handleOpen,

@@ -4,6 +4,7 @@ import { FaSearch, FaTimes } from "react-icons/fa";
 
 import { useNotification } from "app";
 import { SInput } from "shared/ui";
+
 import styles from "./SearchInput.module.css";
 
 interface IProps {

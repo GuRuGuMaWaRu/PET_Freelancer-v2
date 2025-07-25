@@ -1,10 +1,8 @@
-/** @jsxImportSource @emotion/react */
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import { FaSortUp, FaSortDown, FaPen, FaRegTrashAlt } from "react-icons/fa";
 
-import { columns } from "./projects.const";
 import { FullPageSpinner, Modal, MemoPagination } from "shared/ui";
 import { CONFIG } from "shared/const";
 import { getAllClientsQuery } from "entities/clients";
@@ -16,6 +14,8 @@ import {
   getProjectsPageQuery,
 } from "entities/projects";
 import { SearchInput } from "widgets";
+
+import { columns } from "./projects.const";
 import styles from "./projects.module.css";
 
 //** TODO: move this into a separate utilities file (projects.utils.tsx) when I'll have FEATURES */

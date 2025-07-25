@@ -1,3 +1,7 @@
+.dropdownContainer {
+  position: relative;
+}
+
 .dropdownMenu {
   display: flex;
   flex-direction: column;

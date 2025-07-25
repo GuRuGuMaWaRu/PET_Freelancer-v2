@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import React from "react";
 import {
   BarChart,
@@ -11,11 +9,12 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { STooltipContainer, STooltipContents } from "features/charts/styles";
 import { getMaxLabelLength } from "features/charts/lib";
 import { colors } from "shared/const";
 import { formatUSD } from "shared/lib";
 import type { IEarningsByClient } from "shared/types";
+
+import styles from "../charts.module.css";
 
 interface IProps {
   data: IEarningsByClient[];
@@ -56,8 +55,8 @@ function ClientsChart({ data }: IProps) {
         <Tooltip
           content={({ active, payload }) => {
             return active && payload && payload.length ? (
-              <STooltipContainer>
-                <STooltipContents>
+              <div className={styles.tooltipContainer}>
+                <div className={styles.tooltipContents}>
                   <p>
                     <b>Client:</b> {payload[0].payload.client}
                   </p>
@@ -67,8 +66,8 @@ function ClientsChart({ data }: IProps) {
                   <p>
                     <b># of projects:</b> {payload[0].payload.projects}
                   </p>
-                </STooltipContents>
-              </STooltipContainer>
+                </div>
+              </div>
             ) : null;
           }}
         />

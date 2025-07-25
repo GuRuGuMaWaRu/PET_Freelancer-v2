@@ -13,7 +13,9 @@
   --color-base2: #0e0430;
   --color-disabled: #858585;
   --color-opaque-black: rgba(0, 0, 0, 0.2);
+  --color-opaque-black-2: rgba(0, 0, 0, 0.4);
   --color-grey-1: #d2d2d2;
+  --color-dark-grey-1: #333;
   --color-green-1: #3cff3c;
   --color-green-dark-2: #49815e;
   --color-red-1: #ff6347;

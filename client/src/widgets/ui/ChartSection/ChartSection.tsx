@@ -1,11 +1,11 @@
 import React from "react";
 import clsx from "clsx";
 
-import { ChartType } from "./ChartSection.types";
-import { getDateRange } from "./ChartSection.helpers";
 import type { IEarningsByClient, IEarningsByMonth } from "shared/types";
 import { MemoClientsChart, MemoEarningsChart } from "features/charts";
 
+import { ChartType } from "./ChartSection.types";
+import { getDateRange } from "./ChartSection.helpers";
 import styles from "./ChartSection.module.css";
 
 interface IProps {

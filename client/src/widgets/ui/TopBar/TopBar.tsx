@@ -1,5 +1,6 @@
 import { useAuth } from "app";
 import { Button } from "shared/ui";
+
 import styles from "./TopBar.module.css";
 
 function TopBar() {

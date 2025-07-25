@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-
 import * as React from "react";
 import VisuallyHidden from "@reach/visually-hidden";
 import { animated, useTransition } from "react-spring";
@@ -67,14 +65,7 @@ const ModalContents = ({
             }}
             {...props}
           >
-            <div
-              css={{
-                position: "relative",
-                display: "flex",
-                justifyContent: "end",
-                top: "-10px",
-              }}
-            >
+            <div className={modalStyles.modalCloseButtonContainer}>
               <button
                 className={modalStyles.modalCloseButton}
                 onClick={() => setIsOpen(false)}

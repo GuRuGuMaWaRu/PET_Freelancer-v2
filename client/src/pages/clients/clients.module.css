@@ -6,6 +6,10 @@
   margin-block-end: 10px;
 }
 
+.dropdownIcon {
+  font-size: 12px;
+}
+
 .sortByButton {
   display: flex;
   justify-content: space-between;
@@ -16,6 +20,10 @@
   border-radius: 5px;
   background: rgba(255, 255, 255, 0.15);
   color: var(--color-white);
+}
+
+.sortIcon {
+  font-size: 20px;
 }
 
 .sortItem {

@@ -1,9 +1,7 @@
-/** @jsxImportSource @emotion/react */
-
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 import { SlArrowDown } from "react-icons/sl";
+import { useQuery } from "@tanstack/react-query";
 
 import {
   IClientWithProjectData,
@@ -14,6 +12,7 @@ import {
 } from "entities/clients";
 import { Dropdown, FullPageSpinner } from "shared/ui";
 import { ModalAddProject } from "entities/projects";
+
 import styles from "./clients.module.css";
 
 enum sortDirItem {
@@ -70,11 +69,7 @@ function Clients() {
           trigger={
             <button className={styles.sortByButton}>
               <span>{clientDataItems[sortBy].displayName}</span>{" "}
-              <SlArrowDown
-                css={{
-                  fontSize: "12px",
-                }}
-              />
+              <SlArrowDown className={styles.dropdownIcon} />
             </button>
           }
           menu={Object.entries(clientDataItems).map(
@@ -100,17 +95,9 @@ function Clients() {
         />
         <button className={styles.controlsButton} onClick={changeSortDirection}>
           {sortDir === sortDirItem.desc ? (
-            <HiSortDescending
-              css={{
-                fontSize: "20px",
-              }}
-            />
+            <HiSortDescending className={styles.sortIcon} />
           ) : (
-            <HiSortAscending
-              css={{
-                fontSize: "20px",
-              }}
-            />
+            <HiSortAscending className={styles.sortIcon} />
           )}
         </button>
         <button className={styles.controlsButton} onClick={toggleExpandAll}>
