@@ -1,40 +1,10 @@
-/** @jsxImportSource @emotion/react */
 import React from "react";
-import styled from "@emotion/styled";
-import { FaSearch, FaTimes } from "react-icons/fa";
 import Tooltip from "@reach/tooltip";
+import { FaSearch, FaTimes } from "react-icons/fa";
 
-import { SInput } from "shared/ui";
-import { colors } from "shared/const";
 import { useNotification } from "app";
-
-const SCancelButton = styled("button")({
-  color: colors.textImportant,
-  border: "0",
-  position: "relative",
-  marginLeft: "-30px",
-  background: "transparent",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "30px",
-  height: "30px",
-});
-
-const SSearchButton = styled("button")({
-  color: colors.white,
-  paddingLeft: "10px",
-  border: `2px solid ${colors.white}`,
-  borderLeft: 0,
-  borderRadius: "5px",
-  marginLeft: "-5px",
-  background: "transparent",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "38px",
-  height: "33px",
-});
+import { SInput } from "shared/ui";
+import styles from "./SearchInput.module.css";
 
 interface IProps {
   onSearch: (input: string) => void;
@@ -60,13 +30,7 @@ const SearchInput: React.FC<IProps> = ({ onSearch }) => {
   };
 
   return (
-    <form
-      css={{
-        display: "flex",
-        alignItems: "center",
-      }}
-      onSubmit={handleSearch}
-    >
+    <form className={styles.inputContainer} onSubmit={handleSearch}>
       <SInput
         placeholder="Search projects..."
         id="search"
@@ -77,17 +41,21 @@ const SearchInput: React.FC<IProps> = ({ onSearch }) => {
       {searchInput.length > 0 && (
         <Tooltip label="Cancel search">
           <label htmlFor="cancel">
-            <SCancelButton type="button" onClick={handleCancelSearch}>
+            <button
+              className={styles.cancelButton}
+              type="button"
+              onClick={handleCancelSearch}
+            >
               <FaTimes aria-label="cancel" />
-            </SCancelButton>
+            </button>
           </label>
         </Tooltip>
       )}
       <Tooltip label="Search projects">
         <label htmlFor="search">
-          <SSearchButton type="submit">
+          <button className={styles.searchButton} type="submit">
             <FaSearch aria-label="search" />
-          </SSearchButton>
+          </button>
         </label>
       </Tooltip>
     </form>
