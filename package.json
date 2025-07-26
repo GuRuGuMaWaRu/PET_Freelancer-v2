@@ -1,58 +1,23 @@
 {
-  "name": "pet-freelancer",
-  "version": "0.2.0",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GuRuGuMaWaRu/PET_Freelancer.git"
-  },
-  "keywords": [],
-  "author": "Peter Krevenets (https://www.linkedin.com/in/peter-krevenets-35b50b33/)",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/GuRuGuMaWaRu/PET_Freelancer/issues"
-  },
-  "homepage": "https://github.com/GuRuGuMaWaRu/PET_Freelancer#readme",
-  "engines": {
-    "node": "16.x"
-  },
-  "description": "Manage your freelance jobs",
-  "main": "app.js",
+  "name": "freelancer",
+  "private": true,
   "scripts": {
-    "start": "node app",
-    "server": "nodemon app",
-    "server:test": "mocha",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client": "npm start --prefix client",
     "client:install": "npm install --prefix client",
     "client:test": "npm test --prefix client -- --coverage",
-    "test": "npm run client:test",
+    "server": "nodemon app --prefix server",
+    "server:test": "mocha",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "check-types": "tsc",
     "prettier": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\"",
     "format": "npm run prettier -- --write",
     "check-format": "npm run prettier -- --list-different",
-    "validate": "npm-run-all --parallel check-types check-format lint",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
-  },
-  "dependencies": {
-    "bcrypt": "^5.1.0",
-    "compression": "^1.7.4",
-    "concurrently": "^5.0.2",
-    "cors": "^2.8.5",
-    "date-fns": "^2.29.3",
-    "debug": "~2.6.9",
-    "dotenv": "^8.2.0",
-    "express": "^4.18.2",
-    "express-rate-limit": "^6.7.0",
-    "express-validator": "^6.14.2",
-    "helmet": "^4.6.0",
-    "jsonwebtoken": "^9.0.1",
-    "mongoose": "^6.7.5",
-    "morgan": "~1.9.1",
-    "uuid": "^9.0.0",
-    "validator": "^13.7.0"
+    "validate": "npm-run-all --parallel check-types check-format lint"
   },
   "devDependencies": {
+    "concurrently": "^8.2.0",
+    "nodemon": "^3.1.10",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
     "eslint": "^7.32.0",
@@ -67,10 +32,8 @@
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "mocha": "^10.2.0",
-    "nodemon": "^3.0.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1",
-    "supertest": "^4.0.2",
-    "typescript": "^4.8.4"
+    "supertest": "^4.0.2"
   }
 }

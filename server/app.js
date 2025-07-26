@@ -13,9 +13,8 @@ const errorHandler = require("./middleware/errorHandler");
 const corsOptions = require("./config/corsOptions");
 const { clientRouter, projectRouter, userRouter } = require("./resources");
 
-// Set environment variables
 if (process.env.NODE_ENV !== "production") {
-  dotenv.config();
+  dotenv.config({ path: ".env.server" });
 }
 
 // Connect to mongo DB

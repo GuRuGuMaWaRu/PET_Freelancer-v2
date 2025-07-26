@@ -1,0 +1,40 @@
+{
+  "name": "pet-freelancer",
+  "version": "0.2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuRuGuMaWaRu/PET_Freelancer.git"
+  },
+  "keywords": [],
+  "author": "Peter Krevenets (https://www.linkedin.com/in/peter-krevenets-35b50b33/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GuRuGuMaWaRu/PET_Freelancer/issues"
+  },
+  "homepage": "https://github.com/GuRuGuMaWaRu/PET_Freelancer#readme",
+  "engines": {
+    "node": "16.x"
+  },
+  "description": "Manage your freelance jobs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "date-fns": "^2.29.3",
+    "debug": "~2.6.9",
+    "dotenv": "^17.2.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "express-validator": "^6.14.2",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^6.7.5",
+    "morgan": "~1.9.1",
+    "uuid": "^9.0.0",
+    "validator": "^13.7.0"
+  }
+}

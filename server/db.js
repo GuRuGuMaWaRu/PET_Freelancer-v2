@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== "test") {
   mongoose.set("strictQuery", false);
 
   mongoose
-    .connect(address, { autoIndex })
+    .connect(process.env.DB_MAIN, { autoIndex })
     // eslint-disable-next-line
     .then(() => console.log("Connection to database is established"))
     // eslint-disable-next-line

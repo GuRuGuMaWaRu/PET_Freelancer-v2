@@ -1,5 +1,5 @@
 node_modules
-logs
+server/logs
 client/node_modules
 process.env
 bash.exe.stackdump
