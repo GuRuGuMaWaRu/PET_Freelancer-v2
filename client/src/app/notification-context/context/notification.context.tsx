@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo } from "react";
+import ReactDOM from "react-dom";
 
 import {
   INotification,
@@ -45,13 +46,22 @@ function NotificationProvider({ children }: { children: React.ReactNode }) {
     [showSuccess, showWarning]
   );
 
+  const notificationRoot = document.getElementById("notification-root");
+
+  if (!notificationRoot) {
+    throw new Error("Notification root element not found");
+  }
+
   return (
     <NotificationContext.Provider value={value}>
-      <Notification
-        notification={notification}
-        isShown={isShown}
-        hideNotification={hideNotification}
-      />
+      {ReactDOM.createPortal(
+        <Notification
+          notification={notification}
+          isShown={isShown}
+          hideNotification={hideNotification}
+        />,
+        notificationRoot
+      )}
       {children}
     </NotificationContext.Provider>
   );
