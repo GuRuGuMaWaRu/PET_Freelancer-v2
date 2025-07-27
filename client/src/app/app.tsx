@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 
-import { useAuth } from ".";
 import { FullPageSpinner } from "shared/ui";
+import { useAuth } from "app";
 
 const AppUnauthenticated = React.lazy(
   () => import("pages/app-unauthenticated/app-unauthenticated")
@@ -17,9 +17,9 @@ function App() {
   const { user } = useAuth();
 
   return (
-    <React.Suspense fallback={<FullPageSpinner />}>
+    <Suspense fallback={<FullPageSpinner />}>
       {user ? <AppAuthenticated /> : <AppUnauthenticated />}
-    </React.Suspense>
+    </Suspense>
   );
 }
 

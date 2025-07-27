@@ -1,4 +1,4 @@
-import { CONFIG } from "../../shared/const";
+import { config } from "../../shared/const";
 import { buildProject } from "../generate";
 import type { IProject } from "../../shared/types";
 
@@ -8,12 +8,12 @@ let projects: IProject[] = [];
 // load();
 
 function persist() {
-  window.localStorage.setItem(CONFIG.PROJECTS_KEY, JSON.stringify(projects));
+  window.localStorage.setItem(config.PROJECTS_KEY, JSON.stringify(projects));
 }
 function load() {
   Object.assign(
     projects,
-    JSON.parse(window.localStorage.getItem(CONFIG.PROJECTS_KEY) || "[]")
+    JSON.parse(window.localStorage.getItem(config.PROJECTS_KEY) || "[]")
   );
 }
 

@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import { AuthProvider } from "..";
-import { NotificationProvider } from "..";
+import { AuthProvider } from "./auth.provider";
+import { NotificationProvider } from "./notification.provider";
 
 const queryClient = new QueryClient({
   defaultOptions: {

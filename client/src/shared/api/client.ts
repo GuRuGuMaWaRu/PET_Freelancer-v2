@@ -1,4 +1,4 @@
-import { CONFIG } from "../const";
+import { config } from "../const";
 
 interface IConfig {
   data?: object;
@@ -26,7 +26,7 @@ async function client<T>(
     body: data ? JSON.stringify(data) : undefined,
     headers: {
       Authorization: useToken
-        ? `Bearer ${window.localStorage.getItem(CONFIG.LOCAL_STORAGE_KEY)}`
+        ? `Bearer ${window.localStorage.getItem(config.LOCAL_STORAGE_KEY)}`
         : "",
       "Content-Type": data ? "application/json" : "",
       ...customHeaders,

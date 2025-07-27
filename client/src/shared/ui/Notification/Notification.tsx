@@ -3,8 +3,10 @@ import clsx from "clsx";
 import { useTransition, animated } from "react-spring";
 import { FaTimes, FaExclamationCircle, FaCheck } from "react-icons/fa";
 
-import { NOTIFICATION_DURATION } from "../const/notification.const";
-import { NotificationType, INotificationProps } from "../types";
+import { config } from "shared/const";
+import type { INotificationProps } from "shared/types";
+import { NotificationType } from "shared/types";
+
 import notificationStyles from "./Notification.module.css";
 
 const getNotificationIcon = (type: NotificationType) => {
@@ -56,7 +58,7 @@ function Notification({
     if (notification) {
       timeoutId.current = window.setTimeout(
         () => hideNotification(),
-        NOTIFICATION_DURATION
+        config.NOTIFICATION_DURATION
       );
     }
     return () => window.clearTimeout(timeoutId.current);

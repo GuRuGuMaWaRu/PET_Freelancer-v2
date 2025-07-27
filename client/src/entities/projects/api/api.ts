@@ -1,6 +1,6 @@
 import { client } from "shared/api";
 import type { IProject, IProjectPaginatedData } from "shared/types";
-import { CONFIG } from "shared/const";
+import { config } from "shared/const";
 
 const getProjectsForYear = async () => {
   return await client<IProject[]>("projects/lastYear");
@@ -12,7 +12,7 @@ const getPageOfProjects = async (
   searchQuery?: string
 ) => {
   const sort = sortParam ? `&sort=${sortParam}` : "";
-  const page = `page=${pageParam}&limit=${CONFIG.PAGE_LIMIT}`;
+  const page = `page=${pageParam}&limit=${config.PAGE_LIMIT}`;
   const search = searchQuery ? `&q=${searchQuery}` : "";
 
   return await client<IProjectPaginatedData>(

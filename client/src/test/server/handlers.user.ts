@@ -1,10 +1,10 @@
 import { rest } from "msw";
 
-import { CONFIG } from "../../shared/const";
+import { config } from "../../shared/const";
 import { getUser, addUser, getUserByToken } from "./users";
 
 export const userHandlers = [
-  rest.post(`${CONFIG.API_URL}/users/login`, async (req, res, ctx) => {
+  rest.post(`${config.API_URL}/users/login`, async (req, res, ctx) => {
     const { email, password }: { email: string; password: string } =
       await req.json();
     const user = getUser(email, password);
@@ -22,7 +22,7 @@ export const userHandlers = [
       ctx.json({ status: "success", data: user })
     );
   }),
-  rest.post(`${CONFIG.API_URL}/users/signup`, async (req, res, ctx) => {
+  rest.post(`${config.API_URL}/users/signup`, async (req, res, ctx) => {
     const {
       name,
       email,
@@ -52,9 +52,9 @@ export const userHandlers = [
     );
   }),
 
-  rest.get(`${CONFIG.API_URL}/users/getUser`, (req, res, ctx) => {
+  rest.get(`${config.API_URL}/users/getUser`, (req, res, ctx) => {
     // Check if the user is authenticated in this session
-    const token = localStorage.getItem(CONFIG.LOCAL_STORAGE_KEY);
+    const token = localStorage.getItem(config.LOCAL_STORAGE_KEY);
 
     if (!token) {
       // If not authenticated, respond with a 403 error

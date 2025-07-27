@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { FaSortUp, FaSortDown, FaPen, FaRegTrashAlt } from "react-icons/fa";
 
 import { FullPageSpinner, Modal, MemoPagination } from "shared/ui";
-import { CONFIG } from "shared/const";
+import { config } from "shared/const";
 import { getAllClientsQuery } from "entities/clients";
 import {
   DeleteProjectForm,
@@ -48,7 +48,7 @@ function Projects() {
   };
 
   //** Calculate total number of pages */
-  const pagesTotal = Math.ceil((projects?.allDocs ?? 0) / CONFIG.PAGE_LIMIT);
+  const pagesTotal = Math.ceil((projects?.allDocs ?? 0) / config.PAGE_LIMIT);
 
   return (
     <div>

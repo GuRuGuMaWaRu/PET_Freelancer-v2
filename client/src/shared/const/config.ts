@@ -8,3 +8,5 @@ export const USERS_KEY = "__FreelancerApp_dev_users__";
 export const PROJECTS_KEY = "__FreelancerApp_dev_projects__";
 
 export const PAGE_LIMIT = 15;
+
+export const NOTIFICATION_DURATION = 4000;
