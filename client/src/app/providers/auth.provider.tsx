@@ -19,14 +19,14 @@ import { client } from "shared/api";
 import { useAsync } from "shared/lib";
 import { useNotification } from "app";
 
-interface IState {
+interface IAuthContext {
   user: IResponseUserData | null | undefined;
   login: (data: ILoginFormInputs) => Promise<IResponseUserData>;
   signup: (data: IRegisterFormInputs) => Promise<IResponseUserData>;
   logout: () => void;
 }
 
-const AuthContext = createContext<IState>({} as IState);
+const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();

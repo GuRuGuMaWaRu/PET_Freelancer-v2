@@ -1,9 +1,14 @@
 import React, { useState, useCallback, useMemo } from "react";
 import ReactDOM from "react-dom";
 
-import type { INotification, INotificationContext } from "shared/types";
+import type { INotification } from "shared/types";
 import { NotificationType } from "shared/types";
 import { Notification } from "shared/ui";
+
+interface INotificationContext {
+  showSuccess: (message: string) => void;
+  showWarning: (message: string) => void;
+}
 
 const NotificationContext = React.createContext<INotificationContext>(
   {} as INotificationContext

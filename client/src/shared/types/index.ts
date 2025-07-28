@@ -80,11 +80,6 @@ interface INotification {
   message: string;
 }
 
-interface INotificationContext {
-  showSuccess: (message: string) => void;
-  showWarning: (message: string) => void;
-}
-
 interface INotificationProps {
   notification: INotification | null;
   hideNotification: () => void;
@@ -104,7 +99,6 @@ export type {
   ILoginFormInputs,
   IRegisterFormInputs,
   INotification,
-  INotificationContext,
   INotificationProps,
 };
 
