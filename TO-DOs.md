@@ -1,0 +1,1 @@
+1. Follow this article to set up multiple connected README files: https://www.fuzzycomputer.com/posts/onboarding?ck_subscriber_id=478685813. There will be a main README.md file and then other files will be connected to it.
