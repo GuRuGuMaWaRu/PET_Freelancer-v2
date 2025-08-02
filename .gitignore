@@ -6,3 +6,4 @@ bash.exe.stackdump
 coverage
 .env.server
 .env
+.DS_Store
