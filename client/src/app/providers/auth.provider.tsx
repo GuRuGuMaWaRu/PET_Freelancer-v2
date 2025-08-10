@@ -15,7 +15,7 @@ import {
 } from "shared/types";
 import { FullPageSpinner, FullPageError } from "shared/ui";
 import { config } from "shared/const";
-import { client } from "shared/api";
+import { apiClient } from "shared/api";
 import { useAsync } from "shared/lib";
 import { useNotification } from "app";
 
@@ -41,8 +41,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       const token = window.localStorage.getItem(config.LOCAL_STORAGE_KEY);
 
       if (token) {
-        const res = await client<IResponseUserData>("users/getUser").catch(
-          (e) => {
+        const res = await apiClient
+          .get<IResponseUserData>("users/getUser")
+          .catch((e) => {
             console.log(e);
 
             if (e.code !== 406) {
@@ -50,8 +51,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             }
 
             return { data: null };
-          }
-        );
+          });
 
         return res.data;
       }
@@ -64,24 +64,28 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signup = useCallback(
     async (data: IRegisterFormInputs) => {
-      return client<IResponseUserData>("users/signup", { data }).then((res) => {
-        window.localStorage.setItem(config.LOCAL_STORAGE_KEY, res.data.token);
-        setData(res.data);
+      return apiClient
+        .post<IResponseUserData>("users/signup", { data })
+        .then((res) => {
+          window.localStorage.setItem(config.LOCAL_STORAGE_KEY, res.data.token);
+          setData(res.data);
 
-        return res.data;
-      });
+          return res.data;
+        });
     },
     [setData]
   );
 
   const login = useCallback(
     async (data: ILoginFormInputs) => {
-      return client<IResponseUserData>("users/login", { data }).then((res) => {
-        window.localStorage.setItem(config.LOCAL_STORAGE_KEY, res.data.token);
-        setData(res.data);
+      return apiClient
+        .post<IResponseUserData>("users/login", { data })
+        .then((res) => {
+          window.localStorage.setItem(config.LOCAL_STORAGE_KEY, res.data.token);
+          setData(res.data);
 
-        return res.data;
-      });
+          return res.data;
+        });
     },
     [setData]
   );

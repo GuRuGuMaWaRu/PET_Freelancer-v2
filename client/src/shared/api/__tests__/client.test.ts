@@ -4,20 +4,20 @@ import {
   RestRequest,
   PathParams,
 } from "../../../test/server/test-server";
-import { client } from "../client";
-import { CONFIG } from "../../const";
+import { apiClient } from "shared/api";
+import { config } from "../../const";
 
 describe("RestClient", () => {
-  let previousToken = window.localStorage.getItem(CONFIG.LOCAL_STORAGE_KEY);
+  let previousToken = window.localStorage.getItem(config.LOCAL_STORAGE_KEY);
   const token = "test-token";
 
-  beforeAll(() => window.localStorage.setItem(CONFIG.LOCAL_STORAGE_KEY, token));
+  beforeAll(() => window.localStorage.setItem(config.LOCAL_STORAGE_KEY, token));
 
   afterAll(() => {
     if (previousToken) {
-      window.localStorage.setItem(CONFIG.LOCAL_STORAGE_KEY, previousToken);
+      window.localStorage.setItem(config.LOCAL_STORAGE_KEY, previousToken);
     } else {
-      window.localStorage.removeItem(CONFIG.LOCAL_STORAGE_KEY);
+      window.localStorage.removeItem(config.LOCAL_STORAGE_KEY);
     }
   });
 
@@ -31,7 +31,7 @@ describe("RestClient", () => {
       })
     );
 
-    const result = await client(endpoint);
+    const result = await apiClient.get(endpoint);
 
     expect(result).toEqual(mockResult);
   });
@@ -48,7 +48,7 @@ describe("RestClient", () => {
       })
     );
 
-    await client(endpoint);
+    await apiClient.get(endpoint);
 
     expect(request?.headers.get("Authorization")).toBe(`Bearer ${token}`);
   });
@@ -70,7 +70,7 @@ describe("RestClient", () => {
       headers: { Boom: "foo" },
     };
 
-    await client(endpoint, customConfig);
+    await apiClient.get(endpoint, customConfig);
 
     expect(request?.mode).toBe(customConfig.mode);
     expect(request?.headers.get("Boom")).toBe(customConfig.headers.Boom);
@@ -88,7 +88,7 @@ describe("RestClient", () => {
 
     const customData = { a: "foo" };
 
-    const result = await client(endpoint, { data: customData });
+    const result = await apiClient.post(endpoint, { data: customData });
 
     expect(result).toEqual(customData);
   });
@@ -103,7 +103,7 @@ describe("RestClient", () => {
       })
     );
 
-    const error = await client(endpoint).catch((e) => e);
+    const error = await apiClient.get(endpoint).catch((e) => e);
 
     expect(error.message).toEqual(testError.message);
   });

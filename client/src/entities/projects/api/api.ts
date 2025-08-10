@@ -1,9 +1,9 @@
-import { client } from "shared/api";
+import { apiClient } from "shared/api";
 import type { IProject, IProjectPaginatedData } from "shared/types";
 import { config } from "shared/const";
 
 const getProjectsForYear = async () => {
-  return await client<IProject[]>("projects/lastYear");
+  return await apiClient.get<IProject[]>("projects/lastYear");
 };
 
 const getPageOfProjects = async (
@@ -15,21 +15,23 @@ const getPageOfProjects = async (
   const page = `page=${pageParam}&limit=${config.PAGE_LIMIT}`;
   const search = searchQuery ? `&q=${searchQuery}` : "";
 
-  return await client<IProjectPaginatedData>(
+  return await apiClient.get<IProjectPaginatedData>(
     `projects/?${page}${sort}${search}`
   );
 };
 
 const addProject = async (project: Partial<IProject>) => {
-  return await client<IProject>("projects", { data: project });
+  return await apiClient.post<IProject>("projects", { data: project });
 };
 
 const deleteProject = async (projectId: string) => {
-  return await client<null>(`projects/${projectId}`, { method: "DELETE" });
+  return await apiClient.delete<null>(`projects/${projectId}`, {
+    method: "DELETE",
+  });
 };
 
 const editProject = async (projectId: string, project: Partial<IProject>) => {
-  return await client<IProject>(`projects/${projectId}`, {
+  return await apiClient.patch<IProject>(`projects/${projectId}`, {
     data: project,
     method: "PATCH",
   });
