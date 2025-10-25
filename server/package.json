@@ -13,7 +13,7 @@
   },
   "homepage": "https://github.com/GuRuGuMaWaRu/PET_Freelancer#readme",
   "engines": {
-    "node": "16.x"
+    "node": "22.x"
   },
   "description": "Manage your freelance jobs",
   "main": "app.js",
