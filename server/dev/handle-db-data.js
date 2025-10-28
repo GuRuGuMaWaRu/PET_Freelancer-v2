@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Project = require("../models/projectModel");
 
-require("dotenv").config({ path: "process.env" });
+require("dotenv").config({ path: ".env.server" });
 
 mongoose.connect(process.env.DB_MAIN, {
   useUnifiedTopology: true,
