@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import { config } from "shared/const";
 import { ChartSection } from "../ChartSection";
 import { getMaxLabelLength } from "features/charts/lib";
 
@@ -40,11 +41,17 @@ describe("ChartSection", () => {
     mockGetMaxLabelLength.mockReturnValue(100);
   });
 
+  const defaultChartProps = {
+    chartRange: config.DEFAULT_CHART_RANGE,
+    onChartRangeChange: jest.fn(),
+  };
+
   it("should render", () => {
     render(
       <ChartSection
         clientChartData={clientChartData}
         monthsChartData={monthsChartData}
+        {...defaultChartProps}
       />,
     );
 
@@ -59,6 +66,7 @@ describe("ChartSection", () => {
       <ChartSection
         clientChartData={clientChartData}
         monthsChartData={monthsChartData}
+        {...defaultChartProps}
       />,
     );
 
@@ -76,6 +84,7 @@ describe("ChartSection", () => {
       <ChartSection
         clientChartData={clientChartData}
         monthsChartData={monthsChartData}
+        {...defaultChartProps}
       />,
     );
 

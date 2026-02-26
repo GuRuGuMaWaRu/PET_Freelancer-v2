@@ -3,7 +3,7 @@ import { rest } from "msw";
 import { config } from "../../shared/const";
 import {
   getProjects,
-  getProjectsForYear,
+  getProjectsForChart,
   addProject,
   updateProject,
   IProject,
@@ -23,8 +23,10 @@ export const projectHandlers = [
     );
   }),
 
-  rest.get(`${config.API_URL}/projects/lastYear`, (req, res, ctx) => {
-    const projects = getProjectsForYear();
+  rest.get(`${config.API_URL}/projects/forChart`, (req, res, ctx) => {
+    const monthsParam = req.url.searchParams.get("months");
+    const months = monthsParam ? parseInt(monthsParam, 10) : 0;
+    const projects = getProjectsForChart(Number.isNaN(months) ? 0 : months);
 
     return res(
       ctx.status(200),

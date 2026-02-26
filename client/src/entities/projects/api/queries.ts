@@ -1,12 +1,25 @@
-import { getProjectsForYear, getPageOfProjects } from "./api";
+import type { ChartRange } from "shared/types";
+import { getProjectsForChart, getPageOfProjects } from "./api";
 
-const projectsOneYearQuery = () => ({
-  queryKey: ["projects", "oneyear"],
+export const chartRangeToMonths = (range: ChartRange): number => {
+  const map: Record<ChartRange, number> = {
+    "3m": 3,
+    "6m": 6,
+    "1y": 12,
+    "2y": 24,
+    all: 0,
+  };
+  return map[range];
+};
+
+const getProjectsForChartQuery = (chartRange: ChartRange) => ({
+  queryKey: ["projects", "forChart", chartRange] as const,
   queryFn: async () => {
-    const res = await getProjectsForYear();
-
+    const months = chartRangeToMonths(chartRange);
+    const res = await getProjectsForChart(months);
     return res.data;
   },
+  keepPreviousData: true,
 });
 
 const getProjectsPageQuery = (
@@ -23,4 +36,4 @@ const getProjectsPageQuery = (
   keepPreviousData: true,
 });
 
-export { projectsOneYearQuery, getProjectsPageQuery };
+export { getProjectsForChartQuery, getProjectsPageQuery };

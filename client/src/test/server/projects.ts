@@ -29,13 +29,15 @@ function getProjects(): IProject[] {
   return projects;
 }
 
-function getProjectsForYear(): IProject[] {
-  const startDate = new Date();
-  startDate.setFullYear(startDate.getFullYear() - 1);
+function getProjectsForChart(months: number): IProject[] {
+  if (months <= 0) return projects;
 
-  return projects.filter((project) => {
-    return project.date >= startDate;
-  });
+  const fromDate = new Date();
+  fromDate.setMonth(fromDate.getMonth() - (months - 1));
+  fromDate.setDate(1);
+  fromDate.setHours(0, 0, 0, 0);
+
+  return projects.filter((p) => new Date(p.date) >= fromDate);
 }
 
 function addProject(project: IProject): void {
@@ -46,7 +48,7 @@ function addProject(project: IProject): void {
 function updateProject(project: IProject): void {
   const index = projects.findIndex((p) => p._id === project._id);
 
-  if (index) {
+  if (index !== -1) {
     projects[index] = project;
     persist();
   }
@@ -56,4 +58,9 @@ function updateProject(project: IProject): void {
 bootstrapFakeProjects();
 
 export type { IProject };
-export { getProjects, getProjectsForYear, addProject, updateProject };
+export {
+  getProjects,
+  getProjectsForChart,
+  addProject,
+  updateProject,
+};

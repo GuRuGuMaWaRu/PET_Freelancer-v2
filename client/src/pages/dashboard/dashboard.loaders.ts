@@ -1,7 +1,8 @@
 import { QueryClient } from "@tanstack/react-query";
 
 import type { IProject, IClient } from "shared/types";
-import { projectsOneYearQuery } from "entities/projects";
+import { config } from "shared/const";
+import { getProjectsForChartQuery } from "entities/projects";
 import { getAllClientsQuery } from "entities/clients";
 
 const loader =
@@ -10,7 +11,7 @@ const loader =
     projectsQuery: IProject[];
     clientsQuery: IClient[];
   }> => {
-    const projectsQuery = projectsOneYearQuery();
+    const projectsQuery = getProjectsForChartQuery(config.DEFAULT_CHART_RANGE);
     const clientsQuery = getAllClientsQuery();
 
     return {
