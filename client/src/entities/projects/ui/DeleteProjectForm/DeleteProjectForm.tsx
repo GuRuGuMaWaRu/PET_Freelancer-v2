@@ -26,7 +26,9 @@ function DeleteProjectForm({ project }: IProps) {
           {project.projectNr}
         </span> from{" "}
         <span className={styles.highlightedText}>{project.client.name}</span>?
-        <SubmitButton isLoading={isLoading}>Go ahead</SubmitButton>
+        <div className={styles.submitRow}>
+          <SubmitButton isLoading={isLoading}>Go ahead</SubmitButton>
+        </div>
       </fetcher.Form>
     </div>
   );

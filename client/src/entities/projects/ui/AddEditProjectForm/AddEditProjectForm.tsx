@@ -13,16 +13,20 @@ import {
   STextarea,
   SInput,
   SubmitButton,
+  Button,
 } from "shared/ui";
 import { Currency } from "shared/types";
 import type { IClient, IProject } from "shared/types";
 
+import styles from "./AddEditProjectForm.module.css";
+
 interface IProps {
   project?: IProject;
   clients: IClient[];
+  onCancel?: () => void;
 }
 
-function AddEditProjectForm({ project, clients }: IProps) {
+function AddEditProjectForm({ project, clients, onCancel }: IProps) {
   const {
     register,
     handleSubmit,
@@ -113,9 +117,16 @@ function AddEditProjectForm({ project, clients }: IProps) {
           {...register("comments")}
         ></STextarea>
       </Field>
-      <SubmitButton isLoading={isLoading}>
-        {project ? "Update" : "Add"}
-      </SubmitButton>
+      <div className={styles.formActions}>
+        {onCancel && (
+          <Button type="button" variant="secondary" onClick={onCancel}>
+            Cancel
+          </Button>
+        )}
+        <SubmitButton isLoading={isLoading}>
+          {project ? "Update" : "Add"}
+        </SubmitButton>
+      </div>
     </Form>
   );
 }

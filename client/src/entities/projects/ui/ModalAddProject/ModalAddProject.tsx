@@ -1,4 +1,4 @@
-import { Button, Modal } from "shared/ui";
+import { Button, Modal, useModal } from "shared/ui";
 import type { IClient } from "shared/types";
 import { AddEditProjectForm } from "entities/projects";
 
@@ -7,13 +7,21 @@ interface IProps {
   customStyles?: React.CSSProperties;
 }
 
+function AddProjectModalContent({ clients }: { clients: IClient[] }) {
+  const { setIsOpen } = useModal();
+
+  return (
+    <AddEditProjectForm clients={clients} onCancel={() => setIsOpen(false)} />
+  );
+}
+
 function ModalAddProject({ clients, customStyles = {} }: IProps) {
   return (
     <Modal
       title="Add Project"
       button={<Button customStyles={customStyles}>Add Project</Button>}
     >
-      <AddEditProjectForm clients={clients} />
+      <AddProjectModalContent clients={clients} />
     </Modal>
   );
 }

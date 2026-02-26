@@ -3,6 +3,10 @@
   line-height: 1.8rem;
 }
 
+.submitRow {
+  margin-block-start: 30px;
+}
+
 .highlightedText {
   background-color: var(--color-text-important);
   padding: 0 0.2rem;

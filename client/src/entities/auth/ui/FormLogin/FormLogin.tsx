@@ -4,9 +4,11 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Field, SInput, SubmitButton } from "shared/ui";
-import { IResponseUserData, ILoginFormInputs } from "shared/types";
 import { useAsync } from "shared/lib";
+import { IResponseUserData, ILoginFormInputs } from "shared/types";
 import { useNotification, useAuth } from "app";
+
+import styles from "./FormLogin.module.css";
 
 const formSchema = yup.object().shape({
   email: yup.string().required("You must specify an email"),
@@ -61,7 +63,9 @@ const LoginForm = () => {
           {...register("password")}
         ></SInput>
       </Field>
-      <SubmitButton isLoading={isLoading}>Login</SubmitButton>
+      <div className={styles.submitRow}>
+        <SubmitButton isLoading={isLoading}>Login</SubmitButton>
+      </div>
     </form>
   );
 };
