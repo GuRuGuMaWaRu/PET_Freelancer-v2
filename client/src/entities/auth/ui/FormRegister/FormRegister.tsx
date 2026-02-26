@@ -8,6 +8,8 @@ import { IResponseUserData, IRegisterFormInputs } from "shared/types";
 import { useAsync } from "shared/lib";
 import { useAuth, useNotification } from "app";
 
+import styles from "./FormRegister.module.css";
+
 const getCharacterValidationError = (str: string) => {
   return `Your password must have at least 1 ${str} character`;
 };
@@ -94,7 +96,9 @@ const RegisterForm = () => {
           {...register("confirmPassword")}
         ></SInput>
       </Field>
-      <SubmitButton isLoading={isLoading}>Register</SubmitButton>
+      <div className={styles.submitRow}>
+        <SubmitButton isLoading={isLoading}>Register</SubmitButton>
+      </div>
     </form>
   );
 };
