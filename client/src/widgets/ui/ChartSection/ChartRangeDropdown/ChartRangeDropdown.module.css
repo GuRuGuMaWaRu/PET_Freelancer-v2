@@ -1,0 +1,26 @@
+.triggerButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 205px;
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.triggerIcon {
+  font-size: 12px;
+}
+
+.menuItem {
+  padding: 9px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menuItem:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

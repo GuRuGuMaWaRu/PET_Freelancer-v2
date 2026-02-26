@@ -181,30 +181,33 @@ router
   );
 
 router
-  .route("/lastYear")
+  .route("/forChart")
   /**
-   * @route     GET projects/lastYear
-   * @desc      Get projects from year ago and up till now
+   * @route     GET projects/forChart
+   * @desc      Get projects for dashboard chart; optional ?months=N (3,6,12,24). Omit or months=0 = all time.
    * @access    Private
    */
   .get(
     catchAsync(async (req, res, next) => {
-      //** Return early if no user ID is provided  */
       if (!req.userId) {
         return next(new AppError(400, "User ID is required"));
       }
 
-      const currentDate = new Date();
-      currentDate.setFullYear(currentDate.getFullYear() - 1);
-      currentDate.setDate(1);
-
-      const projects = await Project.find({
+      const filter = {
         user: mongoose.Types.ObjectId(req.userId),
         deleted: false,
-        date: {
-          $gte: currentDate,
-        },
-      })
+      };
+
+      const months = parseInt(req.query.months, 10);
+      if (!Number.isNaN(months) && months > 0) {
+        const fromDate = new Date();
+        fromDate.setMonth(fromDate.getMonth() - (months - 1));
+        fromDate.setDate(1);
+        fromDate.setHours(0, 0, 0, 0);
+        filter.date = { $gte: fromDate };
+      }
+
+      const projects = await Project.find(filter)
         .populate({
           path: "client",
           select: "-_id -user -__v -createdAt -updatedAt",

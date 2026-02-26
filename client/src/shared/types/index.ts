@@ -52,6 +52,9 @@ interface IEarnings {
   projects: number;
 }
 
+/** Dashboard chart time range: 3m, 6m, 1y, 2y, or all time */
+type ChartRange = "3m" | "6m" | "1y" | "2y" | "all";
+
 interface IResponseUserData {
   name: string;
   email: string;
@@ -87,6 +90,7 @@ interface INotificationProps {
 }
 
 export type {
+  ChartRange,
   Error,
   ErrorVariant,
   IProject,

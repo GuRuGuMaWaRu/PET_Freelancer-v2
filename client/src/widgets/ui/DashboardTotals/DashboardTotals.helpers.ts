@@ -10,17 +10,10 @@ const getEarningsForThisMonth = (data: IEarnings[]): string => {
   return formatUSD(earnings?.payment ? earnings.payment / 1000 : 0);
 };
 
-const getEarningsForThisYear = (data: IEarnings[]): string => {
-  const year = new Date().getFullYear();
-
-  const total = data.reduce((acc, item) => {
-    if (item.date.getFullYear() === year) {
-      return acc + item.payment;
-    }
-    return acc;
-  }, 0);
-
+/** Sum of all earnings in the data (data is already scoped to the selected chart range). */
+const getEarningsForRange = (data: IEarnings[]): string => {
+  const total = data.reduce((acc, item) => acc + item.payment, 0);
   return formatUSD(total !== 0 ? total / 1000 : 0);
 };
 
-export { getEarningsForThisMonth, getEarningsForThisYear };
+export { getEarningsForThisMonth, getEarningsForRange };

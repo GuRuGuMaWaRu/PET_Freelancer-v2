@@ -1,9 +1,14 @@
 import React from "react";
 import clsx from "clsx";
 
-import type { IEarningsByClient, IEarningsByMonth } from "shared/types";
+import type {
+  ChartRange,
+  IEarningsByClient,
+  IEarningsByMonth,
+} from "shared/types";
 import { MemoClientsChart, MemoEarningsChart } from "features/charts";
 
+import { ChartRangeDropdown } from "./ChartRangeDropdown/ChartRangeDropdown";
 import { ChartType } from "./ChartSection.types";
 import { getDateRange } from "./ChartSection.helpers";
 import styles from "./ChartSection.module.css";
@@ -11,17 +16,27 @@ import styles from "./ChartSection.module.css";
 interface IProps {
   clientChartData: IEarningsByClient[];
   monthsChartData: IEarningsByMonth[];
+  chartRange: ChartRange;
+  onChartRangeChange: (range: ChartRange) => void;
 }
 
-function ChartSection({ clientChartData, monthsChartData }: IProps) {
+function ChartSection({
+  clientChartData,
+  monthsChartData,
+  chartRange,
+  onChartRangeChange,
+}: IProps) {
   const [chartType, setChartType] = React.useState<ChartType>(
     ChartType.earnings
   );
 
-  const dateRange = getDateRange(
-    monthsChartData[0].date,
-    monthsChartData[monthsChartData.length - 1].date
-  );
+  const dateRange =
+    monthsChartData.length > 0
+      ? getDateRange(
+          monthsChartData[0].date,
+          monthsChartData[monthsChartData.length - 1].date
+        )
+      : "";
 
   const chartTitle =
     chartType === ChartType.earnings
@@ -32,7 +47,7 @@ function ChartSection({ clientChartData, monthsChartData }: IProps) {
     <div className={styles.chartSection}>
       <div className={styles.chartDataContainer}>
         <h2 className={styles.chartTitle}>{chartTitle}</h2>
-        <div>
+        <div className={styles.chartControls}>
           <button
             className={clsx(
               styles.chartSelectionButton,
@@ -51,9 +66,16 @@ function ChartSection({ clientChartData, monthsChartData }: IProps) {
           >
             Clients
           </button>
+
+          <ChartRangeDropdown
+            value={chartRange}
+            onChange={onChartRangeChange}
+          />
         </div>
       </div>
-      <div className={styles.dateRange}>{dateRange}</div>
+
+      <div className={styles.dateRange}>{dateRange || "No data"}</div>
+
       {chartType === ChartType.earnings ? (
         <MemoEarningsChart data={monthsChartData} />
       ) : (

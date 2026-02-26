@@ -27,7 +27,9 @@ describe("DashboardTotals", () => {
       },
     ];
 
-    const { container } = render(<MemoDashboardTotals data={earnings} />);
+    const { container } = render(
+      <MemoDashboardTotals data={earnings} chartRange="1y" />
+    );
     expect(container).toMatchSnapshot();
   });
 });

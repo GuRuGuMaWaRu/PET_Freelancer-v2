@@ -2,8 +2,9 @@ import { apiClient } from "shared/api";
 import type { IProject, IProjectPaginatedData } from "shared/types";
 import { config } from "shared/const";
 
-const getProjectsForYear = async () => {
-  return await apiClient.get<IProject[]>("projects/lastYear");
+const getProjectsForChart = async (months: number) => {
+  const query = months > 0 ? `?months=${months}` : "";
+  return await apiClient.get<IProject[]>(`projects/forChart${query}`);
 };
 
 const getPageOfProjects = async (
@@ -38,7 +39,7 @@ const editProject = async (projectId: string, project: Partial<IProject>) => {
 };
 
 export {
-  getProjectsForYear,
+  getProjectsForChart,
   getPageOfProjects,
   addProject,
   deleteProject,
