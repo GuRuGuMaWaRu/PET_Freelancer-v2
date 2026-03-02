@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react";
 import { useLocation } from "react-router-dom";
+import { toBrowserRgb } from "test/test-helpers";
 import { useChangeBGColor } from "../hooks/useChangeBGColor";
 import { colors } from "../../const";
 
@@ -23,7 +24,9 @@ describe("useChangeBGColor", () => {
   it("should update the body background color when the pathname changes", () => {
     render(<TestComponent />);
 
-    expect(document.body.style.backgroundColor).toBe(colors.projectsPageBg);
+    expect(document.body.style.backgroundColor).toBe(
+      toBrowserRgb(colors.projectsPageBg),
+    );
   });
 });
 

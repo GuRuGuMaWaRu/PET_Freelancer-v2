@@ -1,68 +1,71 @@
 const assert = require("assert");
 const request = require("supertest");
+
 const app = require("../app");
-const Project = require("../models/projectModel");
-const Client = require("../models/clientModel");
+const Project = require("../resources/project/project.model");
+const Client = require("../resources/client/client.model");
+const { getAuthToken, getTestUserId } = require("./test-helpers");
 
 describe("Project controller", () => {
-  it("should save a new project with a new client on POST request to /projects", (done) => {
-    const data = {
-      newClient: "Client 1",
-      client: "",
-      projectNr: "ABC123",
-      payment: 1000,
-    };
-
+  it("should save a new project with a new client on POST request to /api/v1/projects", (done) => {
     Promise.all([Project.countDocuments(), Client.countDocuments()]).then(
       (counts) => {
+        const data = {
+          client: "Client 1",
+          projectNr: "ABC123",
+          payment: 1000,
+          currency: "USD",
+          date: "2019-10-07T09:34:00.309Z",
+        };
+
         request(app)
-          .post("/projects")
+          .post("/api/v1/projects")
+          .set("Authorization", `Bearer ${getAuthToken()}`)
           .send(data)
           .expect(201)
           .end((err, res) => {
+            if (err) return done(err);
             Promise.all([Project.countDocuments(), Client.countDocuments()])
               .then((newCounts) => {
-                assert(newCounts[0] === counts[0] + 1);
-                assert(newCounts[1] === counts[1] + 1);
+                assert.strictEqual(newCounts[0], counts[0] + 1);
+                assert.strictEqual(newCounts[1], counts[1] + 1);
                 done();
               })
-              .catch((err) => {
-                console.log(err);
-              });
+              .catch(done);
           });
       },
     );
   });
 
-  it("should save a new project with an old client on POST request to /projects", (done) => {
-    const client = new Client({
-      name: "Cosmos",
-    });
+  it("should save a new project with an old client on POST request to /api/v1/projects", (done) => {
+    const userId = getTestUserId();
+    const client = new Client({ name: "Cosmos", user: userId });
 
-    Client.create(client).then(() => {
-      const data = {
-        newClient: "",
-        client: client._id,
-        projectNr: "ABC123",
-        payment: 1000,
-      };
-
+    client.save().then(() => {
       Promise.all([Project.countDocuments(), Client.countDocuments()]).then(
         (counts) => {
+          const data = {
+            client: "Cosmos",
+            projectNr: "ABC123",
+            payment: 1000,
+            currency: "USD",
+            date: "2019-10-07T09:34:00.309Z",
+          };
+
           request(app)
-            .post("/projects")
+            .post("/api/v1/projects")
+            .set("Authorization", `Bearer ${getAuthToken()}`)
             .send(data)
             .expect(201)
             .end((err, res) => {
+              if (err) return done(err);
               Promise.all([Project.countDocuments(), Client.countDocuments()])
                 .then((newCounts) => {
-                  assert(newCounts[0] === counts[0] + 1);
-                  assert(newCounts[1] === counts[1]);
+                  assert.strictEqual(newCounts[0], counts[0] + 1);
+                  assert.strictEqual(newCounts[1], counts[1]);
                   done();
                 })
-                .catch((err) => {
-                  console.log(err);
-                });
+                .catch(done);
             });
         },
       );

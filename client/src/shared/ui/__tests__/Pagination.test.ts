@@ -1,13 +1,13 @@
-import { getPages } from "../Pagination/Pagination.helpers";
+import { getPaginationData } from "../Pagination/Pagination.helpers";
 import { randomNumbers } from "test/generate";
 
-describe("getPages", () => {
+describe("getPaginationData", () => {
   test("shows no more than 9 page buttons", () => {
     const currentPage = 1;
     const totalPages = randomNumbers(15);
 
     for (let i = 0; i < totalPages.length; i++) {
-      const pages = getPages(currentPage, totalPages[i]);
+      const pages = getPaginationData(currentPage, totalPages[i]);
 
       expect(pages.length).toBeLessThan(10);
     }
@@ -18,7 +18,7 @@ describe("getPages", () => {
     const totalPages = randomNumbers(15);
 
     for (let i = 0; i < totalPages.length; i++) {
-      const pages = getPages(currentPage, totalPages[i]);
+      const pages = getPaginationData(currentPage, totalPages[i]);
 
       expect(pages[0].page).toEqual(1);
     }
@@ -29,7 +29,7 @@ describe("getPages", () => {
     const totalPages = randomNumbers(15);
 
     for (let i = 0; i < totalPages.length; i++) {
-      const pages = getPages(currentPage, totalPages[i]);
+      const pages = getPaginationData(currentPage, totalPages[i]);
 
       expect(pages[pages.length - 1].page).toEqual(totalPages[i]);
     }
@@ -40,7 +40,7 @@ describe("getPages", () => {
     const totalPages = randomNumbers(9);
 
     for (let i = 0; i < totalPages.length; i++) {
-      const pages = getPages(currentPage, totalPages[i]);
+      const pages = getPaginationData(currentPage, totalPages[i]);
       const expectedPages = Array.from({ length: pages.length }, (_, idx) => ({
         page: idx + 1,
       }));
@@ -51,7 +51,7 @@ describe("getPages", () => {
 
   describe("returns correct page numbers if totalPages is more than 9", () => {
     test("and currentPage is less than or equal 5", () => {
-      expect(getPages(5, 10)).toEqual([
+      expect(getPaginationData(5, 10)).toEqual([
         { page: 1 },
         { page: 2 },
         { page: 3 },
@@ -59,11 +59,11 @@ describe("getPages", () => {
         { page: 5 },
         { page: 6 },
         { page: 7 },
-        { page: 8, next_previous: true },
+        { page: 8, isSpread: true },
         { page: 10 },
       ]);
 
-      expect(getPages(3, 13)).toEqual([
+      expect(getPaginationData(3, 13)).toEqual([
         { page: 1 },
         { page: 2 },
         { page: 3 },
@@ -71,53 +71,53 @@ describe("getPages", () => {
         { page: 5 },
         { page: 6 },
         { page: 7 },
-        { page: 8, next_previous: true },
+        { page: 8, isSpread: true },
         { page: 13 },
       ]);
     });
 
     test("and currentPage is more than 5 and less than totalPages - 4", () => {
-      expect(getPages(6, 77)).toEqual([
+      expect(getPaginationData(6, 77)).toEqual([
         { page: 1 },
-        { page: 3, next_previous: true },
+        { page: 3, isSpread: true },
         { page: 4 },
         { page: 5 },
         { page: 6 },
         { page: 7 },
         { page: 8 },
-        { page: 9, next_previous: true },
+        { page: 9, isSpread: true },
         { page: 77 },
       ]);
 
-      expect(getPages(66, 177)).toEqual([
+      expect(getPaginationData(66, 177)).toEqual([
         { page: 1 },
-        { page: 63, next_previous: true },
+        { page: 63, isSpread: true },
         { page: 64 },
         { page: 65 },
         { page: 66 },
         { page: 67 },
         { page: 68 },
-        { page: 69, next_previous: true },
+        { page: 69, isSpread: true },
         { page: 177 },
       ]);
 
-      expect(getPages(372, 377)).toEqual([
+      expect(getPaginationData(372, 377)).toEqual([
         { page: 1 },
-        { page: 369, next_previous: true },
+        { page: 369, isSpread: true },
         { page: 370 },
         { page: 371 },
         { page: 372 },
         { page: 373 },
         { page: 374 },
-        { page: 375, next_previous: true },
+        { page: 375, isSpread: true },
         { page: 377 },
       ]);
     });
 
     test("and currentPage is between totalPages - 4 and totalPages", () => {
-      expect(getPages(73, 77)).toEqual([
+      expect(getPaginationData(73, 77)).toEqual([
         { page: 1 },
-        { page: 70, next_previous: true },
+        { page: 70, isSpread: true },
         { page: 71 },
         { page: 72 },
         { page: 73 },
@@ -127,9 +127,9 @@ describe("getPages", () => {
         { page: 77 },
       ]);
 
-      expect(getPages(177, 177)).toEqual([
+      expect(getPaginationData(177, 177)).toEqual([
         { page: 1 },
-        { page: 170, next_previous: true },
+        { page: 170, isSpread: true },
         { page: 171 },
         { page: 172 },
         { page: 173 },
@@ -139,9 +139,9 @@ describe("getPages", () => {
         { page: 177 },
       ]);
 
-      expect(getPages(374, 377)).toEqual([
+      expect(getPaginationData(374, 377)).toEqual([
         { page: 1 },
-        { page: 370, next_previous: true },
+        { page: 370, isSpread: true },
         { page: 371 },
         { page: 372 },
         { page: 373 },

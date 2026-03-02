@@ -84,10 +84,15 @@ app.all("*", (req, res, next) => {
 // Handle all errors
 app.use(errorHandler);
 
-// Connect to server
+// Connect to server (skip in test so supertest can use the app without binding to a port)
 const PORT = process.env.PORT || 6000;
 
-mongoose.connection.once("open", () => {
-  app.listen(PORT, () => console.log(`Server is listening on port ${PORT}...`));
-});
-// eslint-disable-next-line
+if (process.env.NODE_ENV !== "test") {
+  mongoose.connection.once("open", () => {
+    app.listen(PORT, () =>
+      console.log(`Server is listening on port ${PORT}...`),
+    );
+  });
+}
+
+module.exports = app;
