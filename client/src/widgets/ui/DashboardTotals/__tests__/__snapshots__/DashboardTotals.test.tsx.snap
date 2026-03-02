@@ -3,47 +3,47 @@
 exports[`DashboardTotals should render 1`] = `
 <div>
   <div
-    class="css-xabrvj"
+    class="totals"
   >
     <div>
-      <time
-        class="css-w0qwta"
-      >
-        ЛИПЕНЬ
-      </time>
       <div
-        class="css-8idrzu"
+        class="date"
+      >
+        БЕР. 2026 Р.
+      </div>
+      <div
+        class="sumContainer"
       >
         <span
-          class="css-9w5ib6"
+          class="currencySymbol"
         >
           $
         </span>
          
         <span
-          class="css-15qor2q"
+          class="sum"
         >
           100
         </span>
       </div>
     </div>
     <div>
-      <time
-        class="css-w0qwta"
+      <div
+        class="date"
       >
         1 year
-      </time>
+      </div>
       <div
-        class="css-8idrzu"
+        class="sumContainer"
       >
         <span
-          class="css-9w5ib6"
+          class="currencySymbol"
         >
           $
         </span>
          
         <span
-          class="css-15qor2q"
+          class="sum"
         >
           600
         </span>
